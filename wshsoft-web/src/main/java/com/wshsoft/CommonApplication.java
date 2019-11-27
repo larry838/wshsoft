@@ -1,0 +1,20 @@
+package com.wshsoft;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+
+/**
+ * 启动程序
+ * 
+ * @author Larry xie
+ */
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
+public class CommonApplication
+{
+    public static void main(String[] args)
+    {
+        // System.setProperty("spring.devtools.restart.enabled", "false");
+        SpringApplication.run(CommonApplication.class, args);
+    }
+}

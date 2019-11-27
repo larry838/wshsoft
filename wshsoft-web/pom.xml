@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+		<groupId>com.wshsoft</groupId>
+		<artifactId>wshsoft</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+	<packaging>jar</packaging>
+    <artifactId>${wshsoft-web.aid}</artifactId>
+	
+	<description>
+	    web服务入口
+	</description>
+
+    <dependencies>
+  
+          <!-- 系统模块-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>${wshsoft-biz.aid}</artifactId>
+        </dependency>
+
+	    <!-- 核心模块-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>${wshsoft-framework.aid}</artifactId>
+        </dependency>
+        
+        <!-- 定时任务-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>${wshsoft-quartz.aid}</artifactId>
+        </dependency>
+        
+        <!-- 代码生成-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>${wshsoft-generator.aid}</artifactId>
+        </dependency>
+
+        <!-- SpringBoot集成thymeleaf模板 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- spring-boot-devtools -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional> <!-- 表示依赖不会传递 -->
+		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+		<!-- swagger2-->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+		</dependency>
+		
+		<!--防止进入swagger页面报类型转换错误，排除2.9.2中的引用，手动增加1.5.21版本-->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.21</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>1.5.21</version>
+        </dependency>
+		
+		<!-- swagger2-UI-->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+		</dependency>
+        
+    </dependencies>
+
+    <build>
+        <plugins>
+         
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+					<fork>true</fork>
+					<includes>
+						<!-- 项目启动jar包中排除依赖包 -->
+						<include>
+							<groupId>non-exists</groupId>
+							<artifactId>non-exists</artifactId>
+						</include>
+					</includes>
+				</configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin> 
+            <plugin>   
+                <groupId>org.apache.maven.plugins</groupId>   
+                <artifactId>maven-war-plugin</artifactId>   
+                <version>3.0.0</version>   
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <warName>${project.artifactId}</warName>
+                </configuration>   
+		   </plugin>
+		   
+<!-- add -->      
+            <!-- 跳过单元测试，不然打包的时候会因为加载不了application.yaml报错 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<appendAssemblyId>false</appendAssemblyId>
+					<descriptors>
+						<descriptor>src/main/resources/assembly.xml</descriptor>
+					</descriptors>
+					<outputDirectory>${project.build.directory}/dist/</outputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<!-- 绑定到package生命周期阶段上 -->
+						<phase>package</phase>
+						<goals>
+						    <!-- 只运行一次 --> 
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		
+			<!-- 打包成jar文件，并指定lib文件夹以及resources资源文件夹 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+	                <!--不打包资源文件 -->
+	                <excludes>
+	                   <exclude>*.**</exclude>
+	                   <exclude>static/**</exclude>
+	                   <exclude>templates/**</exclude>
+	                   <exclude>config/**</exclude>
+	                </excludes>				
+					<archive>
+						<manifest>
+							<mainClass>com.wshsoft.CommonApplication</mainClass>
+							<classpathPrefix>lib/</classpathPrefix>
+							<addClasspath>true</addClasspath>
+						</manifest>
+						<manifestEntries>
+							<Class-Path>resources/</Class-Path>
+						</manifestEntries>
+					</archive>
+					<outputDirectory>${project.build.directory}</outputDirectory>
+				</configuration>
+			</plugin>
+  <!-- end --> 
+        </plugins>
+        <finalName>${project.artifactId}</finalName>       
+    </build>
+	
+</project>

@@ -1,0 +1,35 @@
+package ${basePackage}.${moduleName}.service;
+
+import ${basePackage}.${moduleName}.domain.${ClassName};
+import java.util.List;
+#if($table.tree)
+import com.wsh.common.core.domain.Ztree;
+#end
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+ * ${functionName} Service接口
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+ 
+public interface ${ClassName}Service extends IService<${ClassName}> {
+
+    /**
+     * 查询${functionName}列表
+     * 
+     * @param ${className} ${functionName}
+     * @return ${functionName}集合
+     */
+    public List<${ClassName}> select${ClassName}List(${ClassName} ${className});
+#if($table.tree)
+
+    /**
+     * 查询${functionName}树列表
+     * 
+     * @return 所有${functionName}信息
+     */
+    public List<Ztree> select${ClassName}Tree();
+#end
+}
