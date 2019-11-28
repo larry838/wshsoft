@@ -29,7 +29,7 @@
                 <div class="col-sm-8">
                     <div class="input-group">
 #set($BusinessName=$businessName.substring(0,1).toUpperCase() + ${businessName.substring(1)})
-#set($treeId = "${className}?.${treeCode}")
+#set($treeId = "${className}.${treeCode}")
                         <input id="treeId" name="${treeParentCode}" type="hidden" th:value="${${treeId}}"/>
                         <input class="form-control" type="text" onclick="select${BusinessName}Tree()" id="treeName" readonly="true" th:value="${${treeName}}"#if($column.required) required#end>
                         <span class="input-group-addon"><i class="fa fa-search"></i></span>

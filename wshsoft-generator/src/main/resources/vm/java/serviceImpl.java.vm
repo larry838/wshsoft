@@ -3,7 +3,7 @@ package ${basePackage}.${moduleName}.service.impl;
 import java.util.List;
 #if($table.tree)
 import java.util.ArrayList;
-import com.wsh.common.core.domain.Ztree;
+import com.wshsoft.common.core.domain.Ztree;
 #end
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

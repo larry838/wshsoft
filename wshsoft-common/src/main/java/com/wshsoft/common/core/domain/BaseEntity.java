@@ -45,10 +45,13 @@ public class BaseEntity implements Serializable
 
    // @TableLogic
    // protected Integer deleted;
-
+    
+    /** 备注 */
+    protected String remark;
+    
     /** 请求参数 */
     @TableField(exist = false)
-    private Map<String, Object> params=new HashMap<>();
+    protected Map<String, Object> params=new HashMap<>();
 
 	/** 搜索值 */
 	@TableField(exist = false)

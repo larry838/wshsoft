@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改参数配置')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-config-edit" th:object="${config}">
+            <input id="configId" name="configId" th:field="*{configId}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">参数名称：</label>
+                <div class="col-sm-8">
+                    <input name="configName" th:field="*{configName}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">参数键名：</label>
+                <div class="col-sm-8">
+                    <input name="configKey" th:field="*{configKey}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">参数键值：</label>
+                <div class="col-sm-8">
+                    <textarea name="configValue" class="form-control">[[*{configValue}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">系统内置：</label>
+                <div class="col-sm-8">
+                    <select name="configType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script type="text/javascript">
+        var prefix = ctx + "sys/config";
+        $("#form-config-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-config-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

@@ -162,7 +162,8 @@ public class VelocityUtils
         }
         else if (template.contains("list-tree.html.vm"))
         {
-            fileName = StringUtils.format("{}/{}.html", htmlPath, businessName);
+            //fileName = StringUtils.format("{}/{}.html", htmlPath, businessName);
+            fileName = StringUtils.format("{}/list.html", htmlPath, businessName);
         }
         else if (template.contains("tree.html.vm"))
         {

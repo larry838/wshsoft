@@ -14,50 +14,50 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * 岗位信息表 sys_post
+ * 参数配置表 sys_config
  *
  * @author Carry xie
- * @date 2019-11-25
+ * @date 2019-11-28
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sys_post")
-public class Post  extends BaseEntity implements Serializable {
+@TableName("sys_config")
+public class Config  extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    /** 岗位ID */
-     @TableId(value="post_id", type= IdType.AUTO)
-      private Long postId;
+    /** 参数主键 */
+     @TableId(value="config_id", type= IdType.AUTO)
+      private Integer configId;
 
-    /** 岗位编码 */
-    @TableField("post_code")
-    @Excel(name = "岗位编码")
-    private String postCode;
+    /** 参数名称 */
+    @TableField("config_name")
+    @Excel(name = "参数名称")
+    private String configName;
 
-    /** 岗位名称 */
-    @TableField("post_name")
-    @Excel(name = "岗位名称")
-    private String postName;
+    /** 参数键名 */
+    @TableField("config_key")
+    @Excel(name = "参数键名")
+    private String configKey;
 
-    /** 显示顺序 */
-    @TableField("post_sort")
-    @Excel(name = "显示顺序")
-    private Integer postSort;
+    /** 参数键值 */
+    @TableField("config_value")
+    @Excel(name = "参数键值")
+    private String configValue;
 
-    /** 状态（0正常 1停用） */
-    @Excel(name = "状态", readConverterExp = "0=正常,1=停用")
-    private String status;
-
+    /** 系统内置（Y是 N否） */
+    @TableField("config_type")
+    @Excel(name = "系统内置", readConverterExp = "Y=是,N=否")
+    private String configType;
 
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("postId", getPostId())
-            .append("postCode", getPostCode())
-            .append("postName", getPostName())
-            .append("postSort", getPostSort())
-            .append("status", getStatus())
+            .append("configId", getConfigId())
+            .append("configName", getConfigName())
+            .append("configKey", getConfigKey())
+            .append("configValue", getConfigValue())
+            .append("configType", getConfigType())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())

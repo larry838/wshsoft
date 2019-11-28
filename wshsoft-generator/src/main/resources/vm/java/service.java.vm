@@ -3,7 +3,7 @@ package ${basePackage}.${moduleName}.service;
 import ${basePackage}.${moduleName}.domain.${ClassName};
 import java.util.List;
 #if($table.tree)
-import com.wsh.common.core.domain.Ztree;
+import com.wshsoft.common.core.domain.Ztree;
 #end
 import com.baomidou.mybatisplus.extension.service.IService;
 

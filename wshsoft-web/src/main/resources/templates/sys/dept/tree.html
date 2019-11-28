@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('${functionName}树选择')" />
+    <th:block th:include="include :: header('部门树选择')" />
     <th:block th:include="include :: ztree-css" />
 </head>
 <style>
@@ -9,10 +9,8 @@
     button{font-family: "SimSun","Helvetica Neue",Helvetica,Arial;}
 </style>
 <body class="hold-transition box box-main">
-#set($treeId = "${className}." + $treeCode)
-#set($treeName = "${className}." + $treeName)
-    <input id="treeId"   name="treeId"    type="hidden" th:value="${${treeId}}"/>
-    <input id="treeName" name="treeName"  type="hidden" th:value="${${treeName}}"/>
+    <input id="treeId"   name="treeId"    type="hidden" th:value="${dept.deptId}"/>
+    <input id="treeName" name="treeName"  type="hidden" th:value="${dept.deptName}"/>
     <div class="wrapper"><div class="treeShowHideButton" onclick="$.tree.toggleSearch();">
         <label id="btnShow" title="显示搜索" style="display:none;">︾</label>
         <label id="btnHide" title="隐藏搜索">︽</label>
@@ -31,7 +29,7 @@
     <th:block th:include="include :: ztree-js" />
     <script th:inline="javascript">
         $(function() {
-            var url = ctx + "${moduleName}/${businessName}/treeData";
+            var url = ctx + "sys/dept/treeData";
             var options = {
                 url: url,
                 expandLevel: 2,
