@@ -10,36 +10,68 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">参数名称：</label>
                 <div class="col-sm-8">
-                    <input name="configName" th:field="*{configName}" class="form-control" type="text">
+                    <input id="configName" name="configName" th:field="*{configName}" class="form-control" type="text" required>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">参数键名：</label>
                 <div class="col-sm-8">
-                    <input name="configKey" th:field="*{configKey}" class="form-control" type="text">
+                    <input id="configKey" name="configKey" th:field="*{configKey}" class="form-control" type="text" required>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">参数键值：</label>
                 <div class="col-sm-8">
-                    <textarea name="configValue" class="form-control">[[*{configValue}]]</textarea>
+                    <input id="configValue" name="configValue" th:field="*{configValue}" class="form-control" type="text" required>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">系统内置：</label>
                 <div class="col-sm-8">
-                    <select name="configType" class="form-control m-b">
-                        <option value="">所有</option>
-                    </select>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+				    <div class="radio-box" th:each="dict : ${@dict.getType('sys_yes_no')}">
+						<input type="radio" th:id="${dict.dictCode}" name="configType" th:value="${dict.dictValue}" th:field="*{configType}">
+						<label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
+					</div>
+				</div>
                 </div>
-            </div>
+			<div class="form-group">	
+	            <label class="col-sm-3 control-label">备注：</label>
+	            <div class="col-sm-8">
+	                <textarea id="remark" name="remark" class="form-control">[[*{remark}]]</textarea>
+	            </div>
+	        </div>
         </form>
     </div>
     <th:block th:include="include :: footer" />
     <script type="text/javascript">
         var prefix = ctx + "sys/config";
         $("#form-config-edit").validate({
+	    	onkeyup: false,
+	        rules: {
+	            configKey: {
+	                remote: {
+	                    url: prefix + "/checkConfigKeyUnique",
+	                    type: "post",
+	                    dataType: "json",
+	                    data: {
+	                        "configId": function() {
+	                        	return $("#configId").val();
+	                        },
+	                        "configKey": function() {
+	                        	return $.common.trim($("#configKey").val());
+	                        }
+	                    },
+	                    dataFilter: function(data, type) {
+	                        return $.validate.unique(data);
+	                    }
+	                }
+	            },
+	        },
+	        messages: {
+	            "configKey": {
+	                remote: "参数键名已经存在"
+	            }
+	        },
             focusCleanup: true
         });
 

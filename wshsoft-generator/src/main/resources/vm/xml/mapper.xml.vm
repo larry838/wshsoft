@@ -27,19 +27,19 @@
 #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
 #if($column.query)
 #if($column.queryType == "EQ")
-            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and $columnName = #{$javaField}</if>
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> AND $columnName = #{$javaField}</if>
 #elseif($queryType == "NE")
-            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and $columnName != #{$javaField}</if>
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> AND $columnName != #{$javaField}</if>
 #elseif($queryType == "GT")
-            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and $columnName &gt; #{$javaField}</if>
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> AND $columnName &gt; #{$javaField}</if>
 #elseif($queryType == "GTE")
-            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and $columnName &gt;= #{$javaField}</if>
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> AND $columnName &gt;= #{$javaField}</if>
 #elseif($queryType == "LT")
-            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and $columnName &lt; #{$javaField}</if>
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> AND $columnName &lt; #{$javaField}</if>
 #elseif($queryType == "LTE")
-            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and $columnName &lt;= #{$javaField}</if>
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> AND $columnName &lt;= #{$javaField}</if>
 #elseif($queryType == "LIKE")
-            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and $columnName like concat('%', #{$javaField}, '%')</if>
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> AND $columnName like concat('%', #{$javaField}, '%')</if>
 #elseif($queryType == "BETWEEN")
             <if test="params.begin$AttrName != null and params.begin$AttrName != '' and params.end$AttrName != null and params.end$AttrName != ''"> and $columnName between #{params.begin$AttrName} and #{params.end$AttrName}</if>
 #end
@@ -50,4 +50,52 @@
         order by ${tree_parent_code}
 #end
     </select>
+#if($table.tree)
+    <select id="select${ClassName}ById" parameterType="${pkColumn.javaType}" resultMap="${ClassName}Result">
+        select#foreach($column in $columns) t.$column.columnName,#end p.${tree_name} as parent_name
+        from ${tableName} t
+        left join ${tableName} p on p.${pkColumn.columnName} = t.${tree_parent_code}
+        where t.${pkColumn.columnName} = #{${pkColumn.javaField}}
+   </select>
+    <select id="select${ClassName}Count" parameterType="${pkColumn.javaType}" resultType="int">
+        select count(1) from ${tableName}
+        where del_flag = '0'
+        <if test="${pkColumn.javaField} != null and ${pkColumn.javaField} != 0"> and ${pkColumn.columnName} = #{${pkColumn.javaField}} </if>
+        <if test="parentId != null and parentId != 0"> and parent_id = #{parentId} </if>
+    </select>
+    
+    <select id="check${ClassName}NameUnique" resultMap="${ClassName}Result">
+        <include refid="select${ClassName}Vo"/>
+        where ${className}_name=#{${className}Name} and parent_id = #{parentId}
+    </select>
+     <update id="update${ClassName}Children" parameterType="java.util.List">
+      update ${tableName} set ancestors =
+      <foreach collection="${className}s" item="item" index="index"
+          separator=" " open="case ${pkColumn.columnName}" close="end">
+          when #{item.${pkColumn.javaField}} then #{item.ancestors}
+      </foreach>
+      where ${pkColumn.columnName} in
+      <foreach collection="${className}s" item="item" index="index"
+          separator="," open="(" close=")">
+          #{item.${pkColumn.javaField}}
+      </foreach>
+   </update>
+   
+   <update id="update${ClassName}Status" parameterType="${pkColumn.javaType}">
+       update ${tableName}
+       <set>
+           <if test="status != null and status != ''">status = #{status},</if>
+       </set>
+       where ${pkColumn.columnName} in (${ancestors})
+   </update>
+   
+    <select id="selectChildren${ClassName}ById" parameterType="Long" resultMap="${ClassName}Result">
+        <include refid="select${ClassName}Vo"/>
+         where find_in_set(#{${pkColumn.javaField}}, ancestors)
+    </select>
+    
+    <select id="check${ClassName}ExistUse" parameterType="Long" resultType="int">
+        select count(1) from sys_user where ${pkColumn.columnName} = #{${pkColumn.javaField}} and del_flag = '0'
+    </select>
+#end 
 </mapper>

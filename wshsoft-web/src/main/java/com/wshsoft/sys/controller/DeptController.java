@@ -6,6 +6,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wshsoft.common.annotation.SysLog;
+import com.wshsoft.common.constant.UserConstants;
 import com.wshsoft.common.enums.BusinessType;
 import com.wshsoft.sys.domain.Dept;
 import com.wshsoft.sys.service.DeptService;
+import com.wshsoft.system.domain.SysDept;
 import com.wshsoft.common.core.controller.BaseController;
 import com.wshsoft.common.core.domain.AjaxResult;
 import com.wshsoft.common.utils.poi.ExcelUtil;
@@ -88,9 +91,12 @@ public class DeptController extends BaseController {
     @SysLog(title = "部门管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(Dept dept) {
-        return toAjax(deptService.save(dept));
-	//return toAjax(deptService.insertDept(dept));
+    public AjaxResult addSave(@Validated Dept dept) {
+        if (UserConstants.DEPT_NAME_NOT_UNIQUE.equals(deptService.checkDeptNameUnique(dept))){
+            return error("新增部门'" + dept.getDeptName() + "'失败，部门名称已存在");
+        }
+       //return toAjax(deptService.save(dept));
+	   return toAjax(deptService.insertDept(dept));
     }
 
     /**
@@ -98,8 +104,12 @@ public class DeptController extends BaseController {
      */
     @GetMapping("/edit/{deptId}")
     public String edit(@PathVariable("deptId") Long deptId, ModelMap mmap) {
-        Dept dept = deptService.getById(deptId);
-	//Dept dept = deptService.selectDeptById(deptId);
+       // Dept dept = deptService.getById(deptId);
+    	Dept dept = deptService.selectDeptById(deptId);
+        if (StringUtils.isNotNull(dept) && 100L == deptId)
+        {
+            dept.setParentName("无");
+        }
         mmap.put("dept", dept);
         return prefix + "/edit";
     }
@@ -112,8 +122,16 @@ public class DeptController extends BaseController {
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(Dept dept) {
-        return toAjax(deptService.updateById(dept));
-	//return toAjax(deptService.updateDept(dept));
+        if (UserConstants.DEPT_NAME_NOT_UNIQUE.equals(deptService.checkDeptNameUnique(dept)))
+        {
+            return error("修改部门'" + dept.getDeptName() + "'失败，部门名称已存在");
+        }
+        else if (dept.getParentId().equals(dept.getDeptId()))
+        {
+            return error("修改部门'" + dept.getDeptName() + "'失败，上级部门不能是自己");
+        }
+       // return toAjax(deptService.updateById(dept));
+	    return toAjax(deptService.updateDept(dept));
     }
 
     /**
@@ -124,6 +142,14 @@ public class DeptController extends BaseController {
     @GetMapping("/remove/{deptId}")
     @ResponseBody
     public AjaxResult remove(@PathVariable("deptId") Long deptId) {
+        if (deptService.selectDeptCount(deptId) > 0)
+        {
+            return AjaxResult.warn("存在下级部门,不允许删除");
+        }
+        if (deptService.checkDeptExistUser(deptId))
+        {
+            return AjaxResult.warn("部门存在用户,不允许删除");
+        }
         return toAjax(deptService.removeById(deptId));
     }
 
@@ -147,4 +173,14 @@ public class DeptController extends BaseController {
         List<Ztree> ztrees = deptService.selectDeptTree();
         return ztrees;
     }
+    /**
+     * 校验部门名称
+     */
+    @PostMapping("/checkDeptNameUnique")
+    @ResponseBody
+    public String checkDeptNameUnique(Dept dept)
+    {
+        return deptService.checkDeptNameUnique(dept);
+    }
+    
 }

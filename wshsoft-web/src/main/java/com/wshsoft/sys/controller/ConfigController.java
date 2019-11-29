@@ -6,6 +6,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wshsoft.common.annotation.SysLog;
+import com.wshsoft.common.constant.UserConstants;
 import com.wshsoft.common.enums.BusinessType;
 import com.wshsoft.sys.domain.Config;
 import com.wshsoft.sys.service.ConfigService;
@@ -86,6 +88,10 @@ public class ConfigController extends BaseController {
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(Config config) {
+        if (UserConstants.CONFIG_KEY_NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config)))
+        {
+            return error("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
+        }
         return toAjax(configService.save(config));
 	//return toAjax(configService.insertConfig(config));
     }
@@ -109,6 +115,10 @@ public class ConfigController extends BaseController {
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(Config config) {
+        if (UserConstants.CONFIG_KEY_NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config)))
+        {
+            return error("修改参数'" + config.getConfigName() + "'失败，参数键名已存在");
+        }
         return toAjax(configService.updateById(config));
 	//return toAjax(configService.updateConfig(config));
     }
@@ -123,5 +133,15 @@ public class ConfigController extends BaseController {
     public AjaxResult remove(String ids) {
         return toAjax(configService.removeByIds(Arrays.asList(Convert.toStrArray(ids))));
 	//return toAjax(configService.deleteConfigByIds(ids));
+    }
+    
+    /**
+     * 校验参数键名
+     */
+    @PostMapping("/checkConfigKeyUnique")
+    @ResponseBody
+    public String checkConfigKeyUnique(Config config)
+    {
+        return configService.checkConfigKeyUnique(config);
     }
 }

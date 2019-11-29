@@ -4,7 +4,11 @@ import java.util.List;
 #if($table.tree)
 import java.util.ArrayList;
 import com.wshsoft.common.core.domain.Ztree;
+import com.wshsoft.common.exception.BusinessException;
+import org.springframework.transaction.annotation.Transactional;
+import com.wshsoft.common.utils.StringUtils;
 #end
+import com.wshsoft.common.constant.SysConstants;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,5 +64,131 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
         }
         return ztrees;
     }
+ 
+     /**
+     * 新增${functionName}
+     * 
+     * @param ${className} ${functionName}
+     * @return 结果
+     */
+    @Override
+    public int insert${ClassName}(${ClassName} ${className})
+    {
+        ${ClassName} info = ${className}Mapper.selectById(${className}.getParentId());
+        // 如果父节点不为"正常"状态,则不允许新增子节点
+        if (!UserConstants.DEPT_NORMAL.equals(info.getStatus()))
+        {
+            throw new BusinessException("${functionName}停用，不允许新增");
+        }
+        ${className}.setAncestors(info.getAncestors() + "," + ${className}.getParentId());
+        return ${className}Mapper.insert(${className});
+    }   
+ 
+    /**
+     * 修改${functionName}
+     * 
+     * @param ${className} ${functionName}
+     * @return 结果
+     */
+    @Override
+    @Transactional
+    public int update${ClassName}(${ClassName} ${className})
+    {
+        ${ClassName} newParent${ClassName} = ${className}Mapper.select${ClassName}ById(${className}.getParentId());
+        ${ClassName} old${ClassName} = select${ClassName}ById(${className}.get${ClassName}Id());
+        if (StringUtils.isNotNull(newParent${ClassName}) && StringUtils.isNotNull(old${ClassName}))
+        {
+            String newAncestors = newParent${ClassName}.getAncestors() + "," + newParent${ClassName}.get${ClassName}Id();
+            String oldAncestors = old${ClassName}.getAncestors();
+            ${className}.setAncestors(newAncestors);
+            update${ClassName}Children(${className}.get${ClassName}Id(), newAncestors, oldAncestors);
+        }
+        int result = ${className}Mapper.updateById(${className});
+        if (UserConstants.DEPT_NORMAL.equals(${className}.getStatus()))
+        {
+            // 如果该${functionName}是启用状态，则启用该${functionName}的所有上级${functionName}
+            updateParent${ClassName}Status(${className});
+        }
+        return result;
+    }
+     /**
+     * 修改该${functionName}的父级${functionName}状态
+     * 
+     * @param ${className} 当前${functionName}
+     */
+    private void updateParent${ClassName}Status(${ClassName} ${className})
+    {
+        ${className} = ${className}Mapper.select${ClassName}ById(${className}.get${ClassName}Id());
+        ${className}Mapper.update${ClassName}Status(${className});
+    }
+
+    /**
+     * 修改子元素关系
+     * 
+     * @param ${className}Id 被修改的${functionName}ID
+     * @param newAncestors 新的父ID集合
+     * @param oldAncestors 旧的父ID集合
+     */
+    private void update${ClassName}Children(Long ${className}Id, String newAncestors, String oldAncestors)
+    {
+        List<${ClassName}> children = ${className}Mapper.selectChildren${ClassName}ById(${className}Id);
+        for (${ClassName} child : children)
+        {
+            child.setAncestors(child.getAncestors().replace(oldAncestors, newAncestors));
+        }
+        if (children.size() > 0)
+        {
+            ${className}Mapper.update${ClassName}Children(children);
+        }
+    }
+  
+    /**
+     * 查询${functionName}
+     * 
+     * @param ${pkColumn.javaField} ${functionName}ID
+     * @return ${functionName}
+     */
+    @Override
+    public ${ClassName} select${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField})
+    {
+        return ${className}Mapper.select${ClassName}ById(${pkColumn.javaField});
+    } 
+    /**
+     * 校验${functionName}名称是否唯一
+     * 
+     * @param ${className} ${functionName}信息
+     * @return 结果
+     */
+    public String check${ClassName}NameUnique(${ClassName} ${className}) {
+        Long ${className}Id = StringUtils.isNull(${className}.get${ClassName}Id()) ? -1L : ${className}.get${ClassName}Id();
+        ${ClassName} info = ${className}Mapper.check${ClassName}NameUnique(${className}.get${ClassName}Name(), ${className}.getParentId());
+        if (StringUtils.isNotNull(info) && info.get${ClassName}Id().longValue() != ${className}Id.longValue()) {
+            return SysConstants.BUSS_NAME_UNIQUE;
+        }
+        return SysConstants.BUSS_NAME_NOT_UNIQUE;
+    }
+    
+    /**
+     * 查询${functionName}个数
+     * 
+     * @param parentId 父${functionName}ID
+     * @return 结果
+     */
+    public int select${ClassName}Count(Long parentId) {
+          ${ClassName} ${className} = new ${ClassName}();
+          ${className}.setParentId(parentId);
+          return ${className}Mapper.select${ClassName}Count(${className});
+    }
+
+    /**
+     * 查询${functionName}是否存在使用
+     * 
+     * @param ${pkColumn.javaField} ${functionName}ID
+     * @return 结果 true 存在 false 不存在
+     */
+    public boolean check${ClassName}ExistUse(${pkColumn.javaType} ${pkColumn.javaField}) {
+        int result = ${className}Mapper.check${ClassName}ExistUse(${pkColumn.javaField});
+        return result > 0 ? true : false;
+    }     
 #end
 }

@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wshsoft.sys.mapper.ConfigMapper;
+import com.wshsoft.common.constant.UserConstants;
+import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.sys.domain.Config;
 import com.wshsoft.sys.service.ConfigService;
+import com.wshsoft.system.domain.SysConfig;
 
 /**
  * 参数配置 Service业务层实现
@@ -30,5 +33,23 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, Config> impleme
     @Override
     public List<Config> selectConfigList(Config config) {
         return configMapper.selectConfigList(config);
+    }
+    
+    /**
+     * 校验参数键名是否唯一
+     * 
+     * @param config 参数配置信息
+     * @return 结果
+     */
+    @Override
+    public String checkConfigKeyUnique(Config config)
+    {
+        Long configId = StringUtils.isNull(config.getConfigId()) ? -1L : config.getConfigId();
+        SysConfig info = configMapper.checkConfigKeyUnique(config.getConfigKey());
+        if (StringUtils.isNotNull(info) && info.getConfigId().longValue() != configId.longValue())
+        {
+            return UserConstants.CONFIG_KEY_NOT_UNIQUE;
+        }
+        return UserConstants.CONFIG_KEY_UNIQUE;
     }
 }

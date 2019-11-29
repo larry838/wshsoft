@@ -29,4 +29,9 @@
             <if test="configType != null  and configType != ''"> and config_type = #{configType}</if>
         </where>
     </select>
+    
+    <select id="checkConfigKeyUnique" parameterType="String" resultMap="ConfigResult">
+        <include refid="selectConfigVo"/>
+        where config_key = #{configKey}
+    </select>
 </mapper>

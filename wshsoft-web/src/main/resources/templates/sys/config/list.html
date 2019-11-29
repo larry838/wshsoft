@@ -7,23 +7,26 @@
      <div class="container-div">
         <div class="row">
             <div class="col-sm-12 search-collapse">
-                <form id="formId">
+				<form id="config-form">
                     <div class="select-list">
                         <ul>
                             <li>
-                                <p>参数名称：</p>
-                                <input type="text" name="configName"/>
+								参数名称：<input type="text" name="configName"/>
                             </li>
                             <li>
-                                <p>参数键名：</p>
-                                <input type="text" name="configKey"/>
+								参数键名：<input type="text" name="configKey"/>
                             </li>
                             <li>
-                                <p>系统内置：</p>
-                                <select name="configType" th:with="type=${@dict.getType('')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
+								系统内置：<select name="configType" th:with="type=${@dict.getType('sys_yes_no')}">
+									<option value="">所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
+							</li>
+							<li class="select-time">
+								<label>创建时间： </label>
+								<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
+								<span>-</span>
+								<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -57,6 +60,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('sys:config:edit')}]];
         var removeFlag = [[${@permission.hasPermi('sys:config:remove')}]];
+        var datas = [[${@dict.getType('sys_yes_no')}]];
         var prefix = ctx + "sys/config";
 
         $(function() {
@@ -66,22 +70,29 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
+                sortName: "createTime",
+		        sortOrder: "desc",
                 modalName: "参数配置",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field : 'configId', 
-                    title : '参数主键',
-                    visible: false
+                    title : '参数主键'
                 },
                 {
                     field : 'configName', 
-                    title : '参数名称'
+                    title: '参数名称',
+                    formatter: function(value, row, index) {
+                    	return $.table.tooltip(value);
+                    }
                 },
                 {
                     field : 'configKey', 
-                    title : '参数键名'
+                    title: '参数键名',
+                    formatter: function(value, row, index) {
+                    	return $.table.tooltip(value);
+                    }
                 },
                 {
                     field : 'configValue', 
@@ -89,11 +100,23 @@
                 },
                 {
                     field : 'configType', 
-                    title : '系统内置'
+                    title: '系统内置',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                    	return $.table.selectDictLabel(datas, value);
+                    }
                 },
                 {
-                    field : 'remark', 
-                    title : '备注'
+                    field: 'remark',
+                    title: '备注',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                    	return $.table.tooltip(value, 10, "open");
+                    }
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间'
                 },
                 {
                     title: '操作',

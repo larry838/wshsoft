@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wshsoft.common.annotation.SysLog;
 import com.wshsoft.common.enums.BusinessType;
+import com.wshsoft.common.constant.SysConstants;
 import ${packageName}.domain.${ClassName};
 import ${packageName}.service.${ClassName}Service;
 import com.wshsoft.common.core.controller.BaseController;
@@ -117,8 +118,11 @@ public class ${ClassName}Controller extends BaseController {
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(${ClassName} ${className}) {
-        return toAjax(${className}Service.save(${className}));
-	//return toAjax(${className}Service.insert${ClassName}(${className}));
+        if (SysConstants.BUSS_NAME_NOT_UNIQUE.equals(${className}Service.check${ClassName}NameUnique(${className}))){
+            return error("新增部门'" + ${className}.get${ClassName}Name() + "'失败，${functionName}名称已存在");
+        }
+       // return toAjax(${className}Service.save(${className}));
+	  return toAjax(${className}Service.insert${ClassName}(${className}));
     }
 
     /**
@@ -126,8 +130,14 @@ public class ${ClassName}Controller extends BaseController {
      */
     @GetMapping("/edit/{${pkColumn.javaField}}")
     public String edit(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField}, ModelMap mmap) {
+    #if($table.crud)
         ${ClassName} ${className} = ${className}Service.getById(${pkColumn.javaField});
-	//${ClassName} ${className} = ${className}Service.select${ClassName}ById(${pkColumn.javaField});
+    #elseif($table.tree)
+	    ${ClassName} ${className} = ${className}Service.select${ClassName}ById(${pkColumn.javaField});
+        if (StringUtils.isNotNull(${className})) {
+            ${className}.setParentName("无");
+        }
+    #end
         mmap.put("${className}", ${className});
         return prefix + "/edit";
     }
@@ -140,9 +150,21 @@ public class ${ClassName}Controller extends BaseController {
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(${ClassName} ${className}) {
+    #if($table.crud)
+        if (SysConstants.BUSS_NAME_NOT_UNIQUE.equals(${className}Service.check${ClassName}NameUnique(${className}))) {
+            return error("新增参数'" + ${className}.get${ClassName}Name() + "'失败，参数键名已存在");
+        }
         return toAjax(${className}Service.updateById(${className}));
-	//return toAjax(${className}Service.update${ClassName}(${className}));
-    }
+    #elseif($table.tree)    
+        if (SysConstants.BUSS_NAME_NOT_UNIQUE.equals(${className}Service.check${ClassName}NameUnique(${className}))) {
+            return error("修改${functionName}'" + ${className}.get${ClassName}Name() + "'失败，${functionName}名称已存在");
+        }
+        else if (${className}.getParentId().equals(${className}.get${ClassName}Id())) {
+            return error("修改${functionName}'" + ${className}.get${ClassName}Name() + "'失败，上级${functionName}不能是自己");
+        }
+        return toAjax(${className}Service.update${ClassName}(${className}));
+     #end	
+   }
 
 #if($table.crud)
     /**
@@ -168,6 +190,15 @@ public class ${ClassName}Controller extends BaseController {
         return toAjax(${className}Service.removeById(${pkColumn.javaField}));
     }
 #end
+    /**
+     * 校验${functionName}名称
+     */
+    @PostMapping("/check${ClassName}NameUnique")
+    @ResponseBody
+    public String check${ClassName}NameUnique(${ClassName} ${className})
+    {
+        return ${className}Service.check${ClassName}NameUnique(${className});
+    }
 #if($table.tree)
 
     /**

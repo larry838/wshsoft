@@ -4,8 +4,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.wshsoft.common.annotation.Excel;
 import java.io.Serializable;
-
-import com.wshsoft.common.core.domain.BaseEntity;
 import com.wshsoft.common.core.domain.TreeEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -16,41 +14,39 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * 部门表 sys_dept
+ * 公司表 sys_company
  *
  * @author Carry xie
- * @date 2019-11-28
+ * @date 2019-11-29
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sys_dept")
-public class Dept  extends TreeEntity implements Serializable {
+@TableName("sys_company")
+public class Company  extends TreeEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    /** 部门id */
-     @TableId(value="dept_id", type= IdType.AUTO)
-      private Long deptId;
+    /** 公司id */
+     @TableId(value="company_id", type= IdType.AUTO)
+      private Long companyId;
 
-    /** 部门名称 */
-    @TableField("dept_name")
-    @Excel(name = "部门名称")
-    private String deptName;
+    /** 公司名称 */
+    @TableField("company_name")
+    @Excel(name = "公司名称")
+    private String companyName;
 
     /** 负责人 */
     @Excel(name = "负责人")
     private String leader;
 
     /** 联系电话 */
-    @Excel(name = "联系电话")
-    private String phone;
+      private String phone;
 
     /** 邮箱 */
-    @Excel(name = "邮箱")
-    private String email;
+      private String email;
 
-    /** 部门状态（0正常 1停用） */
-    @Excel(name = "部门状态", readConverterExp = "0=正常,1=停用")
+    /** 公司状态（0正常 1停用） */
+    @Excel(name = "公司状态", readConverterExp = "0=正常,1=停用")
     private String status;
 
     /** 删除标志（0代表存在 2代表删除） */
@@ -61,10 +57,10 @@ public class Dept  extends TreeEntity implements Serializable {
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("deptId", getDeptId())
+            .append("companyId", getCompanyId())
             .append("parentId", getParentId())
             .append("ancestors", getAncestors())
-            .append("deptName", getDeptName())
+            .append("companyName", getCompanyName())
             .append("orderNum", getOrderNum())
             .append("leader", getLeader())
             .append("phone", getPhone())
@@ -75,6 +71,7 @@ public class Dept  extends TreeEntity implements Serializable {
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())
             .append("updateTime", getUpdateTime())
+            .append("remark", getRemark())
             .toString();
     }
 }

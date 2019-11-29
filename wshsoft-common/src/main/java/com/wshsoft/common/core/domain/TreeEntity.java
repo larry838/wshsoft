@@ -1,5 +1,8 @@
 package com.wshsoft.common.core.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.wshsoft.common.annotation.Excel;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,16 +19,22 @@ public class TreeEntity extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 父菜单名称 */
-    private String parentName;
+    /** 父节点名称 */
+    @TableField(exist = false)
+    protected  String parentName;
 
-    /** 父菜单ID */
-    private Long parentId;
+    /** 父id */
+    @TableField("parent_id")
+    @Excel(name = "父id")
+    protected  Long parentId;
 
     /** 显示顺序 */
-    private Integer orderNum;
+    @TableField("order_num")
+    @Excel(name = "显示顺序")
+    protected  Integer orderNum;
 
     /** 祖级列表 */
-    private String ancestors;
+    @Excel(name = "祖级列表")
+    protected  String ancestors;
 
 }

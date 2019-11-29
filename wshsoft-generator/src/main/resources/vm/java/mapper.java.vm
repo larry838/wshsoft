@@ -2,6 +2,9 @@ package ${basePackage}.${moduleName}.mapper;
 
 import java.util.List;
 import ${basePackage}.${moduleName}.domain.${ClassName};
+#if($table.tree)
+import org.apache.ibatis.annotations.Param;
+#end
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -19,5 +22,62 @@ public interface ${ClassName}Mapper extends BaseMapper<${ClassName}> {
      * @param ${className} ${functionName}
      * @return ${functionName}集合
      */
-    public List<${ClassName}> select${ClassName}List(${ClassName} ${className});
+    public List<${ClassName}> select${ClassName}List(${ClassName} ${className});    
+ #if($table.tree)   
+    /**
+     * 修改子元素关系
+     * 
+     * @param ${className}s 子元素
+     * @return 结果
+     */
+    public int update${ClassName}Children(@Param("${className}s") List<${ClassName}> ${className}s);
+    
+    /**
+     * 根据${functionName}ID查询信息
+     * 
+     * @param ${pkColumn.javaField} ${functionName}ID
+     * @return ${functionName}
+     */
+    public ${ClassName} select${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField});
+    
+    /**
+     * 修改父级${functionName}状态
+     * 
+     * @param ${className} ${functionName}
+     */
+    public void update${ClassName}Status(${ClassName} ${className});
+
+    /**
+     * 根据ID查询所有子${functionName}
+     * @param ${pkColumn.javaField} ${functionName}ID
+     * @return ${functionName}列表
+     */
+    public List<${ClassName}> selectChildren${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField});
+    
+    /**
+     * 校验${functionName}名称是否唯一
+     * 
+     * @param ${className}Name ${functionName}名称
+     * @param parentId 父${functionName}ID
+     * @return 结果
+     */
+    public ${ClassName} check${ClassName}NameUnique(@Param("${className}Name") String ${className}Name, @Param("parentId") Long parentId);
+    
+    /**
+     * 查询${functionName}个数
+     * 
+     * @param parentId 父${functionName}ID
+     * @return 结果
+     */
+    public int select${ClassName}Count(${ClassName} ${className});
+
+    /**
+     * 查询${functionName}是否存在使用
+     * 
+     * @param ${pkColumn.javaField} ${functionName}ID
+     * @return 结果 true 存在 false 不存在
+     */
+    public int check${ClassName}ExistUse(${pkColumn.javaType} ${pkColumn.javaField});
+    
+ #end
 }

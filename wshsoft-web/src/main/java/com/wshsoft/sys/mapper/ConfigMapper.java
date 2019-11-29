@@ -2,6 +2,7 @@ package com.wshsoft.sys.mapper;
 
 import java.util.List;
 import com.wshsoft.sys.domain.Config;
+import com.wshsoft.system.domain.SysConfig;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -20,4 +21,12 @@ public interface ConfigMapper extends BaseMapper<Config> {
      * @return 参数配置集合
      */
     public List<Config> selectConfigList(Config config);
+    
+    /**
+     * 根据键名查询参数配置信息
+     * 
+     * @param configKey 参数键名
+     * @return 参数配置信息
+     */
+    public SysConfig checkConfigKeyUnique(String configKey);
 }

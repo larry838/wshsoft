@@ -1,55 +1,55 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增部门')" />
+    <th:block th:include="include :: header('新增公司')" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-dept-add">
+        <form class="form-horizontal m" id="form-company-add" name="form-company-add">
             <div class="form-group">    
-				<label class="col-sm-3 control-label ">上级部门：</label>
+                <label class="col-sm-3 control-label">父公司id：</label>
                 <div class="col-sm-8">
                     <div class="input-group">
-                        <input id="treeId" name="parentId" type="hidden" th:value="${dept.deptId}"/>
-                        <input class="form-control" type="text" onclick="selectDeptTree()" id="treeName" readonly="true" th:value="${dept.deptName}">
+                        <input id="treeId" name="parentId" type="hidden" th:value="${company.companyId}"/>
+                        <input class="form-control" type="text" onclick="selectCompanyTree()" id="treeName" readonly="true" th:value="${company.companyName}">
                         <span class="input-group-addon"><i class="fa fa-search"></i></span>
                     </div>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">部门名称：</label>
+                <label class="col-sm-3 control-label">公司名称：</label>
                 <div class="col-sm-8">
-					<input class="form-control" type="text" name="deptName" id="deptName" required>
+                    <input id="companyName" name="companyName" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-				<label class="col-sm-3 control-label">显示排序：</label>
+                <label class="col-sm-3 control-label">显示顺序：</label>
                 <div class="col-sm-8">
-					<input class="form-control" type="text" name="orderNum" required>
+                    <input id="orderNum" name="orderNum" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">负责人：</label>
                 <div class="col-sm-8">
-					<input class="form-control" type="text" name="leader">
+                    <input id="leader" name="leader" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">联系电话：</label>
                 <div class="col-sm-8">
-					<input class="form-control" type="text" name="phone">
+                    <input id="phone" name="phone" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">邮箱：</label>
                 <div class="col-sm-8">
-					<input class="form-control" type="text" name="email">
+                    <input id="email" name="email" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">部门状态：</label>
+                <label class="col-sm-3 control-label">公司状态：</label>
                 <div class="col-sm-8">
-				    <div class="radio-box" th:each="dict : ${@dict.getType('sys_normal_disable')}">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('sys_common_status')}">
                         <input type="radio" th:id="${'status_' + dict.dictCode}" name="status" th:value="${dict.dictValue}" th:checked="${dict.default}">
                         <label th:for="${'status_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
                     </div>
@@ -59,58 +59,23 @@
     </div>
     <th:block th:include="include :: footer" />
     <script type="text/javascript">
-        var prefix = ctx + "sys/dept"
-        $("#form-dept-add").validate({
-			onkeyup: false,
-			rules:{
-				deptName:{
-					remote: {
-		                url: prefix + "/checkDeptNameUnique",
-		                type: "post",
-		                dataType: "json",
-		                data: {
-		                	"parentId": function() {
-		                		return $("input[name='parentId']").val();
-		                    },
-		                	"deptName" : function() {
-		                        return $.common.trim($("#deptName").val());
-		                    }
-		                },
-		                dataFilter: function(data, type) {
-		                	return $.validate.unique(data);
-		                }
-		            }
-				},
-				orderNum:{
-					digits:true
-				},
-				email:{
-                    email:true,
-        		},
-        		phone:{
-        			isPhone:true,
-        		},
-			},
-			messages: {
-		        "deptName": {
-		            remote: "部门已经存在"
-		        }
-		    },
+        var prefix = ctx + "sys/company";
+        $("#form-company-add").validate({
             focusCleanup: true
         });
 
         function submitHandler() {
             if ($.validate.form()) {
-                $.operate.save(prefix + "/add", $('#form-dept-add').serialize());
+                $.operate.save(prefix + "/add", $('#form-company-add').serialize());
             }
         }
 
-		/*部门管理-新增-选择父部门树*/
-        function selectDeptTree() {
+        /*公司管理-新增-选择父公司树*/
+        function selectCompanyTree() {
             var options = {
-                title: '部门选择',
+                title: '公司选择',
                 width: "380",
-                url: prefix + "/selectDeptTree/" + $("#treeId").val(),
+                url: prefix + "/selectCompanyTree/" + $("#treeId").val(),
                 callBack: doSubmit
             };
             $.modal.openOptions(options);
