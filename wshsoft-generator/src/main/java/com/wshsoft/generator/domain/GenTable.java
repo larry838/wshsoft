@@ -3,6 +3,9 @@ package com.wshsoft.generator.domain;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+
+import org.apache.commons.lang3.ArrayUtils;
+
 import com.wshsoft.common.constant.GenConstants;
 import com.wshsoft.common.core.domain.BaseEntity;
 import com.wshsoft.common.utils.StringUtils;
@@ -273,7 +276,7 @@ public class GenTable extends BaseEntity
     {
         if (isTree(tplCategory))
         {
-            StringUtils.equalsAnyIgnoreCase(javaField, GenConstants.TREE_ENTITY);
+        	return  StringUtils.equalsAnyIgnoreCase(javaField, ArrayUtils.addAll(GenConstants.TREE_ENTITY , GenConstants.BASE_ENTITY));
         }
         return StringUtils.equalsAnyIgnoreCase(javaField, GenConstants.BASE_ENTITY);
     }

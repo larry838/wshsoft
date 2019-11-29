@@ -40,14 +40,14 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">${comment}：</label>
                 <div class="col-sm-8">
-                    <input name="${field}" th:field="*{${field}}" class="form-control" type="text"#if($column.required) required#end>
+                    <input id="${field}" name="${field}" th:field="*{${field}}" class="form-control" type="text"#if($column.required) required#end>
                 </div>
             </div>
 #elseif($column.htmlType == "select" && "" != $dictType)
             <div class="form-group">    
                 <label class="col-sm-3 control-label">${comment}：</label>
                 <div class="col-sm-8">
-                    <select name="${field}" class="form-control m-b" th:with="type=${@dict.getType('${dictType}')}"#if($column.required) required#end>
+                    <select name="${field}" id="${field}" class="form-control m-b" th:with="type=${@dict.getType('${dictType}')}"#if($column.required) required#end>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{${field}}"></option>
                     </select>
                 </div>
@@ -56,7 +56,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">${comment}：</label>
                 <div class="col-sm-8">
-                    <select name="${field}" class="form-control m-b"#if($column.required) required#end>
+                    <select name="${field}" id="${field}" class="form-control m-b"#if($column.required) required#end>
                         <option value="">所有</option>
                     </select>
                     <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
@@ -77,7 +77,7 @@
                 <label class="col-sm-3 control-label">${comment}：</label>
                 <div class="col-sm-8">
                     <div class="radio-box">
-                        <input type="radio" name="${field}" value=""#if($column.required) required#end>
+                        <input type="radio" id="${field}" name="${field}" value=""#if($column.required) required#end>
                         <label th:for="${field}" th:text="未知"></label>
                     </div>
                     <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
@@ -89,7 +89,7 @@
                 <div class="col-sm-8">
                     <div class="input-group date">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        <input name="${field}" th:value="${#dates.format(${className}.${field}, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text"#if($column.required) required#end>
+                        <input name="${field}" id="${field}" th:value="${#dates.format(${className}.${field}, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text"#if($column.required) required#end>
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">${comment}：</label>
                 <div class="col-sm-8">
-                    <textarea name="${field}" class="form-control"#if($column.required) required#end>[[*{${field}}]]</textarea>
+                    <textarea name="${field}" id="${field}" class="form-control"#if($column.required) required#end>[[*{${field}}]]</textarea>
                 </div>
             </div>
 #end
@@ -116,6 +116,7 @@
     <script type="text/javascript">
         var prefix = ctx + "${moduleName}/${businessName}";
         $("#form-${businessName}-edit").validate({
+            onkeyup: false,
             focusCleanup: true
         });
 
@@ -136,22 +137,30 @@
 #end
 #if($table.tree)
 
-        /*${functionName}-新增-选择父部门树*/
+        /*${functionName}管理-修改-选择父${functionName}树*/
         function select${BusinessName}Tree() {
-            var options = {
-                title: '${functionName}选择',
-                width: "380",
-                url: prefix + "/select${BusinessName}Tree/" + $("#treeId").val(),
-                callBack: doSubmit
-            };
-            $.modal.openOptions(options);
+            var parentId = $("#treeId").val();
+            if(parentId > 0) {
+                var options = {
+                    title: '${functionName}选择',
+                    width: "380",
+                    url: prefix + "/select${BusinessName}Tree/" + $("#treeId").val(),
+                    callBack: doSubmit
+                };
+                $.modal.openOptions(options);
+            } else {
+                $.modal.alertError("父${functionName}不能选择");
+            }
         }
 
         function doSubmit(index, layero){
-            var body = layer.getChildFrame('body', index);
-               $("#treeId").val(body.find('#treeId').val());
-               $("#treeName").val(body.find('#treeName').val());
-               layer.close(index);
+            var tree = layero.find("iframe")[0].contentWindow.$._tree;
+            if ($.tree.notAllowLastLevel(tree)) {
+                var body = layer.getChildFrame('body', index);
+                   $("#treeId").val(body.find('#treeId').val());
+                   $("#treeName").val(body.find('#treeName').val());
+                   layer.close(index);
+           }
         }
 #end
     </script>
