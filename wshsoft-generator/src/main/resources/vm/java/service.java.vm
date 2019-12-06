@@ -54,15 +54,19 @@ public interface ${ClassName}Service extends IService<${ClassName}> {
      * @return 所有${functionName}信息
      */
     public List<Ztree> select${ClassName}Tree();
-    
+
+#foreach ($column in $columns)
+#if($column.isUnique())
+#set($JavaField=$column.UpCaseField())
     /**
      * 校验${functionName}名称是否唯一
      * 
      * @param ${className} ${functionName}信息
      * @return 结果
      */
-    public String check${ClassName}NameUnique(${ClassName} ${className});
-    
+    public String check${javaField}Unique(${ClassName} ${className});
+#end
+#end        
     /**
      * 查询${functionName}个数
      * 

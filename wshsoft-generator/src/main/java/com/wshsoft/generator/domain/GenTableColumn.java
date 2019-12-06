@@ -67,6 +67,34 @@ public class GenTableColumn extends BaseEntity
 
     /** 排序 */
     private Integer sort;
+    
+    /** 是否不允许重复（1是） */
+    private String isUnique;
+    
+    public String UpCaseField(){
+      return  StringUtils.capitalize(this.javaField);
+    }
+    
+    public void setIsUnique(String isUnique)
+    {
+        this.isUnique = isUnique;
+    }
+
+    public String getIsUnique()
+    {
+        return isUnique;
+    }
+
+    public boolean isUnique()
+    {
+        return isUnique(this.isUnique);
+    }
+
+    public boolean isUnique(String isUnique)
+    {
+        return isUnique != null && StringUtils.equals("1", isUnique);
+    }
+    
 
     public void setColumnId(Long columnId)
     {

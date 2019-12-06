@@ -341,6 +341,16 @@
 		        		return html;
 		        	}
 		        },
+                {
+                    field: 'isUnique',
+                    title: '唯一',
+                    width: "5%",
+                    formatter: function (value, row, index) {
+                        var isCheck = value == 1 ? 'checked' : '';
+                        var html = $.common.sprintf("<label class='check-box'><input type='checkbox' name='columns[%s].isUnique' value='1' %s></label>", index, isCheck);
+                        return html;
+                    }
+                },		        
 		        {
 		            field: 'htmlType',
 		            title: '显示类型',

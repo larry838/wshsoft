@@ -118,9 +118,14 @@ public class ${ClassName}Controller extends BaseController {
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(${ClassName} ${className}) {
-        if (SysConstants.BUSS_NAME_NOT_UNIQUE.equals(${className}Service.check${ClassName}NameUnique(${className}))){
-            return error("新增部门'" + ${className}.get${ClassName}Name() + "'失败，${functionName}名称已存在");
+#foreach ($column in $columns)
+#if($column.isUnique())
+#set($JavaField=$column.UpCaseField())   
+        if (SysConstants.BUSS_NAME_NOT_UNIQUE.equals(${className}Service.check${JavaField}Unique(${className}))){
+            return error("新增${functionName}'" + ${className}.get${JavaField}() + "'失败，${functionName}已存在");
         }
+#end
+#end
        // return toAjax(${className}Service.save(${className}));
 	  return toAjax(${className}Service.insert${ClassName}(${className}));
     }
@@ -151,17 +156,27 @@ public class ${ClassName}Controller extends BaseController {
     @ResponseBody
     public AjaxResult editSave(${ClassName} ${className}) {
     #if($table.crud)
-        if (SysConstants.BUSS_NAME_NOT_UNIQUE.equals(${className}Service.check${ClassName}NameUnique(${className}))) {
-            return error("新增参数'" + ${className}.get${ClassName}Name() + "'失败，参数键名已存在");
+#foreach ($column in $columns)
+#if($column.isUnique())
+#set($JavaField=$column.UpCaseField())   
+        if (SysConstants.BUSS_NAME_NOT_UNIQUE.equals(${className}Service.check${JavaField}Unique(${className}))) {
+            return error("修改${functionName}'" + ${className}.get${JavaField}() + "'失败，参数键名已存在");
         }
+#end
+#end
         return toAjax(${className}Service.updateById(${className}));
-    #elseif($table.tree)    
-        if (SysConstants.BUSS_NAME_NOT_UNIQUE.equals(${className}Service.check${ClassName}NameUnique(${className}))) {
-            return error("修改${functionName}'" + ${className}.get${ClassName}Name() + "'失败，${functionName}名称已存在");
+    #elseif($table.tree)
+#foreach ($column in $columns)
+#if($column.isUnique())
+#set($JavaField=$column.UpCaseField())       
+        if (SysConstants.BUSS_NAME_NOT_UNIQUE.equals(${className}Service.check${JavaField}Unique(${className}))) {
+            return error("修改${functionName}'" + ${className}.get${JavaField}() + "'失败，${functionName}已存在");
         }
         else if (${className}.getParentId().equals(${className}.get${ClassName}Id())) {
-            return error("修改${functionName}'" + ${className}.get${ClassName}Name() + "'失败，上级${functionName}不能是自己");
+            return error("修改${functionName}'" + ${className}.get${JavaField}() + "'失败，上级${functionName}不能是自己");
         }
+#end
+#end
         return toAjax(${className}Service.update${ClassName}(${className}));
      #end	
    }
@@ -190,15 +205,7 @@ public class ${ClassName}Controller extends BaseController {
         return toAjax(${className}Service.removeById(${pkColumn.javaField}));
     }
 #end
-    /**
-     * 校验${functionName}名称
-     */
-    @PostMapping("/check${ClassName}NameUnique")
-    @ResponseBody
-    public String check${ClassName}NameUnique(${ClassName} ${className})
-    {
-        return ${className}Service.check${ClassName}NameUnique(${className});
-    }
+
 #if($table.tree)
 
     /**
@@ -222,5 +229,18 @@ public class ${ClassName}Controller extends BaseController {
         List<Ztree> ztrees = ${className}Service.select${ClassName}Tree();
         return ztrees;
     }
+#end
+#foreach ($column in $columns)
+#if($column.isUnique())
+#set($JavaField=$column.UpCaseField())
+    /**
+     * 校验${functionName}名称
+     */
+    @PostMapping("/check${JavaField}Unique")
+    @ResponseBody
+    public String check${JavaField}Unique(${ClassName} ${className}) {
+        return ${className}Service.check${JavaField}Unique(${className});
+    }
+#end
 #end
 }

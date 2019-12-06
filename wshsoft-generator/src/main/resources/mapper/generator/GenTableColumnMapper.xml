@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="javaType"       column="java_type"      />
         <result property="javaField"      column="java_field"     />
         <result property="isPk"           column="is_pk"          />
+        <result property="isUnique"       column="is_unique"      />        
         <result property="isIncrement"    column="is_increment"   />
         <result property="isRequired"     column="is_required"    />
         <result property="isInsert"       column="is_insert"      />
@@ -30,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<sql id="selectGenTableColumnVo">
-        select column_id, table_id, column_name, column_comment, column_type, java_type, java_field, is_pk, is_increment, is_required, is_insert, is_edit, is_list, is_query, query_type, html_type, dict_type, sort, create_by, create_time, update_by, update_time from gen_table_column
+        select column_id, table_id, column_name, column_comment, column_type, java_type, java_field, is_pk, is_unique, is_increment, is_required, is_insert, is_edit, is_list, is_query, query_type, html_type, dict_type, sort, create_by, create_time, update_by, update_time from gen_table_column
     </sql>
 	
     <select id="selectGenTableColumnListByTableId" parameterType="GenTableColumn" resultMap="GenTableColumnResult">
@@ -54,6 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="javaType != null and javaType != ''">java_type,</if>
 			<if test="javaField != null  and javaField != ''">java_field,</if>
 			<if test="isPk != null and isPk != ''">is_pk,</if>
+			<if test="isUnique != null and isUnique != ''">is_unique,</if>
 			<if test="isIncrement != null and isIncrement != ''">is_increment,</if>
 			<if test="isRequired != null and isRequired != ''">is_required,</if>
 			<if test="isInsert != null and isInsert != ''">is_insert,</if>
@@ -74,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="javaType != null and javaType != ''">#{javaType},</if>
 			<if test="javaField != null and javaField != ''">#{javaField},</if>
 			<if test="isPk != null and isPk != ''">#{isPk},</if>
+			<if test="isUnique != null and isUnique != ''">#{isUnique},</if>
 			<if test="isIncrement != null and isIncrement != ''">#{isIncrement},</if>
 			<if test="isRequired != null and isRequired != ''">#{isRequired},</if>
 			<if test="isInsert != null and isInsert != ''">#{isInsert},</if>
@@ -96,6 +99,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             java_type = #{javaType},
             java_field = #{javaField},
             is_insert = #{isInsert},
+            is_unique = #{isUnique},
             is_edit = #{isEdit},
             is_list = #{isList},
             is_query = #{isQuery},

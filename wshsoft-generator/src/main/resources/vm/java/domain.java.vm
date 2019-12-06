@@ -35,7 +35,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("${tableName}")
-public class ${ClassName}  extends ${Entity} implements Serializable {
+public class ${ClassName} extends ${Entity} implements Serializable {
     private static final long serialVersionUID = 1L;
 
 #foreach ($column in $columns)

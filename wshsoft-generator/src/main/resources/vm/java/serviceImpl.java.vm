@@ -152,22 +152,30 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
     public ${ClassName} select${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField})
     {
         return ${className}Mapper.select${ClassName}ById(${pkColumn.javaField});
-    } 
+    }
+#foreach ($column in $columns)
+#if($column.isUnique())
+#set($JavaField=$column.UpCaseField())
     /**
      * 校验${functionName}名称是否唯一
      * 
      * @param ${className} ${functionName}信息
      * @return 结果
      */
-    public String check${ClassName}NameUnique(${ClassName} ${className}) {
+    String check${JavaField}Unique(${ClassName} ${className}) {
         Long ${className}Id = StringUtils.isNull(${className}.get${ClassName}Id()) ? -1L : ${className}.get${ClassName}Id();
-        ${ClassName} info = ${className}Mapper.check${ClassName}NameUnique(${className}.get${ClassName}Name(), ${className}.getParentId());
+#if($table.tree)
+        ${ClassName} info = ${className}Mapper.check${JavaField}Unique(${className}.get${JavaField}(), ${className}.getParentId());
+#else
+        ${ClassName} info = ${className}Mapper.check${JavaField}Unique(${className}.get${JavaField}());
+#end
         if (StringUtils.isNotNull(info) && info.get${ClassName}Id().longValue() != ${className}Id.longValue()) {
-            return SysConstants.BUSS_NAME_UNIQUE;
+            return SysConstants.BUSS_NAME_NOT_UNIQUE;
         }
-        return SysConstants.BUSS_NAME_NOT_UNIQUE;
-    }
-    
+        return SysConstants.BUSS_NAME_UNIQUE;
+    }   
+#end
+#end  
     /**
      * 查询${functionName}个数
      * 

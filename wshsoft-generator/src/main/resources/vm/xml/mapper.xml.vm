@@ -63,11 +63,6 @@
         <if test="${pkColumn.javaField} != null and ${pkColumn.javaField} != 0"> and ${pkColumn.columnName} = #{${pkColumn.javaField}} </if>
         <if test="parentId != null and parentId != 0"> and parent_id = #{parentId} </if>
     </select>
-    
-    <select id="check${ClassName}NameUnique" resultMap="${ClassName}Result">
-        <include refid="select${ClassName}Vo"/>
-        where ${className}_name=#{${className}Name} and parent_id = #{parentId}
-    </select>
      <update id="update${ClassName}Children" parameterType="java.util.List">
       update ${tableName} set ancestors =
       <foreach collection="${className}s" item="item" index="index"
@@ -97,5 +92,23 @@
     <select id="check${ClassName}ExistUse" parameterType="Long" resultType="int">
         select count(1) from sys_user where ${pkColumn.columnName} = #{${pkColumn.javaField}} and del_flag = '0'
     </select>
+#end
+#foreach($column in $columns)
+#if($column.isUnique())
+#set($JavaField=$column.UpCaseField())
+#set($javaField=$column.javaField)
+#set($columnName=$column.columnName)
+#if($table.tree)
+    <select id="check${JavaField}Unique" resultMap="${ClassName}Result">
+        <include refid="select${ClassName}Vo"/>
+        where $columnName=#{${javaField}} and parent_id = #{parentId}
+    </select>
+#else
+    <select id="check${JavaField}Unique" resultMap="${ClassName}Result">
+        <include refid="select${ClassName}Vo"/>
+        where $columnName=#{${javaField}}
+    </select>
+#end
+#end
 #end 
 </mapper>

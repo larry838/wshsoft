@@ -55,15 +55,6 @@ public interface ${ClassName}Mapper extends BaseMapper<${ClassName}> {
     public List<${ClassName}> selectChildren${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField});
     
     /**
-     * 校验${functionName}名称是否唯一
-     * 
-     * @param ${className}Name ${functionName}名称
-     * @param parentId 父${functionName}ID
-     * @return 结果
-     */
-    public ${ClassName} check${ClassName}NameUnique(@Param("${className}Name") String ${className}Name, @Param("parentId") Long parentId);
-    
-    /**
      * 查询${functionName}个数
      * 
      * @param parentId 父${functionName}ID
@@ -78,6 +69,30 @@ public interface ${ClassName}Mapper extends BaseMapper<${ClassName}> {
      * @return 结果 true 存在 false 不存在
      */
     public int check${ClassName}ExistUse(${pkColumn.javaType} ${pkColumn.javaField});
-    
  #end
+#foreach ($column in $columns)
+#if($column.isUnique())
+#set($JavaField=$column.UpCaseField())
+#set($javaField=$column.javaField)
+#set($javaType=$column.javaType)
+#if($table.tree)
+    /**
+     * 校验${functionName}名称是否唯一
+     * 
+     * @param ${className}Name ${functionName}名称
+     * @param parentId 父${functionName}ID
+     * @return 结果
+     */
+    public ${ClassName} check${JavaField}Unique(@Param("${javaField}") ${javaType} ${javaField}, @Param("parentId") Long parentId);
+#else
+    /**
+     * 校验${functionName}名称是否唯一
+     * 
+     * @param ${className} ${functionName}信息
+     * @return 结果
+     */
+    public ${ClassName} check${JavaField}Unique(${javaType} ${javaField});
+#end
+#end
+#end  
 }

@@ -117,6 +117,38 @@
         var prefix = ctx + "${moduleName}/${businessName}";
         $("#form-${businessName}-add").validate({
             focusCleanup: true
+            rules:{
+#foreach ($column in $columns)
+#if($column.isUnique())
+#set($JavaField=$column.UpCaseField()) 
+#set($javaField=$column.javaField)
+                ${javaField}:{
+                    remote: {
+                        url: prefix + "/check${JavaField}Unique",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            "${javaField}": function() {
+                                return $.common.trim($("#${javaField}").val());
+                            }
+                        },
+                        dataFilter: function(data, type) {
+                            return $.validate.unique(data);
+                        }
+                    }
+                },
+ #end
+ #end
+                messages: {
+#foreach ($column in $columns)
+#if($column.isUnique())
+#set($javaField=$column.javaField)
+                    "${javaField}": {
+                        remote: "${functionName}已经存在"
+                    }
+#end
+#end
+                },    
         });
 
         function submitHandler() {

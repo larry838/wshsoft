@@ -117,6 +117,41 @@
         var prefix = ctx + "${moduleName}/${businessName}";
         $("#form-${businessName}-edit").validate({
             onkeyup: false,
+#foreach ($column in $columns)
+#if($column.isUnique())
+#set($JavaField=$column.UpCaseField()) 
+#set($javaField=$column.javaField)            
+            ${javaField}:{
+                    remote: {
+                        url: prefix + "/check${JavaField}Unique",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            "${pkColumn.javaField}": function() {
+                                return $("#${pkColumn.javaField}").val();
+                            },
+                            "${javaField}": function() {
+                                return $.common.trim($("#${javaField}").val());
+                            }
+                        },
+                        dataFilter: function(data, type) {
+                            return $.validate.unique(data);
+                        }
+                    }
+                },
+            },
+ #end
+ #end 
+            messages: {
+#foreach ($column in $columns)
+#if($column.isUnique())
+#set($javaField=$column.javaField)
+                "${javaField}": {
+                    remote: "${functionName}已经存在"
+                }
+#end
+#end 
+            },
             focusCleanup: true
         });
 
