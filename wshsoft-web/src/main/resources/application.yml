@@ -54,7 +54,7 @@ logging:
     #com.wshsoft.sys.mapper: debug
     
 # SPRING PROFILES
-spring:
+spring:       
   # 模板引擎
     thymeleaf:
         mode: HTML
@@ -69,6 +69,14 @@ spring:
       date-format: yyyy-MM-dd HH:mm:ss
     profiles: 
       include: druid,mybatisplus
+      
+    ##数据库创建#
+    flyway:
+      baseline-on-migrate: true
+      locations: classpath:/db/migration
+      check-location: true
+      enabled: true
+       
     # 文件上传
     servlet:
        multipart:
@@ -125,6 +133,7 @@ spring:
         timeout: 0
         # 默认的数据过期时间，主要用于shiro权限管理
         expire: 2592000
+     
 banner:
     charset: UTF-8
         
