@@ -64,7 +64,7 @@
 		<zkclient.version>0.11</zkclient.version>
 		<maven-compiler.version>3.5</maven-compiler.version>
 		<ip2region.version>1.7.2</ip2region.version>
-		<flywaydb.version>6.0.8</flywaydb.version>
+		<flywaydb.version>5.2.4</flywaydb.version>
 		<joda-time.version>2.10.5</joda-time.version>
 		<jodd.version>5.0.13</jodd.version>
 	</properties>

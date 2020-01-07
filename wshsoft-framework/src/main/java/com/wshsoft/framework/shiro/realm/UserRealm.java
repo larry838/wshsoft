@@ -64,7 +64,7 @@ public class UserRealm extends AuthorizingRealm
         // 管理员拥有所有权限
         if (user.isRoot())
         {
-            info.addRole("admin");
+            info.addRole("root");
             info.addStringPermission("*:*:*");
         }
         else

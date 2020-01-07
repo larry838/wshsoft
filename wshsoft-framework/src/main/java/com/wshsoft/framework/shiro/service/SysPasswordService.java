@@ -86,5 +86,9 @@ public class SysPasswordService
     public void unlock(String loginName){
         loginRecordCache.remove(loginName);
     }
-
+    
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+      System.out.println(new Md5Hash("root" + "root123" + "123456").toHex().toString());
+	}
 }
