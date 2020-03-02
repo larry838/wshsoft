@@ -276,7 +276,8 @@ public class GenTable extends BaseEntity
     {
         if (isTree(tplCategory))
         {
-        	return  StringUtils.equalsAnyIgnoreCase(javaField, ArrayUtils.addAll(GenConstants.TREE_ENTITY , GenConstants.BASE_ENTITY));
+            return StringUtils.equalsAnyIgnoreCase(javaField,
+                    ArrayUtils.addAll(GenConstants.TREE_ENTITY, GenConstants.BASE_ENTITY));
         }
         return StringUtils.equalsAnyIgnoreCase(javaField, GenConstants.BASE_ENTITY);
     }

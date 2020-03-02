@@ -21,8 +21,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * ${functionName}表 ${tableName}
- *
+ * ${functionName}对象 ${tableName}
+ * 
  * @author ${author}
  * @date ${datetime}
  */
@@ -71,7 +71,7 @@ public class ${ClassName} extends ${Entity} implements Serializable {
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
 #foreach ($column in $columns)
-#if($column.javaField.substring(1,2).matches("[A-Z]"))
+#if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
 #set($AttrName=$column.javaField)
 #else
 #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
