@@ -29,7 +29,7 @@ import com.wshsoft.framework.shiro.service.SysLoginService;
 import com.wshsoft.framework.shiro.utils.ShiroUtils;
 import com.wshsoft.system.domain.SysUser;
 import com.wshsoft.system.service.SysMenuService;
-import com.wshsoft.system.service.ISysRoleService;
+import com.wshsoft.system.service.SysRoleService;
 
 /**
  * 自定义Realm 处理登录 权限
@@ -44,7 +44,7 @@ public class UserRealm extends AuthorizingRealm
     private SysMenuService menuService;
 
     @Autowired
-    private ISysRoleService roleService;
+    private SysRoleService roleService;
 
     @Autowired
     private SysLoginService loginService;

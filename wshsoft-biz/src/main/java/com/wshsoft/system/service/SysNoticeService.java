@@ -8,7 +8,7 @@ import com.wshsoft.system.domain.SysNotice;
  * 
  * @author Larry xie
  */
-public interface ISysNoticeService
+public interface SysNoticeService
 {
     /**
      * 查询公告信息

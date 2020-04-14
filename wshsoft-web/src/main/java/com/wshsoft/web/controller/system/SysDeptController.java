@@ -21,7 +21,7 @@ import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.framework.shiro.utils.ShiroUtils;
 import com.wshsoft.system.domain.SysDept;
 import com.wshsoft.system.domain.SysRole;
-import com.wshsoft.system.service.ISysDeptService;
+import com.wshsoft.system.service.SysDeptService;
 
 /**
  * 部门信息
@@ -35,7 +35,7 @@ public class SysDeptController extends BaseController
     private String prefix = "system/dept";
 
     @Autowired
-    private ISysDeptService deptService;
+    private SysDeptService deptService;
 
     @RequiresPermissions("system:dept:view")
     @GetMapping()

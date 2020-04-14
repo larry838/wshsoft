@@ -8,7 +8,7 @@ import com.wshsoft.quartz.domain.SysJobLog;
  * 
  * @author Larry xie
  */
-public interface ISysJobLogService
+public interface SysJobLogService
 {
     /**
      * 获取quartz调度器日志的计划任务

@@ -4,7 +4,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wshsoft.system.domain.SysDictData;
-import com.wshsoft.system.service.ISysDictDataService;
+import com.wshsoft.system.service.SysDictDataService;
+import com.wshsoft.system.service.SysDictTypeService;
 
 /**
  * RuoYi首创 html调用 thymeleaf 实现字典读取
@@ -15,7 +16,10 @@ import com.wshsoft.system.service.ISysDictDataService;
 public class DictService
 {
     @Autowired
-    private ISysDictDataService dictDataService;
+    private SysDictTypeService dictTypeService;
+
+    @Autowired
+    private SysDictDataService dictDataService;
 
     /**
      * 根据字典类型查询字典数据信息
@@ -25,7 +29,7 @@ public class DictService
      */
     public List<SysDictData> getType(String dictType)
     {
-        return dictDataService.selectDictDataByType(dictType);
+        return dictTypeService.selectDictDataByType(dictType);
     }
 
     /**

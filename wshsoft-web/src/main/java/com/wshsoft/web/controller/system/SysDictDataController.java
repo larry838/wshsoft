@@ -19,7 +19,7 @@ import com.wshsoft.common.enums.BusinessType;
 import com.wshsoft.common.utils.poi.ExcelUtil;
 import com.wshsoft.framework.shiro.utils.ShiroUtils;
 import com.wshsoft.system.domain.SysDictData;
-import com.wshsoft.system.service.ISysDictDataService;
+import com.wshsoft.system.service.SysDictDataService;
 
 /**
  * 数据字典信息
@@ -33,7 +33,7 @@ public class SysDictDataController extends BaseController
     private String prefix = "system/dict/data";
 
     @Autowired
-    private ISysDictDataService dictDataService;
+    private SysDictDataService dictDataService;
 
     @RequiresPermissions("system:dict:view")
     @GetMapping()

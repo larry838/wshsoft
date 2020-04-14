@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.framework.shiro.session.OnlineSession;
 import com.wshsoft.system.domain.SysUserOnline;
-import com.wshsoft.system.service.ISysUserOnlineService;
+import com.wshsoft.system.service.SysUserOnlineService;
 
 /**
  * 会话db操作处理
@@ -18,7 +18,7 @@ import com.wshsoft.system.service.ISysUserOnlineService;
 public class SysShiroService
 {
     @Autowired
-    private ISysUserOnlineService onlineService;
+    private SysUserOnlineService onlineService;
 
     /**
      * 删除会话

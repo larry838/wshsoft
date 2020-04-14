@@ -20,7 +20,7 @@ import com.wshsoft.common.enums.BusinessType;
 import com.wshsoft.common.utils.poi.ExcelUtil;
 import com.wshsoft.framework.shiro.utils.ShiroUtils;
 import com.wshsoft.system.domain.SysPost;
-import com.wshsoft.system.service.ISysPostService;
+import com.wshsoft.system.service.SysPostService;
 
 /**
  * 岗位信息操作处理
@@ -34,7 +34,7 @@ public class SysPostController extends BaseController
     private String prefix = "system/post";
 
     @Autowired
-    private ISysPostService postService;
+    private SysPostService postService;
 
     @RequiresPermissions("system:post:view")
     @GetMapping()

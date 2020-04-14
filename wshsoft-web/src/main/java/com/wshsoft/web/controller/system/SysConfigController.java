@@ -20,7 +20,7 @@ import com.wshsoft.common.enums.BusinessType;
 import com.wshsoft.common.utils.poi.ExcelUtil;
 import com.wshsoft.framework.shiro.utils.ShiroUtils;
 import com.wshsoft.system.domain.SysConfig;
-import com.wshsoft.system.service.ISysConfigService;
+import com.wshsoft.system.service.SysConfigService;
 
 /**
  * 参数配置 信息操作处理
@@ -34,7 +34,7 @@ public class SysConfigController extends BaseController
     private String prefix = "system/config";
 
     @Autowired
-    private ISysConfigService configService;
+    private SysConfigService configService;
 
     @RequiresPermissions("system:config:view")
     @GetMapping()
@@ -130,6 +130,19 @@ public class SysConfigController extends BaseController
     public AjaxResult remove(String ids)
     {
         return toAjax(configService.deleteConfigByIds(ids));
+    }
+
+    /**
+     * 清空缓存
+     */
+    @RequiresPermissions("system:config:remove")
+    @SysLog(title = "参数管理", businessType = BusinessType.CLEAN)
+    @GetMapping("/clearCache")
+    @ResponseBody
+    public AjaxResult clearCache()
+    {
+        configService.clearCache();
+        return success();
     }
 
     /**

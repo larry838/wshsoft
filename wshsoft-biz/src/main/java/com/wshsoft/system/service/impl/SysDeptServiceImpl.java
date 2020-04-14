@@ -13,7 +13,7 @@ import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.system.domain.SysDept;
 import com.wshsoft.system.domain.SysRole;
 import com.wshsoft.system.mapper.SysDeptMapper;
-import com.wshsoft.system.service.ISysDeptService;
+import com.wshsoft.system.service.SysDeptService;
 
 /**
  * 部门管理 服务实现
@@ -21,7 +21,7 @@ import com.wshsoft.system.service.ISysDeptService;
  * @author Larry xie
  */
 @Service
-public class SysDeptServiceImpl implements ISysDeptService
+public class SysDeptServiceImpl implements SysDeptService
 {
     @Autowired
     private SysDeptMapper deptMapper;

@@ -13,7 +13,6 @@ import java.lang.annotation.Target;
  * @author Larry xie
  *
  */
-@Inherited
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

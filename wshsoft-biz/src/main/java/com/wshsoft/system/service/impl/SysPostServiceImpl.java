@@ -10,7 +10,7 @@ import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.system.domain.SysPost;
 import com.wshsoft.system.mapper.SysPostMapper;
 import com.wshsoft.system.mapper.SysUserPostMapper;
-import com.wshsoft.system.service.ISysPostService;
+import com.wshsoft.system.service.SysPostService;
 
 /**
  * 岗位信息 服务层处理
@@ -18,7 +18,7 @@ import com.wshsoft.system.service.ISysPostService;
  * @author Larry xie
  */
 @Service
-public class SysPostServiceImpl implements ISysPostService
+public class SysPostServiceImpl implements SysPostService
 {
     @Autowired
     private SysPostMapper postMapper;

@@ -42,6 +42,9 @@ public class SysUser extends BaseEntity
     @Excel(name = "用户名称")
     private String userName;
 
+    /** 用户类型 */
+    private String userType;
+
     /** 用户邮箱 */
     @Excel(name = "用户邮箱")
     private String email;
@@ -343,13 +346,22 @@ public class SysUser extends BaseEntity
         this.postIds = postIds;
     }
 
-    @Override
+    public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("userId", getUserId())
             .append("deptId", getDeptId())
             .append("loginName", getLoginName())
             .append("userName", getUserName())
+            .append("userType", getUserType())
             .append("email", getEmail())
             .append("phonenumber", getPhonenumber())
             .append("gender", getGender())
@@ -366,6 +378,7 @@ public class SysUser extends BaseEntity
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
             .append("dept", getDept())
+			.append("roles", getRoles())
             .toString();
     }
 }

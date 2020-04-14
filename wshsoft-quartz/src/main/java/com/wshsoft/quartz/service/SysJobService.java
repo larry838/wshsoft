@@ -10,7 +10,7 @@ import com.wshsoft.quartz.domain.SysJob;
  * 
  * @author Larry xie
  */
-public interface ISysJobService
+public interface SysJobService
 {
     /**
      * 获取quartz调度器的计划任务

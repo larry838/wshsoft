@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import com.wshsoft.framework.shiro.utils.ShiroUtils;
 import com.wshsoft.common.constant.Constants;
+import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.utils.ip.AddressUtils;
 import com.wshsoft.common.utils.log.LogUtils;
 import com.wshsoft.common.utils.servlet.ServletUtils;
@@ -16,7 +17,7 @@ import com.wshsoft.system.domain.SysLoginLog;
 import com.wshsoft.system.domain.SysOperLog;
 import com.wshsoft.system.domain.SysUserOnline;
 import com.wshsoft.system.service.SysOperLogService;
-import com.wshsoft.system.service.ISysUserOnlineService;
+import com.wshsoft.system.service.SysUserOnlineService;
 import com.wshsoft.system.service.impl.SysLoginLogServiceImpl;
 import eu.bitwalker.useragentutils.UserAgent;
 
@@ -54,7 +55,7 @@ public class AsyncFactory {
                 online.setBrowser(session.getBrowser());
                 online.setOs(session.getOs());
                 online.setStatus(session.getStatus());
-                SpringUtils.getBean(ISysUserOnlineService.class).saveOnline(online);
+                SpringUtils.getBean(SysUserOnlineService.class).saveOnline(online);
 
             }
         };
@@ -120,7 +121,7 @@ public class AsyncFactory {
                 loginLog.setOs(os);
                 loginLog.setMsg(message);
                 // 日志状态
-                if (Constants.LOGIN_SUCCESS.equals(status) || Constants.LOGOUT.equals(status))
+                if (StringUtils.equalsAny(status, Constants.LOGIN_SUCCESS, Constants.LOGOUT, Constants.REGISTER))
                 {
 	                	loginLog.setStatus(Constants.SUCCESS);
                 }

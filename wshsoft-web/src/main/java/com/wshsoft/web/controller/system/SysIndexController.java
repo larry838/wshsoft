@@ -10,6 +10,7 @@ import com.wshsoft.common.core.controller.BaseController;
 import com.wshsoft.framework.shiro.utils.ShiroUtils;
 import com.wshsoft.system.domain.SysMenu;
 import com.wshsoft.system.domain.SysUser;
+import com.wshsoft.system.service.SysConfigService;
 import com.wshsoft.system.service.SysMenuService;
 
 /**
@@ -22,6 +23,8 @@ public class SysIndexController extends BaseController
 {
     @Autowired
     private SysMenuService menuService;
+    @Autowired
+    private SysConfigService configService;
 
     // 系统首页
     @GetMapping("/index")
@@ -33,6 +36,8 @@ public class SysIndexController extends BaseController
         List<SysMenu> menus = menuService.selectMenusByUser(user);
         mmap.put("menus", menus);
         mmap.put("user", user);
+        mmap.put("sideTheme", configService.selectConfigByKey("sys.index.sideTheme"));
+        mmap.put("skinName", configService.selectConfigByKey("sys.index.skinName"));
         mmap.put("copyrightYear", Global.getCopyrightYear());
         mmap.put("demoEnabled", Global.isDemoEnabled());
         return "index";

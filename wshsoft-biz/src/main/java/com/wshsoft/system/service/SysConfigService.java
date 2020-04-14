@@ -8,7 +8,7 @@ import com.wshsoft.system.domain.SysConfig;
  * 
  * @author Larry xie
  */
-public interface ISysConfigService
+public interface SysConfigService
 {
     /**
      * 查询参数配置信息
@@ -57,6 +57,11 @@ public interface ISysConfigService
      * @return 结果
      */
     public int deleteConfigByIds(String ids);
+
+    /**
+     * 清空缓存数据
+     */
+    public void clearCache();
 
     /**
      * 校验参数键名是否唯一

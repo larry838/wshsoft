@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.wshsoft.common.core.text.Convert;
 import com.wshsoft.quartz.domain.SysJobLog;
 import com.wshsoft.quartz.mapper.SysJobLogMapper;
-import com.wshsoft.quartz.service.ISysJobLogService;
+import com.wshsoft.quartz.service.SysJobLogService;
 
 /**
  * 定时任务调度日志信息 服务层
@@ -14,7 +14,7 @@ import com.wshsoft.quartz.service.ISysJobLogService;
  * @author Larry xie
  */
 @Service
-public class SysJobLogServiceImpl implements ISysJobLogService
+public class SysJobLogServiceImpl implements SysJobLogService
 {
     @Autowired
     private SysJobLogMapper jobLogMapper;

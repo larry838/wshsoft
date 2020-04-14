@@ -9,7 +9,7 @@ import com.wshsoft.system.domain.SysUserOnline;
  * 
  * @author Larry xie
  */
-public interface ISysUserOnlineService
+public interface SysUserOnlineService
 {
     /**
      * 通过会话序号查询信息

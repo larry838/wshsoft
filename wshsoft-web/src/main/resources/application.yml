@@ -6,6 +6,8 @@ wshsoft:
   version: 1.0.0
   # 版权年份
   copyrightYear: 2019
+  # 实例演示开关
+  demoEnabled: true
   # 文件上传
   # 文件路径 示例（ Windows配置D:/tmp/uploadPath，Linux配置 /tmp/uploadPath）
   profile: D:/tmp/uploadPath
@@ -53,7 +55,14 @@ logging:
     #打印sql语句和入参数据的配置
     #com.wshsoft.sys.mapper: debug
     
-# SPRING PROFILES
+# 用户配置
+user:
+  password:
+    # 密码错误次锁定
+    maxRetryCount: 5
+    #锁定时间默认30分钟
+    maxLockTime: 30
+# Spring配置
 spring:       
   # 模板引擎
     thymeleaf:
@@ -63,7 +72,6 @@ spring:
         # 禁用缓存
         cache: false
         content-type: text/html
-        # HTTP ENCODING
     jackson:
       time-zone: GMT+8
       date-format: yyyy-MM-dd HH:mm:ss
@@ -80,7 +88,9 @@ spring:
     # 文件上传
     servlet:
        multipart:
-         max-file-size:  30MB
+       # 单个文件大小
+         max-file-size:  10MB
+       # 设置总上传的文件大小
          max-request-size:  30MB
     # 服务模块
     devtools:
@@ -136,15 +146,7 @@ spring:
      
 banner:
     charset: UTF-8
-        
-
-# 用户配置
-user:
-  password:
-    # 密码错误次锁定
-    maxRetryCount: 5
-    #锁定时间默认30分钟
-    maxLockTime: 60
+            
 # PageHelper分页插件
 pagehelper: 
   helperDialect: mysql

@@ -19,7 +19,7 @@ import com.wshsoft.framework.shiro.session.OnlineSession;
 import com.wshsoft.framework.shiro.session.OnlineSessionDAO;
 import com.wshsoft.framework.shiro.utils.ShiroUtils;
 import com.wshsoft.system.domain.SysUserOnline;
-import com.wshsoft.system.service.ISysUserOnlineService;
+import com.wshsoft.system.service.SysUserOnlineService;
 
 /**
  * 在线用户监控
@@ -33,7 +33,7 @@ public class SysUserOnlineController extends BaseController
     private String prefix = "monitor/online";
 
    // @Autowired
-    private ISysUserOnlineService userOnlineService;
+    private SysUserOnlineService userOnlineService;
 
     //@Autowired
     private OnlineSessionDAO onlineSessionDAO;

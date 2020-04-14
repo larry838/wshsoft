@@ -22,7 +22,7 @@ import com.wshsoft.framework.shiro.utils.ShiroUtils;
 import com.wshsoft.system.domain.SysRole;
 import com.wshsoft.system.domain.SysUser;
 import com.wshsoft.system.domain.SysUserRole;
-import com.wshsoft.system.service.ISysRoleService;
+import com.wshsoft.system.service.SysRoleService;
 import com.wshsoft.system.service.SysUserService;
 
 /**
@@ -37,7 +37,7 @@ public class SysRoleController extends BaseController
     private String prefix = "system/role";
 
     @Autowired
-    private ISysRoleService roleService;
+    private SysRoleService roleService;
 
     @Autowired
     private SysUserService userService;

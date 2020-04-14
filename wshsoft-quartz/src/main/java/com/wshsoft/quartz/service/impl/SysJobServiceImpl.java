@@ -14,7 +14,7 @@ import com.wshsoft.common.core.text.Convert;
 import com.wshsoft.common.exception.job.TaskException;
 import com.wshsoft.quartz.domain.SysJob;
 import com.wshsoft.quartz.mapper.SysJobMapper;
-import com.wshsoft.quartz.service.ISysJobService;
+import com.wshsoft.quartz.service.SysJobService;
 import com.wshsoft.quartz.util.CronUtils;
 import com.wshsoft.quartz.util.ScheduleUtils;
 
@@ -24,7 +24,7 @@ import com.wshsoft.quartz.util.ScheduleUtils;
  * @author Larry xie
  */
 @Service
-public class SysJobServiceImpl implements ISysJobService
+public class SysJobServiceImpl implements SysJobService
 {
     @Autowired
     private Scheduler scheduler;
@@ -39,10 +39,11 @@ public class SysJobServiceImpl implements ISysJobService
     @PostConstruct
     public void init() throws SchedulerException, TaskException
     {
+        scheduler.clear();
         List<SysJob> jobList = jobMapper.selectJobAll();
         for (SysJob job : jobList)
         {
-            updateSchedulerJob(job, job.getJobGroup());
+            ScheduleUtils.createScheduleJob(scheduler, job);
         }
     }
 
@@ -179,12 +180,11 @@ public class SysJobServiceImpl implements ISysJobService
     public void run(SysJob job) throws SchedulerException
     {
         Long jobId = job.getJobId();
-        String jobGroup = job.getJobGroup();
-        SysJob properties = selectJobById(job.getJobId());
+        SysJob tmpObj = selectJobById(job.getJobId());
         // 参数
         JobDataMap dataMap = new JobDataMap();
-        dataMap.put(ScheduleConstants.TASK_PROPERTIES, properties);
-        scheduler.triggerJob(ScheduleUtils.getJobKey(jobId, jobGroup), dataMap);
+        dataMap.put(ScheduleConstants.TASK_PROPERTIES, tmpObj);
+        scheduler.triggerJob(ScheduleUtils.getJobKey(jobId, tmpObj.getJobGroup()), dataMap);
     }
 
     /**

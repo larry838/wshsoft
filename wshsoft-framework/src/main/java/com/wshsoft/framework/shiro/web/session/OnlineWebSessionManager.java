@@ -19,7 +19,7 @@ import com.wshsoft.common.utils.bean.BeanUtils;
 import com.wshsoft.common.utils.spring.SpringUtils;
 import com.wshsoft.framework.shiro.session.OnlineSession;
 import com.wshsoft.system.domain.SysUserOnline;
-import com.wshsoft.system.service.ISysUserOnlineService;
+import com.wshsoft.system.service.SysUserOnlineService;
 
 /**
  * 主要是在此如果会话的属性修改了 就标识下其修改了 然后方便 OnlineSessionDao同步
@@ -104,7 +104,7 @@ public class OnlineWebSessionManager extends DefaultWebSessionManager
 
         int timeout = (int) this.getGlobalSessionTimeout();
         Date expiredDate = DateUtils.addMilliseconds(new Date(), 0 - timeout);
-        ISysUserOnlineService userOnlineService = SpringUtils.getBean(ISysUserOnlineService.class);
+        SysUserOnlineService userOnlineService = SpringUtils.getBean(SysUserOnlineService.class);
         List<SysUserOnline> userOnlineList = userOnlineService.selectOnlineByExpired(expiredDate);
         // 批量过期删除
         List<String> needOfflineIdList = new ArrayList<String>();

@@ -80,7 +80,7 @@ public class SysPasswordService
 
     public String encryptPassword(String username, String password, String salt)
     {
-        return new Md5Hash(username + password + salt).toHex().toString();
+        return new Md5Hash(username + password + salt).toHex();
     }
 
     public void unlock(String loginName){
@@ -89,6 +89,6 @@ public class SysPasswordService
     
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-      System.out.println(new Md5Hash("root" + "root123" + "123456").toHex().toString());
+      System.out.println(new Md5Hash("root" + "root123" + "123456").toHex());
 	}
 }

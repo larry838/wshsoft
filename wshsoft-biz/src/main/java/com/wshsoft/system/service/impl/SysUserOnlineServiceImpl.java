@@ -9,7 +9,7 @@ import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.utils.date.DateUtils;
 import com.wshsoft.system.domain.SysUserOnline;
 import com.wshsoft.system.mapper.SysUserOnlineMapper;
-import com.wshsoft.system.service.ISysUserOnlineService;
+import com.wshsoft.system.service.SysUserOnlineService;
 
 /**
  * 在线用户 服务层处理
@@ -17,7 +17,7 @@ import com.wshsoft.system.service.ISysUserOnlineService;
  * @author Larry xie
  */
 @Service
-public class SysUserOnlineServiceImpl implements ISysUserOnlineService
+public class SysUserOnlineServiceImpl implements SysUserOnlineService
 {
     @Autowired
     private SysUserOnlineMapper userOnlineDao;

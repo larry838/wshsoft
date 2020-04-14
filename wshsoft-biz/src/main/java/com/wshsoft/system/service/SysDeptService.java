@@ -10,7 +10,7 @@ import com.wshsoft.system.domain.SysRole;
  * 
  * @author Larry xie
  */
-public interface ISysDeptService
+public interface SysDeptService
 {
     /**
      * 查询部门管理数据

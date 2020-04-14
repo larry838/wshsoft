@@ -20,7 +20,7 @@ import com.wshsoft.common.enums.BusinessType;
 import com.wshsoft.common.exception.job.TaskException;
 import com.wshsoft.common.utils.poi.ExcelUtil;
 import com.wshsoft.quartz.domain.SysJob;
-import com.wshsoft.quartz.service.ISysJobService;
+import com.wshsoft.quartz.service.SysJobService;
 
 /**
  * 调度任务信息操作处理
@@ -34,7 +34,7 @@ public class SysJobController extends BaseController
     private String prefix = "monitor/job";
 
     @Autowired
-    private ISysJobService jobService;
+    private SysJobService jobService;
 
     @RequiresPermissions("monitor:job:view")
     @GetMapping()

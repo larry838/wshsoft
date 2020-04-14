@@ -17,7 +17,7 @@ import com.wshsoft.common.core.page.TableDataInfo;
 import com.wshsoft.common.enums.BusinessType;
 import com.wshsoft.framework.shiro.utils.ShiroUtils;
 import com.wshsoft.system.domain.SysNotice;
-import com.wshsoft.system.service.ISysNoticeService;
+import com.wshsoft.system.service.SysNoticeService;
 
 /**
  * 公告 信息操作处理
@@ -31,7 +31,7 @@ public class SysNoticeController extends BaseController
     private String prefix = "system/notice";
 
     @Autowired
-    private ISysNoticeService noticeService;
+    private SysNoticeService noticeService;
 
     @RequiresPermissions("system:notice:view")
     @GetMapping()

@@ -9,15 +9,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.wshsoft.common.annotation.SysLog;
 import com.wshsoft.common.core.controller.BaseController;
 import com.wshsoft.common.core.domain.AjaxResult;
 import com.wshsoft.common.core.page.TableDataInfo;
 import com.wshsoft.common.enums.BusinessType;
+import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.utils.poi.ExcelUtil;
+import com.wshsoft.quartz.domain.SysJob;
 import com.wshsoft.quartz.domain.SysJobLog;
-import com.wshsoft.quartz.service.ISysJobLogService;
+import com.wshsoft.quartz.service.SysJobLogService;
+import com.wshsoft.quartz.service.SysJobService;
 
 /**
  * 调度日志操作处理
@@ -31,12 +35,20 @@ public class SysJobLogController extends BaseController
     private String prefix = "monitor/job";
 
     @Autowired
-    private ISysJobLogService jobLogService;
+    private SysJobService jobService;
+
+    @Autowired
+    private SysJobLogService jobLogService;
 
     @RequiresPermissions("monitor:job:view")
     @GetMapping()
-    public String jobLog()
+    public String jobLog(@RequestParam(value = "jobId", required = false) Long jobId, ModelMap mmap)
     {
+        if (StringUtils.isNotNull(jobId))
+        {
+            SysJob job = jobService.selectJobById(jobId);
+            mmap.put("job", job);
+        }
         return prefix + "/jobLog";
     }
 

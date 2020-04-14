@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.wshsoft.common.core.text.Convert;
 import com.wshsoft.system.domain.SysNotice;
 import com.wshsoft.system.mapper.SysNoticeMapper;
-import com.wshsoft.system.service.ISysNoticeService;
+import com.wshsoft.system.service.SysNoticeService;
 
 /**
  * 公告 服务层实现
@@ -15,7 +15,7 @@ import com.wshsoft.system.service.ISysNoticeService;
  * @date 2018-06-25
  */
 @Service
-public class SysNoticeServiceImpl implements ISysNoticeService
+public class SysNoticeServiceImpl implements SysNoticeService
 {
     @Autowired
     private SysNoticeMapper noticeMapper;

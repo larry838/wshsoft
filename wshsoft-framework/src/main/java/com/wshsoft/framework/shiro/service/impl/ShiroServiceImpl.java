@@ -72,6 +72,8 @@ public class ShiroServiceImpl implements ShiroService {
 		
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
+        // 注册相关
+        filterChainDefinitionMap.put("/register", "anon,captchaValidate");
             
 		filterChainDefinitionMap.put("/static/**", "anon");
         filterChainDefinitionMap.put("/assets/**", "anon");
@@ -89,7 +91,7 @@ public class ShiroServiceImpl implements ShiroService {
         return filterChainDefinitionMap;
     }
 
-    /**
+    /** 
      * 重新加载权限
      */
     @Override

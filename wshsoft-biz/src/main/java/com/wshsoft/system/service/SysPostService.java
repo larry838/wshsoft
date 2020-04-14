@@ -8,7 +8,7 @@ import com.wshsoft.system.domain.SysPost;
  * 
  * @author Larry xie
  */
-public interface ISysPostService
+public interface SysPostService
 {
     /**
      * 查询岗位信息集合

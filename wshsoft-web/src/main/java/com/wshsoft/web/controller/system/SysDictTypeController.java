@@ -21,7 +21,7 @@ import com.wshsoft.common.enums.BusinessType;
 import com.wshsoft.common.utils.poi.ExcelUtil;
 import com.wshsoft.framework.shiro.utils.ShiroUtils;
 import com.wshsoft.system.domain.SysDictType;
-import com.wshsoft.system.service.ISysDictTypeService;
+import com.wshsoft.system.service.SysDictTypeService;
 
 /**
  * 数据字典信息
@@ -35,7 +35,7 @@ public class SysDictTypeController extends BaseController
     private String prefix = "system/dict/type";
 
     @Autowired
-    private ISysDictTypeService dictTypeService;
+    private SysDictTypeService dictTypeService;
 
     @RequiresPermissions("system:dict:view")
     @GetMapping()
@@ -135,6 +135,19 @@ public class SysDictTypeController extends BaseController
         }
     }
 
+    /**
+     * 清空缓存
+     */
+    @RequiresPermissions("system:dict:remove")
+    @SysLog(title = "字典类型", businessType = BusinessType.CLEAN)
+    @GetMapping("/clearCache")
+    @ResponseBody
+    public AjaxResult clearCache()
+    {
+        dictTypeService.clearCache();
+        return success();
+    }
+	
     /**
      * 查询字典详细
      */

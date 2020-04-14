@@ -12,6 +12,11 @@ $(function() {
 		});
 	}
 	
+	// 回到顶部绑定
+	if ($.fn.toTop !== undefined) {
+		$('#scroll-up').toTop();
+	}
+	
 	// select2复选框事件绑定
 	if ($.fn.select2 !== undefined) {
         $.fn.select2.defaults.set( "theme", "bootstrap" );
@@ -31,6 +36,23 @@ $(function() {
             })
         })
 	}
+	
+	// 气泡弹出框特效（移到元素时）
+	$(document).on("mouseenter", '.table [data-toggle="popover"]', function() {
+		var _this = this;
+		$(this).popover("show");
+		$(".popover").on("mouseleave", function() {
+			$(_this).popover('hide');
+		});
+	})
+
+	// 气泡弹出框特效（离开元素时）
+	$(document).on("mouseleave", '.table [data-toggle="popover"]', function() {
+		var _this = this;
+		setTimeout(function() {
+			if (!$(".popover:hover").length) $(_this).popover("hide");
+		}, 100);
+	});
 	 
 	// laydate 时间控件绑定
 	if ($(".select-time").length > 0) {
@@ -66,14 +88,15 @@ $(function() {
 		                startDate.config.max.month = date.month - 1;
 		                startDate.config.max.date = date.date;
 		            } else {
-		                startDate.config.max.year = '';
-		                startDate.config.max.month = '';
-		                startDate.config.max.date = '';
+		                startDate.config.max.year = '2099';
+		                startDate.config.max.month = '12';
+		                startDate.config.max.date = '31';
 		            }
 		        }
 		    });
 		});
 	}
+	
 	// laydate time-input 时间控件绑定
 	if ($(".time-input").length > 0) {
 		layui.use('laydate', function () {
@@ -121,6 +144,7 @@ $(function() {
 			});
 		});
 	}
+	
 	// tree 关键字搜索绑定
 	if ($("#keyword").length > 0) {
 		$("#keyword").bind("focus", function focusKey(e) {
@@ -134,6 +158,7 @@ $(function() {
 		    $.tree.searchNode(e);
 		}).bind("input propertychange", $.tree.searchNode);
 	}
+	
 	// tree表格树 展开/折叠
 	var expandFlag;
 	$("#expandAllBtn").click(function() {
@@ -146,15 +171,57 @@ $(function() {
 	    }
 	    expandFlag = expandFlag ? false: true;
 	})
+	
 	// 按下ESC按钮关闭弹层
 	$('body', document).on('keyup', function(e) {
 	    if (e.which === 27) {
-	    	if(window.sessionStorage.getItem("lockcms")!= "true"){//增加锁屏情况失效
-	          $.modal.closeAll();
-	    	}
+	        $.modal.closeAll();
 	    }
 	});
 });
+
+(function ($) {
+    'use strict';
+    $.fn.toTop = function(opt) {
+        var elem = this;
+        var win = $(window);
+        var doc = $('html, body');
+        var options = $.extend({
+            autohide: true,
+            offset: 50,
+            speed: 500,
+            position: true,
+            right: 15,
+            bottom: 5
+        }, opt);
+        elem.css({
+            'cursor': 'pointer'
+        });
+        if (options.autohide) {
+            elem.css('display', 'none');
+        }
+        if (options.position) {
+            elem.css({
+                'position': 'fixed',
+                'right': options.right,
+                'bottom': options.bottom,
+            });
+        }
+        elem.click(function() {
+            doc.animate({
+                scrollTop: 0
+            }, options.speed);
+        });
+        win.scroll(function() {
+            var scrolling = win.scrollTop();
+            if (options.autohide) {
+                if (scrolling > options.offset) {
+                    elem.fadeIn(options.speed);
+                } else elem.fadeOut(options.speed);
+            }
+        });
+    };
+})(jQuery);
 
 /** 刷新选项卡 */
 var refreshItem = function(){

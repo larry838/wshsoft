@@ -14,7 +14,7 @@ import com.wshsoft.common.utils.bean.BeanUtils;
 import com.wshsoft.common.utils.spring.SpringUtils;
 import com.wshsoft.quartz.domain.SysJob;
 import com.wshsoft.quartz.domain.SysJobLog;
-import com.wshsoft.quartz.service.ISysJobLogService;
+import com.wshsoft.quartz.service.SysJobLogService;
 
 /**
  * 抽象quartz调用
@@ -93,7 +93,7 @@ public abstract class AbstractQuartzJob implements Job
         }
 
         // 写入数据库当中
-        SpringUtils.getBean(ISysJobLogService.class).addJobLog(sysJobLog);
+        SpringUtils.getBean(SysJobLogService.class).addJobLog(sysJobLog);
     }
 
     /**

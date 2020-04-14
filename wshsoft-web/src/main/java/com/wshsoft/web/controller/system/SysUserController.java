@@ -25,8 +25,9 @@ import com.wshsoft.common.utils.poi.ExcelUtil;
 import com.wshsoft.framework.shiro.service.SysPasswordService;
 import com.wshsoft.framework.shiro.utils.ShiroUtils;
 import com.wshsoft.system.domain.SysUser;
-import com.wshsoft.system.service.ISysPostService;
-import com.wshsoft.system.service.ISysRoleService;
+import com.wshsoft.system.domain.SysUserRole;
+import com.wshsoft.system.service.SysPostService;
+import com.wshsoft.system.service.SysRoleService;
 import com.wshsoft.system.service.SysUserService;
 
 /**
@@ -44,10 +45,10 @@ public class SysUserController extends BaseController
     private SysUserService userService;
 
     @Autowired
-    private ISysRoleService roleService;
+    private SysRoleService roleService;
 
     @Autowired
-    private ISysPostService postService;
+    private SysPostService postService;
 
     @Autowired
     private SysPasswordService passwordService;
@@ -201,6 +202,33 @@ public class SysUserController extends BaseController
             return success();
         }
         return error();
+    }
+
+    /**
+     * 进入授权角色页
+     */
+    @GetMapping("/authRole/{userId}")
+    public String authRole(@PathVariable("userId") Long userId, ModelMap mmap)
+    {
+        SysUser user = userService.selectUserById(userId);
+        // 获取用户所属的角色列表
+        List<SysUserRole> userRoles = userService.selectUserRoleByUserId(userId);
+        mmap.put("user", user);
+        mmap.put("userRoles", userRoles);
+        return prefix + "/authRole";
+    }
+
+    /**
+     * 用户授权角色
+     */
+    @RequiresPermissions("system:user:add")
+    @SysLog(title = "用户管理", businessType = BusinessType.GRANT)
+    @PostMapping("/authRole/insertAuthRole")
+    @ResponseBody
+    public AjaxResult insertAuthRole(Long userId, Long[] roleIds)
+    {
+        userService.insertUserAuth(userId, roleIds);
+        return success();
     }
 
     @RequiresPermissions("system:user:remove")
