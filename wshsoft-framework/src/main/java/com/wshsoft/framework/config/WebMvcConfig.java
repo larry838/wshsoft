@@ -21,6 +21,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.wshsoft.framework.interceptor.impl.SameUrlDataInterceptor;
 
 @Configuration
 public class WebMvcConfig  extends WebMvcConfigurerAdapter {
@@ -36,6 +37,9 @@ public class WebMvcConfig  extends WebMvcConfigurerAdapter {
      */
     @Value("${shiro.user.indexUrl}")
     private String indexUrl;
+	
+    @Autowired
+    private SameUrlDataInterceptor sameUrlDataInterceptor;
 
     /**
      * 默认首页的设置，当输入域名是可以自动跳转到默认指定的网页
@@ -45,6 +49,11 @@ public class WebMvcConfig  extends WebMvcConfigurerAdapter {
     {
         registry.addViewController("/").setViewName("forward:" + indexUrl);
     }
+    
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		 registry.addInterceptor(sameUrlDataInterceptor).addPathPatterns("/**/add");
+	}
 
 	// 重写添加拦截器方法并添加配置拦截器
 

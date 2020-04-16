@@ -24,11 +24,11 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor
     public final String SESSION_REPEAT_KEY = "repeatData";
 
     /**
-     * 间隔时间，单位:秒 默认10秒
+     * 间隔时间，单位:秒 默认5秒
      * 
      * 两次相同参数的请求，如果间隔时间大于该参数，系统不会认定为重复提交的数据
      */
-    private int intervalTime = 10;
+    private int intervalTime = 5;
 
     public void setIntervalTime(int intervalTime)
     {

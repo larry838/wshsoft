@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.wshsoft.common.annotation.RepeatSubmit;
 import com.wshsoft.common.annotation.SysLog;
 import com.wshsoft.common.constant.UserConstants;
 import com.wshsoft.common.core.controller.BaseController;
@@ -120,6 +121,7 @@ public class SysUserController extends BaseController
     @RequiresPermissions("system:user:add")
     @SysLog(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
+    @RepeatSubmit
     @ResponseBody
     public AjaxResult addSave(@Validated SysUser user)
     {

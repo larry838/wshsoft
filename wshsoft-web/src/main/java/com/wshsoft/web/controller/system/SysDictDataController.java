@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.wshsoft.common.annotation.RepeatSubmit;
 import com.wshsoft.common.annotation.SysLog;
 import com.wshsoft.common.core.controller.BaseController;
 import com.wshsoft.common.core.domain.AjaxResult;
@@ -79,6 +81,7 @@ public class SysDictDataController extends BaseController
     @SysLog(title = "字典数据", businessType = BusinessType.INSERT)
     @RequiresPermissions("system:dict:add")
     @PostMapping("/add")
+    @RepeatSubmit
     @ResponseBody
     public AjaxResult addSave(@Validated SysDictData dict)
     {
