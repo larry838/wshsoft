@@ -12,7 +12,7 @@ wshsoft:
   # 文件路径 示例（ Windows配置D:/tmp/uploadPath，Linux配置 /tmp/uploadPath）
   profile: D:/tmp/uploadPath
   # 获取ip地址开关
-  addressEnabled: true
+  addressEnabled: false
 
 # 开发环境配置
 # Server settings
