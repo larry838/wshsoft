@@ -371,6 +371,7 @@ $(function() {
             });
         }
         scrollToTab($('.menuTab.active'));
+        setIframeUrl($('.page-tabs-content').find('.active').attr('data-id'));
         return false;
     }
     
@@ -428,6 +429,7 @@ $(function() {
             $(this).remove();
         });
         $('.page-tabs-content').css("margin-left", "0");
+        setIframeUrl($('.page-tabs-content').find('.active').attr('data-id'));
     }
     
     // 关闭全部选项卡
@@ -441,6 +443,7 @@ $(function() {
             $(this).addClass("active");
         });
         $('.page-tabs-content').css("margin-left", "0");
+        setIframeUrl($('.page-tabs-content').find('.active').attr('data-id'));
     }
     
     
