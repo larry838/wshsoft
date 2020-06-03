@@ -22,7 +22,7 @@
 	<script th:src="@{/js/jquery.min.js}"></script>
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 	<!-- bootstrap-table 表格插件 -->
-	<script th:src="@{/ajax/libs/bootstrap-table/bootstrap-table.min.js?v=20200423}"></script>
+	<script th:src="@{/ajax/libs/bootstrap-table/bootstrap-table.min.js?v=20200529}"></script>
 	<script th:src="@{/ajax/libs/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
 	<script th:src="@{/ajax/libs/bootstrap-table/extensions/mobile/bootstrap-table-mobile.js}"></script>
 	<script th:src="@{/ajax/libs/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.min.js}"></script>
@@ -137,6 +137,11 @@
 <!-- typeahead搜索自动补全 -->
 <div th:fragment="bootstrap-typeahead-js">
     <script th:src="@{/ajax/libs/typeahead/bootstrap3-typeahead.min.js}"></script>
+</div>
+
+<!-- 多级联动下拉 -->
+<div th:fragment="jquery-cxselect-js">
+    <script th:src="@{/ajax/libs/cxselect/jquery.cxselect.min.js}"></script>
 </div>
 
 <!-- jsonview格式化和语法高亮JSON格式数据查看插件 -->
