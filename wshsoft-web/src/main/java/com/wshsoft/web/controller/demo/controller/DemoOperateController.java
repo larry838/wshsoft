@@ -21,6 +21,7 @@ import com.wshsoft.common.core.text.Convert;
 import com.wshsoft.common.exception.BusinessException;
 import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.utils.poi.ExcelUtil;
+import com.wshsoft.web.controller.demo.domain.CustomerModel;
 import com.wshsoft.web.controller.demo.domain.UserOperateModel;
 
 /**
@@ -151,6 +152,17 @@ public class DemoOperateController extends BaseController
         Integer userId = users.size() + 1;
         user.setUserId(userId);
         return AjaxResult.success(users.put(userId, user));
+    }
+
+    /**
+     * 新增保存主子表信息
+     */
+    @PostMapping("/customer/add")
+    @ResponseBody
+    public AjaxResult addSave(CustomerModel customerModel)
+    {
+        System.out.println(customerModel.toString());
+        return AjaxResult.success();
     }
 
     /**

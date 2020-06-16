@@ -6,6 +6,11 @@ import com.wshsoft.common.annotation.Excel.Type;
 import com.wshsoft.common.core.domain.BaseEntity;
 import com.wshsoft.common.utils.date.DateUtils;
 
+/**
+ * 
+ * @author Larry xie
+ *
+ */
 public class UserOperateModel extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
