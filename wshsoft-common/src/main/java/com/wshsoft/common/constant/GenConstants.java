@@ -13,6 +13,9 @@ public class GenConstants
     /** 树表（增删改查） */
     public static final String TPL_TREE = "tree";
 
+    /** 主子表（增删改查） */
+    public static final String TPL_SUB = "sub";
+
     /** 树编码字段 */
     public static final String TREE_CODE = "treeCode";
 
@@ -67,6 +70,9 @@ public class GenConstants
 
     /** 日期控件 */
     public static final String HTML_DATETIME = "datetime";
+
+    /** 上传控件 */
+    public static final String HTML_UPLOAD = "upload";
 
     /** 字符串类型 */
     public static final String TYPE_STRING = "String";

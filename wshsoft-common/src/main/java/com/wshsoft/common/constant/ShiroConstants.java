@@ -5,7 +5,7 @@ package com.wshsoft.common.constant;
  * 
  * @author Larry xie
  */
-public interface ShiroConstants
+public class ShiroConstants
 {
     /**
      * 当前登录的用户

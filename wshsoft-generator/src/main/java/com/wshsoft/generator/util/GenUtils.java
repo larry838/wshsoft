@@ -23,8 +23,7 @@ public class GenUtils
         genTable.setClassName(convertClassName(genTable.getTableName()));
         genTable.setPackageName(GenConfig.getPackageName());
         genTable.setModuleName(getModuleName(GenConfig.getPackageName()));
-        //genTable.setBusinessName(getBusinessName(genTable.getTableName()));//防止重名
-        genTable.setBusinessName(StringUtils.uncapitalize(genTable.getClassName()));
+        genTable.setBusinessName(getBusinessName(genTable.getTableName()));
         genTable.setFunctionName(replaceText(genTable.getTableComment()));
         genTable.setFunctionAuthor(GenConfig.getAuthor());
         genTable.setCreateBy(operName);
@@ -63,7 +62,7 @@ public class GenUtils
             String[] str = StringUtils.split(StringUtils.substringBetween(column.getColumnType(), "(", ")"), ",");
             if (str != null && str.length == 2 && Integer.parseInt(str[1]) > 0)
             {
-                column.setJavaType(GenConstants.TYPE_DOUBLE);
+                column.setJavaType(GenConstants.TYPE_BIGDECIMAL);
             }
             // 如果是整形
             else if (str != null && str.length == 1 && Integer.parseInt(str[0]) <= 10)
@@ -111,6 +110,11 @@ public class GenUtils
                 || StringUtils.endsWithIgnoreCase(columnName, "gender"))
         {
             column.setHtmlType(GenConstants.HTML_SELECT);
+        }
+        // 文件字段设置上传控件
+        else if (StringUtils.endsWithIgnoreCase(columnName, "file"))
+        {
+            column.setHtmlType(GenConstants.HTML_UPLOAD);
         }
     }
 

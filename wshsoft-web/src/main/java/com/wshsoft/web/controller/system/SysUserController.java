@@ -1,6 +1,7 @@
 package com.wshsoft.web.controller.system;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import com.wshsoft.common.enums.BusinessType;
 import com.wshsoft.common.utils.poi.ExcelUtil;
 import com.wshsoft.framework.shiro.service.SysPasswordService;
 import com.wshsoft.framework.shiro.utils.ShiroUtils;
+import com.wshsoft.system.domain.SysRole;
 import com.wshsoft.system.domain.SysUser;
 import com.wshsoft.system.domain.SysUserRole;
 import com.wshsoft.system.service.SysPostService;
@@ -110,7 +112,7 @@ public class SysUserController extends BaseController
     @GetMapping("/add")
     public String add(ModelMap mmap)
     {
-        mmap.put("roles", roleService.selectRoleAll());
+        mmap.put("roles", roleService.selectRoleAll().stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
         mmap.put("posts", postService.selectPostAll());
         return prefix + "/add";
     }
@@ -149,8 +151,9 @@ public class SysUserController extends BaseController
     @GetMapping("/edit/{userId}")
     public String edit(@PathVariable("userId") Long userId, ModelMap mmap)
     {
+        List<SysRole> roles = roleService.selectRolesByUserId(userId);
         mmap.put("user", userService.selectUserById(userId));
-        mmap.put("roles", roleService.selectRolesByUserId(userId));
+        mmap.put("roles", SysUser.isRoot(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
         mmap.put("posts", postService.selectPostsByUserId(userId));
         return prefix + "/edit";
     }
@@ -214,9 +217,9 @@ public class SysUserController extends BaseController
     {
         SysUser user = userService.selectUserById(userId);
         // 获取用户所属的角色列表
-        List<SysUserRole> userRoles = userService.selectUserRoleByUserId(userId);
+        List<SysRole> roles = roleService.selectRolesByUserId(userId);
         mmap.put("user", user);
-        mmap.put("userRoles", userRoles);
+        mmap.put("roles", SysUser.isRoot(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
         return prefix + "/authRole";
     }
 

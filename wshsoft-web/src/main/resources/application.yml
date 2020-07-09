@@ -123,13 +123,13 @@ spring:
         store-type: redis
     # Redis数据库索引（默认为0）
     redis:
-        database: 9
+        database: 10
         # Redis服务器地址
-        host: 192.168.1.20
+        host: 115.236.19.6
         # Redis服务器连接端口
-        port: 6379
+        port: 10009
         # Redis服务器连接密码（默认为空）
-        password: website
+        password: aNOGMMK3zU2A
         # 连接池最大连接数（使用负值表示没有限制）
         pool:
             maxActive: 8
@@ -176,6 +176,8 @@ shiro:
     httpOnly: true
     # 设置Cookie的过期时间，天为单位
     maxAge: 30
+    # 设置密钥，务必保持唯一性（生成方式，直接拷贝到main运行即可）KeyGenerator keygen = KeyGenerator.getInstance("AES"); SecretKey deskey = keygen.generateKey(); System.out.println(Base64.encodeToString(deskey.getEncoded()));
+    cipherKey: 1QWLxg+NYmxraMoxAXu/Iw==
   session:
     # Session超时时间，-1代表永不过期（默认30分钟）
     expireTime: 30
@@ -196,3 +198,8 @@ xss:
   excludes: /system/notice/*
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+# Swagger配置
+swagger:
+  # 是否开启swagger
+  enabled: true

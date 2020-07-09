@@ -30,6 +30,12 @@ public class GenTable extends BaseEntity
     @NotBlank(message = "表描述不能为空")
     private String tableComment;
 
+    /** 关联父表的表名 */
+    private String subTableName;
+
+    /** 本表关联父表的外键名 */
+    private String subTableFkName;
+
     /** 实体类名称(首字母大写) */
     @NotBlank(message = "实体类名称不能为空")
     private String className;
@@ -59,6 +65,9 @@ public class GenTable extends BaseEntity
 
     /** 主键信息 */
     private GenTableColumn pkColumn;
+
+    /** 子表信息 */
+    private GenTable subTable;
 
     /** 表列信息 */
     @Valid
@@ -115,6 +124,26 @@ public class GenTable extends BaseEntity
     public void setTableComment(String tableComment)
     {
         this.tableComment = tableComment;
+    }
+
+    public String getSubTableName()
+    {
+        return subTableName;
+    }
+
+    public void setSubTableName(String subTableName)
+    {
+        this.subTableName = subTableName;
+    }
+
+    public String getSubTableFkName()
+    {
+        return subTableFkName;
+    }
+
+    public void setSubTableFkName(String subTableFkName)
+    {
+        this.subTableFkName = subTableFkName;
     }
 
     public String getClassName()
@@ -197,6 +226,16 @@ public class GenTable extends BaseEntity
         this.pkColumn = pkColumn;
     }
 
+    public GenTable getSubTable()
+    {
+        return subTable;
+    }
+
+    public void setSubTable(GenTable subTable)
+    {
+        this.subTable = subTable;
+    }
+
     public List<GenTableColumn> getColumns()
     {
         return columns;
@@ -245,6 +284,16 @@ public class GenTable extends BaseEntity
     public void setTreeName(String treeName)
     {
         this.treeName = treeName;
+    }
+
+    public boolean isSub()
+    {
+        return isSub(this.tplCategory);
+    }
+
+    public static boolean isSub(String tplCategory)
+    {
+        return tplCategory != null && StringUtils.equals(GenConstants.TPL_SUB, tplCategory);
     }
 
     public boolean isTree()

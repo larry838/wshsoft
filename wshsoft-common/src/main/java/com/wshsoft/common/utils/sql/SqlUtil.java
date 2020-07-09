@@ -1,5 +1,6 @@
 package com.wshsoft.common.utils.sql;
 
+import com.wshsoft.common.exception.base.BaseException;
 import com.wshsoft.common.utils.StringUtils;
 
 /**
@@ -12,7 +13,7 @@ public class SqlUtil
     /**
      * 仅支持字母、数字、下划线、空格、逗号（支持多个字段排序）
      */
-    public static String SQL_PATTERN = "[a-zA-Z0-9_\\ \\,]+";
+    public static String SQL_PATTERN = "[a-zA-Z0-9_\\ \\,\\.]+";
 
     /**
      * 检查字符，防止注入绕过
@@ -21,7 +22,7 @@ public class SqlUtil
     {
         if (StringUtils.isNotEmpty(value) && !isValidOrderBySql(value))
         {
-            return StringUtils.EMPTY;
+            throw new BaseException("参数不符合规范，不能进行查询");
         }
         return value;
     }

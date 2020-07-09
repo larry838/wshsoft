@@ -50,7 +50,7 @@ public class ${ClassName}Controller extends BaseController {
         return prefix + "/list";
     }
 
-#if($table.crud)
+#if($table.crud || $table.sub)
     /**
      * 查询${functionName}列表
      */
@@ -89,7 +89,7 @@ public class ${ClassName}Controller extends BaseController {
         return util.exportExcel(list, "${businessName}");
     }
 
-#if($table.crud)
+#if($table.crud || $table.sub)
     /**
      * 新增${functionName}
      */
@@ -104,7 +104,7 @@ public class ${ClassName}Controller extends BaseController {
     @GetMapping(value = { "/add/{${pkColumn.javaField}}", "/add/" })
     public String add(@PathVariable(value = "${pkColumn.javaField}", required = false) Long ${pkColumn.javaField}, ModelMap mmap) {
         if (StringUtils.isNotNull(${pkColumn.javaField})) {
-            mmap.put("${className}", ${className}Service.getById(${pkColumn.javaField}));
+            mmap.put("${className}", ${className}Service.select${ClassName}ById(${pkColumn.javaField}));
         }
         return prefix + "/add";
     }
@@ -181,7 +181,7 @@ public class ${ClassName}Controller extends BaseController {
      #end	
    }
 
-#if($table.crud)
+#if($table.crud || $table.sub)
     /**
      * 删除${functionName}
      */
@@ -202,7 +202,7 @@ public class ${ClassName}Controller extends BaseController {
     @GetMapping("/remove/{${pkColumn.javaField}}")
     @ResponseBody
     public AjaxResult remove(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField}) {
-        return toAjax(${className}Service.removeById(${pkColumn.javaField}));
+        return toAjax(${className}Service.delete${ClassName}ById(${pkColumn.javaField}));
     }
 #end
 
@@ -215,7 +215,7 @@ public class ${ClassName}Controller extends BaseController {
     @GetMapping(value = { "/select${BusinessName}Tree/{${pkColumn.javaField}}", "/select${BusinessName}Tree/" })
     public String select${BusinessName}Tree(@PathVariable(value = "${pkColumn.javaField}", required = false) Long ${pkColumn.javaField}, ModelMap mmap) {
         if (StringUtils.isNotNull(${pkColumn.javaField})) {
-            mmap.put("${className}", ${className}Service.getById(${pkColumn.javaField}));
+            mmap.put("${className}", ${className}Service.select${ClassName}ById(${pkColumn.javaField}));
         }
         return prefix + "/tree";
     }

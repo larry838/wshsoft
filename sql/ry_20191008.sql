@@ -285,6 +285,7 @@ create table sys_role_menu (
 insert into sys_role_menu values ('2', '1');
 insert into sys_role_menu values ('2', '2');
 insert into sys_role_menu values ('2', '3');
+insert into sys_role_menu values ('2', '4');
 insert into sys_role_menu values ('2', '100');
 insert into sys_role_menu values ('2', '101');
 insert into sys_role_menu values ('2', '102');
@@ -649,8 +650,10 @@ create table gen_table (
   table_id          bigint(20)      not null auto_increment    comment '编号',
   table_name        varchar(200)    default ''                 comment '表名称',
   table_comment     varchar(500)    default ''                 comment '表描述',
+  sub_table_name       varchar(64)     default null               comment '关联子表的表名',
+  sub_table_fk_name    varchar(64)     default null               comment '子表关联的外键名',
   class_name        varchar(100)    default ''                 comment '实体类名称',
-  tpl_category      varchar(200)    default 'crud'             comment '使用的模板（crud单表操作 tree树表操作）',
+  tpl_category         varchar(200)    default 'crud'             comment '使用的模板（crud单表操作 tree树表操作 sub主子表操作）',
   package_name      varchar(100)                               comment '生成包路径',
   module_name       varchar(30)                                comment '生成模块名',
   business_name     varchar(30)                                comment '生成业务名',

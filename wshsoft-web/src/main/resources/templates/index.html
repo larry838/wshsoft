@@ -14,7 +14,7 @@
     <link th:href="@{/css/animate.css}" rel="stylesheet"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
     <link th:href="@{/css/skins.css}" rel="stylesheet"/>
-    <link th:href="@{/ruoyi/css/ry-ui.css?v=4.2.0}" rel="stylesheet"/>
+    <link th:href="@{/ruoyi/css/ry-ui.css?v=4.3.1}" rel="stylesheet"/>
     <!-- lock -->
     <link th:href="@{/ajax/libs/layui/css/layui.css}" rel="stylesheet"/>
     <link th:href="@{/ruoyi/css/lock.css}" rel="stylesheet"/>
@@ -40,7 +40,7 @@
             			<a class="menuItem noactive" title="个人中心" th:href="@{/system/user/profile}"> 
             				<div class="hide" th:text="个人中心"></div>
 					        <div class="pull-left image">
-		                    	<img th:src="(${user.avatar} == '') ? @{/img/profile.jpg} : @{${user.avatar}}" class="img-circle" alt="User Image">
+		                    	<img th:src="(${user.avatar} == '') ? @{/img/profile.jpg} : @{${user.avatar}}" th:onerror="this.src='img/profile.jpg'" class="img-circle" alt="User Image">
 					        </div>
 				        </a>
 				        <div class="pull-left info">
@@ -265,6 +265,8 @@ var skin = storage.get("skin");
 var mode = "history";
 // 历史访问路径缓存
 var historyPath = storage.get("historyPath");
+// 是否页签与菜单联动
+var isLinkage = true;
 
 // 本地主题优先，未设置取系统配置
 if($.common.isNotEmpty(skin)){

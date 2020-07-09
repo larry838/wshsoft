@@ -5,7 +5,7 @@ package com.wshsoft.common.constant;
  * 
  * @author Larry xie
  */
-public interface ScheduleConstants
+public class ScheduleConstants
 {
     public static final String TASK_CLASS_NAME = "TASK_CLASS_NAME";
 
