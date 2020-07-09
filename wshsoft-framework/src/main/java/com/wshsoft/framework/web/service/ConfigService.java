@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.wshsoft.system.service.SysConfigService;
 
 /**
- * RuoYi首创 html调用 thymeleaf 实现参数管理
+ * 通用框架首创 html调用 thymeleaf 实现参数管理
  * 
  * @author Larry xie
  */

@@ -250,7 +250,7 @@ public class DemoFormController
     @ResponseBody
     public AjaxResult collection()
     {
-        String[] array = { "ruoyi 1", "ruoyi 2", "ruoyi 3", "ruoyi 4", "ruoyi 5" };
+        String[] array = { "通用框架 1", "通用框架 2", "通用框架 3", "通用框架 4", "通用框架 5" };
         AjaxResult ajax = new AjaxResult();
         ajax.put("value", array);
         return ajax;

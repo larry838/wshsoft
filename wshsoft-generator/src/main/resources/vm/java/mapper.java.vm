@@ -77,14 +77,6 @@ public interface ${ClassName}Mapper extends BaseMapper<${ClassName}> {
     public int update${ClassName}Children(@Param("${className}s") List<${ClassName}> ${className}s);
     
     /**
-     * 根据${functionName}ID查询信息
-     * 
-     * @param ${pkColumn.javaField} ${functionName}ID
-     * @return ${functionName}
-     */
-    public ${ClassName} select${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField});
-    
-    /**
      * 修改父级${functionName}状态
      * 
      * @param ${className} ${functionName}

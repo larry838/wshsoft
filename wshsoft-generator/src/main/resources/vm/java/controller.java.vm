@@ -139,9 +139,6 @@ public class ${ClassName}Controller extends BaseController {
         ${ClassName} ${className} = ${className}Service.getById(${pkColumn.javaField});
     #elseif($table.tree)
 	    ${ClassName} ${className} = ${className}Service.select${ClassName}ById(${pkColumn.javaField});
-        if (StringUtils.isNotNull(${className})) {
-            ${className}.setParentName("无");
-        }
     #end
         mmap.put("${className}", ${className});
         return prefix + "/edit";

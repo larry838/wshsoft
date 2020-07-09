@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.wshsoft.common.utils.StringUtils;
 
 /**
- * RuoYi首创 js调用 thymeleaf 实现按钮权限可见性
+ * 通用框架首创 js调用 thymeleaf 实现按钮权限可见性
  * 
  * @author Larry xie
  */

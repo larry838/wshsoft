@@ -8,7 +8,7 @@ package com.wshsoft.common.constant;
 public class SysConstants {
 	
     /** 正常状态 */
-    public static final String NORMAL = "0";
+    public static final String _NORMAL = "0";
 	
     /** 业务名称是否唯一的返回结果码 */
     public final static String BUSS_NAME_UNIQUE = "0";

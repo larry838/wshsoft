@@ -11,7 +11,7 @@ import com.wshsoft.common.utils.spring.SpringUtils;
 /**
  * Cache工具类
  * 
- * @author ruoyi
+ * @author Larry xie
  */
 public class CacheUtils
 {

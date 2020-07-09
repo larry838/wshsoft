@@ -31,9 +31,6 @@ import lombok.experimental.Accessors;
 #elseif($table.tree)
 #set($Entity="TreeEntity")
 #end 
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @TableName("${tableName}")
 public class ${ClassName} extends ${Entity} implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -66,6 +63,12 @@ public class ${ClassName} extends ${Entity} implements Serializable {
 
 #end
 #end
+#if($table.tree)
+    /** 上级名称 */
+     @TableField(exist = false)
+    private String parentName;
+    
+#end    
 #if($table.sub)
     /** $table.subTable.functionName信息 */
     private List<${subClassName}> ${subclassName}List;
@@ -89,7 +92,18 @@ public class ${ClassName} extends ${Entity} implements Serializable {
     }
 #end
 #end
+#if($table.tree)
 
+    public String getParentName()
+    {
+        return parentName;
+    }
+
+    public void setParentName(String parentName)
+    {
+        this.parentName = parentName;
+    }
+#end 
 #if($table.sub)
     public List<${subClassName}> get${subClassName}List()
     {
