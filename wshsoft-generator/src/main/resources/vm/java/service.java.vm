@@ -63,15 +63,7 @@ public interface ${ClassName}Service extends IService<${ClassName}> {
      * @return 结果
      */
     public int delete${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField});
-    
-#if($table.tree)    
-    /**
-     * 查询${functionName}树列表
-     * 
-     * @return 所有${functionName}信息
-     */
-    public List<Ztree> select${ClassName}Tree();
-
+ 
 #foreach ($column in $columns)
 #if($column.isUnique())
 #set($JavaField=$column.UpCaseField())
@@ -83,7 +75,15 @@ public interface ${ClassName}Service extends IService<${ClassName}> {
      */
     public String check${JavaField}Unique(${ClassName} ${className});
 #end
-#end        
+#end    
+#if($table.tree)    
+    /**
+     * 查询${functionName}树列表
+     * 
+     * @return 所有${functionName}信息
+     */
+    public List<Ztree> select${ClassName}Tree();
+       
     /**
      * 查询${functionName}个数
      * 

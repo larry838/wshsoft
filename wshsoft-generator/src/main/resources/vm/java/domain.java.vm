@@ -31,6 +31,9 @@ import lombok.experimental.Accessors;
 #elseif($table.tree)
 #set($Entity="TreeEntity")
 #end 
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 @TableName("${tableName}")
 public class ${ClassName} extends ${Entity} implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -74,6 +77,7 @@ public class ${ClassName} extends ${Entity} implements Serializable {
     private List<${subClassName}> ${subclassName}List;
 
 #end
+/*
 #foreach ($column in $columns)
 #if(!$table.isSuperColumn($column.javaField))
 #if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
@@ -92,6 +96,7 @@ public class ${ClassName} extends ${Entity} implements Serializable {
     }
 #end
 #end
+*/
 #if($table.tree)
 
     public String getParentName()

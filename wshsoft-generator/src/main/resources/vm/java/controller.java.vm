@@ -21,7 +21,7 @@ import com.wshsoft.common.core.controller.BaseController;
 import com.wshsoft.common.core.domain.AjaxResult;
 import com.wshsoft.common.utils.poi.ExcelUtil;
 import com.wshsoft.common.core.text.Convert;
-#if($table.crud)
+#if($table.crud || $table.sub)
 import com.wshsoft.common.core.page.TableDataInfo;
 #elseif($table.tree)
 import com.wshsoft.common.utils.StringUtils;
@@ -135,11 +135,7 @@ public class ${ClassName}Controller extends BaseController {
      */
     @GetMapping("/edit/{${pkColumn.javaField}}")
     public String edit(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField}, ModelMap mmap) {
-    #if($table.crud)
-        ${ClassName} ${className} = ${className}Service.getById(${pkColumn.javaField});
-    #elseif($table.tree)
 	    ${ClassName} ${className} = ${className}Service.select${ClassName}ById(${pkColumn.javaField});
-    #end
         mmap.put("${className}", ${className});
         return prefix + "/edit";
     }
@@ -178,6 +174,39 @@ public class ${ClassName}Controller extends BaseController {
      #end	
    }
 
+    /**
+     * 修改保存${functionName}
+     */
+    @RequiresPermissions("${permissionPrefix}:edit")
+    @SysLog(title = "${functionName}", businessType = BusinessType.UPDATE)
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult editSave(${ClassName} ${className})
+    {
+#foreach ($column in $columns)
+#if($column.isUnique())
+#set($JavaField=$column.UpCaseField())   
+        if (SysConstants.BUSS_NAME_NOT_UNIQUE.equals(${className}Service.check${JavaField}Unique(${className}))) {
+            return error("修改${functionName}'" + ${className}.get${JavaField}() + "'失败，参数键名已存在");
+        }
+#end
+#end
+#if($table.tree)
+#foreach ($column in $columns)
+#if($column.isUnique())
+#set($JavaField=$column.UpCaseField())       
+        if (SysConstants.BUSS_NAME_NOT_UNIQUE.equals(${className}Service.check${JavaField}Unique(${className}))) {
+            return error("修改${functionName}'" + ${className}.get${JavaField}() + "'失败，${functionName}已存在");
+        }
+        else if (${className}.getParentId().equals(${className}.get${ClassName}Id())) {
+            return error("修改${functionName}'" + ${className}.get${JavaField}() + "'失败，上级${functionName}不能是自己");
+        }
+#end
+#end
+#end
+        return toAjax(${className}Service.update${ClassName}(${className}));
+    }
+    
 #if($table.crud || $table.sub)
     /**
      * 删除${functionName}

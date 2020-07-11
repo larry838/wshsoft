@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import com.wshsoft.common.core.domain.Ztree;
 import com.wshsoft.common.exception.BusinessException;
 import org.springframework.transaction.annotation.Transactional;
-import com.wshsoft.common.utils.StringUtils;
 #end
+import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.constant.SysConstants;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,6 +119,7 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
 #if($table.sub)
         ${className}Mapper.delete${subClassName}By${subTableFkClassName}(${className}.get${pkColumn.capJavaField}());
         insert${subClassName}(${className});
+        return ${className}Mapper.update${ClassName}(${className});
 #elseif($table.tree)
         ${ClassName} newParent${ClassName} = ${className}Mapper.select${ClassName}ById(${className}.getParentId());
         ${ClassName} old${ClassName} = select${ClassName}ById(${className}.get${ClassName}Id());
@@ -173,6 +174,30 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
 #end
         return ${className}Mapper.delete${ClassName}ById(${pkColumn.javaField});
     }
+    
+#foreach ($column in $columns)
+#if($column.isUnique())
+#set($JavaField=$column.UpCaseField())
+    /**
+     * 校验${functionName}名称是否唯一
+     * 
+     * @param ${className} ${functionName}信息
+     * @return 结果
+     */
+    public String check${JavaField}Unique(${ClassName} ${className}) {
+        Long ${className}Id = StringUtils.isNull(${className}.get${ClassName}Id()) ? -1L : ${className}.get${ClassName}Id();
+#if($table.tree)
+        ${ClassName} info = ${className}Mapper.check${JavaField}Unique(${className}.get${JavaField}(), ${className}.getParentId());
+#else
+        ${ClassName} info = ${className}Mapper.check${JavaField}Unique(${className}.get${JavaField}());
+#end
+        if (StringUtils.isNotNull(info) && info.get${ClassName}Id().longValue() != ${className}Id.longValue()) {
+            return SysConstants.BUSS_NAME_NOT_UNIQUE;
+        }
+        return SysConstants.BUSS_NAME_UNIQUE;
+    }   
+#end
+#end 
     
 #if($table.tree)
     /**
@@ -230,29 +255,7 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
         }
     }
   
-#foreach ($column in $columns)
-#if($column.isUnique())
-#set($JavaField=$column.UpCaseField())
-    /**
-     * 校验${functionName}名称是否唯一
-     * 
-     * @param ${className} ${functionName}信息
-     * @return 结果
-     */
-    public String check${JavaField}Unique(${ClassName} ${className}) {
-        Long ${className}Id = StringUtils.isNull(${className}.get${ClassName}Id()) ? -1L : ${className}.get${ClassName}Id();
-#if($table.tree)
-        ${ClassName} info = ${className}Mapper.check${JavaField}Unique(${className}.get${JavaField}(), ${className}.getParentId());
-#else
-        ${ClassName} info = ${className}Mapper.check${JavaField}Unique(${className}.get${JavaField}());
-#end
-        if (StringUtils.isNotNull(info) && info.get${ClassName}Id().longValue() != ${className}Id.longValue()) {
-            return SysConstants.BUSS_NAME_NOT_UNIQUE;
-        }
-        return SysConstants.BUSS_NAME_UNIQUE;
-    }   
-#end
-#end  
+ 
     /**
      * 查询${functionName}个数
      * 
