@@ -103,26 +103,12 @@
 	border-left: none;
 }
 
-.skin-blue .nav>li>.treeview-menu {
-	margin: 0 1px;
-	background: #2c3b41
-}
-
 .skin-blue .sidebar a {
 	color: #b8c7ce
 }
 
 .skin-blue .sidebar a:hover {
 	text-decoration: none
-}
-
-.skin-blue .treeview-menu>li>a {
-	color: #8aa4af
-}
-
-.skin-blue .treeview-menu>li.active>a,
-.skin-blue .treeview-menu>li>a:hover {
-	color: #fff
 }
 
 .skin-blue .sidebar-form {
@@ -292,26 +278,12 @@
 	border-left: none;
 }
 
-.skin-green .nav>li>.treeview-menu {
-	margin: 0 1px;
-	background: #2c3b41
-}
-
 .skin-green .sidebar a {
 	color: #b8c7ce
 }
 
 .skin-green .sidebar a:hover {
 	text-decoration: none
-}
-
-.skin-green .treeview-menu>li>a {
-	color: #8aa4af
-}
-
-.skin-green .treeview-menu>li.active>a,
-.skin-green .treeview-menu>li>a:hover {
-	color: #fff
 }
 
 .skin-green .sidebar-form {
@@ -457,26 +429,12 @@
 	border-bottom: 1px solid #e5e5e5;
 }
 
-.skin-red .nav>li>.treeview-menu {
-	margin: 0 1px;
-	background: #2c3b41
-}
-
 .skin-red .sidebar a {
 	color: #b8c7ce
 }
 
 .skin-red .sidebar a:hover {
 	text-decoration: none
-}
-
-.skin-red .treeview-menu>li>a {
-	color: #8aa4af
-}
-
-.skin-red .treeview-menu>li.active>a,
-.skin-red .treeview-menu>li>a:hover {
-	color: #fff
 }
 
 .skin-red .sidebar-form {
@@ -622,26 +580,12 @@
 	 border-bottom: 1px solid #e5e5e5;
 }
 
-.skin-yellow .nav>li>.treeview-menu {
-	margin: 0 1px;
-	background: #2c3b41
-}
-
 .skin-yellow .sidebar a {
 	color: #b8c7ce
 }
 
 .skin-yellow .sidebar a:hover {
 	text-decoration: none
-}
-
-.skin-yellow .treeview-menu>li>a {
-	color: #8aa4af
-}
-
-.skin-yellow .treeview-menu>li.active>a,
-.skin-yellow .treeview-menu>li>a:hover {
-	color: #fff
 }
 
 .skin-yellow .sidebar-form {
@@ -787,26 +731,12 @@
 	 border-bottom: 1px solid #e5e5e5;
 }
 
-.skin-purple .nav>li>.treeview-menu {
-	margin: 0 1px;
-	background: #2c3b41
-}
-
 .skin-purple .sidebar a {
 	color: #b8c7ce
 }
 
 .skin-purple .sidebar a:hover {
 	text-decoration: none
-}
-
-.skin-purple .treeview-menu>li>a {
-	color: #8aa4af
-}
-
-.skin-purple .treeview-menu>li.active>a,
-.skin-purple .treeview-menu>li>a:hover {
-	color: #fff
 }
 
 .skin-purple .sidebar-form {
@@ -997,6 +927,7 @@
 .theme-blue.skin-blue .navbar-default .nav>li.selected>a,
 .theme-blue.skin-blue .navbar-default .nav>li.selected>a:focus {
 	background-color: #1890ff;
+	color: rgba(255,255,255,1);
 }
 
 .theme-blue.skin-green .navbar-default .nav>li.active>a {

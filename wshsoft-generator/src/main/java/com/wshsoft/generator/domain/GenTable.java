@@ -40,7 +40,7 @@ public class GenTable extends BaseEntity
     @NotBlank(message = "实体类名称不能为空")
     private String className;
 
-    /** 使用的模板（crud单表操作 tree树表操作） */
+    /** 使用的模板（crud单表操作 tree树表操作 sub主子表操作） */
     private String tplCategory;
 
     /** 生成包路径 */
@@ -62,6 +62,12 @@ public class GenTable extends BaseEntity
     /** 生成作者 */
     @NotBlank(message = "作者不能为空")
     private String functionAuthor;
+
+    /** 生成代码方式（0zip压缩包 1自定义路径） */
+    private String genType;
+
+    /** 生成路径（不填默认项目路径） */
+    private String genPath;
 
     /** 主键信息 */
     private GenTableColumn pkColumn;
@@ -85,7 +91,12 @@ public class GenTable extends BaseEntity
     /** 树名称字段 */
     private String treeName;
 
-    
+    /** 上级菜单ID字段 */
+    private String parentMenuId;
+
+    /** 上级菜单名称字段 */
+    private String parentMenuName;
+
     private String remark;
     
     public String getRemark() {
@@ -216,6 +227,26 @@ public class GenTable extends BaseEntity
         this.functionAuthor = functionAuthor;
     }
 
+    public String getGenType()
+    {
+        return genType;
+    }
+
+    public void setGenType(String genType)
+    {
+        this.genType = genType;
+    }
+
+    public String getGenPath()
+    {
+        return genPath;
+    }
+
+    public void setGenPath(String genPath)
+    {
+        this.genPath = genPath;
+    }
+
     public GenTableColumn getPkColumn()
     {
         return pkColumn;
@@ -284,6 +315,26 @@ public class GenTable extends BaseEntity
     public void setTreeName(String treeName)
     {
         this.treeName = treeName;
+    }
+
+    public String getParentMenuId()
+    {
+        return parentMenuId;
+    }
+
+    public void setParentMenuId(String parentMenuId)
+    {
+        this.parentMenuId = parentMenuId;
+    }
+
+    public String getParentMenuName()
+    {
+        return parentMenuName;
+    }
+
+    public void setParentMenuName(String parentMenuName)
+    {
+        this.parentMenuName = parentMenuName;
     }
 
     public boolean isSub()

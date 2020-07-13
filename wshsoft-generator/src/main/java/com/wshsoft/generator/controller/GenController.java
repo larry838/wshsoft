@@ -192,11 +192,24 @@ public class GenController extends BaseController
      */
     @RequiresPermissions("tool:gen:code")
     @SysLog(title = "代码生成", businessType = BusinessType.GENCODE)
-    @GetMapping("/genCode/{tableName}")
-    public void genCode(HttpServletResponse response, @PathVariable("tableName") String tableName) throws IOException
+    @GetMapping("/download/{tableName}")
+    public void download(HttpServletResponse response, @PathVariable("tableName") String tableName) throws IOException
     {
-        byte[] data = genTableService.generatorCode(tableName);
+        byte[] data = genTableService.downloadCode(tableName);
         genCode(response, data);
+    }
+
+    /**
+     * 生成代码（自定义路径）
+     */
+    @RequiresPermissions("tool:gen:code")
+    @SysLog(title = "代码生成", businessType = BusinessType.GENCODE)
+    @GetMapping("/genCode/{tableName}")
+    @ResponseBody
+    public AjaxResult genCode(HttpServletResponse response, @PathVariable("tableName") String tableName)
+    {
+        genTableService.generatorCode(tableName);
+        return AjaxResult.success();
     }
 
     /**
@@ -209,7 +222,7 @@ public class GenController extends BaseController
     public void batchGenCode(HttpServletResponse response, String tables) throws IOException
     {
         String[] tableNames = Convert.toStrArray(tables);
-        byte[] data = genTableService.generatorCode(tableNames);
+        byte[] data = genTableService.downloadCode(tableNames);
         genCode(response, data);
     }
 
