@@ -11,7 +11,7 @@ import com.wshsoft.common.exception.file.FileSizeLimitExceededException;
 import com.wshsoft.common.exception.file.InvalidExtensionException;
 import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.utils.date.DateUtils;
-import com.wshsoft.common.utils.security.Md5Utils;
+import com.wshsoft.common.utils.uuid.IdUtils;
 
 /**
  * 文件上传工具类
@@ -34,8 +34,6 @@ public class FileUploadUtils
      * 默认上传的地址
      */
     private static String defaultBaseDir = Global.getProfile();
-
-    private static int counter = 0;
 
     public static void setDefaultBaseDir(String defaultBaseDir)
     {
@@ -125,7 +123,7 @@ public class FileUploadUtils
     {
         String fileName = file.getOriginalFilename();
         String extension = getExtension(file);
-        fileName = DateUtils.datePath() + "/" + encodingFilename(fileName) + "." + extension;
+        fileName = DateUtils.datePath() + "/" + IdUtils.fastUUID() + "." + extension;
         return fileName;
     }
 
@@ -150,16 +148,6 @@ public class FileUploadUtils
         String currentDir = StringUtils.substring(uploadDir, dirLastIndex);
         String pathFileName = Constants.RESOURCE_PREFIX + "/" + currentDir + "/" + fileName;
         return pathFileName;
-    }
-
-    /**
-     * 编码文件名
-     */
-    private static final String encodingFilename(String fileName)
-    {
-        fileName = fileName.replace("_", " ");
-        fileName = Md5Utils.hash(fileName + System.nanoTime() + counter++);
-        return fileName;
     }
 
     /**

@@ -21,6 +21,7 @@ import com.wshsoft.common.exception.job.TaskException;
 import com.wshsoft.common.utils.poi.ExcelUtil;
 import com.wshsoft.quartz.domain.SysJob;
 import com.wshsoft.quartz.service.SysJobService;
+import com.wshsoft.quartz.util.CronUtils;
 
 /**
  * 调度任务信息操作处理
@@ -128,6 +129,10 @@ public class SysJobController extends BaseController
     @ResponseBody
     public AjaxResult addSave(@Validated SysJob job) throws SchedulerException, TaskException
     {
+        if (!CronUtils.isValid(job.getCronExpression()))
+        {
+            return AjaxResult.error("cron表达式不正确");
+        }
         return toAjax(jobService.insertJob(job));
     }
 
@@ -150,6 +155,10 @@ public class SysJobController extends BaseController
     @ResponseBody
     public AjaxResult editSave(@Validated SysJob job) throws SchedulerException, TaskException
     {
+        if (!CronUtils.isValid(job.getCronExpression()))
+        {
+            return AjaxResult.error("cron表达式不正确");
+        }
         return toAjax(jobService.updateJob(job));
     }
 
