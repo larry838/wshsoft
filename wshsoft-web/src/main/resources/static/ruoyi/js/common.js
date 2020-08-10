@@ -275,6 +275,7 @@ function createMenuItem(dataUrl, menuName) {
         if ($(this).data('id') == dataUrl) {
             if (!$(this).hasClass('active')) {
                 $(this).addClass('active').siblings('.menuTab').removeClass('active');
+                scrollToTab(this);
                 $('.page-tabs-content').animate({ marginLeft: ""}, "fast");
                 // 显示tab对应的内容区
                 $('.mainContent .RuoYi_iframe', topWindow).each(function() {
@@ -290,7 +291,7 @@ function createMenuItem(dataUrl, menuName) {
     });
     // 选项卡菜单不存在
     if (flag) {
-        var str = '<a href="javascript:;" class="active menuTab" data-id="' + dataUrl + '" data-panel="' + panelUrl + '">' + menuName + ' <i class="fa fa-times-circle"></i></a>';
+        var str = '<a href="javascript:;" class="active menuTab noactive" data-id="' + dataUrl + '" data-panel="' + panelUrl + '">' + menuName + ' <i class="fa fa-times-circle"></i></a>';
         $('.menuTab', topWindow).removeClass('active');
 
         // 添加选项卡对应的iframe
@@ -304,11 +305,75 @@ function createMenuItem(dataUrl, menuName) {
 
         // 添加选项卡
         $('.menuTabs .page-tabs-content', topWindow).append(str);
+        scrollToTab($('.menuTab.active', topWindow));
     }
     return false;
 }
 
-//日志打印封装处理
+// 滚动到指定选项卡
+function scrollToTab(element) {
+	var topWindow = $(window.parent.document);
+    var marginLeftVal = calSumWidth($(element).prevAll()),
+    marginRightVal = calSumWidth($(element).nextAll());
+    // 可视区域非tab宽度
+    var tabOuterWidth = calSumWidth($(".content-tabs", topWindow).children().not(".menuTabs"));
+    //可视区域tab宽度
+    var visibleWidth = $(".content-tabs", topWindow).outerWidth(true) - tabOuterWidth;
+    //实际滚动宽度
+    var scrollVal = 0;
+    if ($(".page-tabs-content", topWindow).outerWidth() < visibleWidth) {
+        scrollVal = 0;
+    } else if (marginRightVal <= (visibleWidth - $(element).outerWidth(true) - $(element).next().outerWidth(true))) {
+        if ((visibleWidth - $(element).next().outerWidth(true)) > marginRightVal) {
+            scrollVal = marginLeftVal;
+            var tabElement = element;
+            while ((scrollVal - $(tabElement).outerWidth()) > ($(".page-tabs-content", topWindow).outerWidth() - visibleWidth)) {
+                scrollVal -= $(tabElement).prev().outerWidth();
+                tabElement = $(tabElement).prev();
+            }
+        }
+    } else if (marginLeftVal > (visibleWidth - $(element).outerWidth(true) - $(element).prev().outerWidth(true))) {
+        scrollVal = marginLeftVal - $(element).prev().outerWidth(true);
+    }
+    $('.page-tabs-content', topWindow).animate({ marginLeft: 0 - scrollVal + 'px' }, "fast");
+}
+
+//计算元素集合的总宽度
+function calSumWidth(elements) {
+    var width = 0;
+    $(elements).each(function() {
+        width += $(this).outerWidth(true);
+    });
+    return width;
+}
+
+/** 密码规则范围验证 */
+function checkpwd(chrtype, password) {
+	if (chrtype == 1) {
+		if(!$.common.numValid(password)){
+			$.modal.alertWarning("密码只能为0-9数字");
+			return false;
+		}
+	} else if (chrtype == 2) {
+		if(!$.common.enValid(password)){
+			$.modal.alertWarning("密码只能为a-z和A-Z字母");
+			return false;
+		}
+	} else if (chrtype == 3) {
+		if(!$.common.enNumValid(password)){
+			$.modal.alertWarning("密码必须包含字母以及数字");
+			return false;
+		}
+	} else if (chrtype == 4) {
+		if(!$.common.charValid(password)){
+			$.modal.alertWarning("密码必须包含字母、数字、以及特殊符号-、_");
+			return false;
+		}
+	}
+	return true;
+}
+
+// 日志打印封装处理
 var log = {
     log: function(msg) {
         console.log(msg);
