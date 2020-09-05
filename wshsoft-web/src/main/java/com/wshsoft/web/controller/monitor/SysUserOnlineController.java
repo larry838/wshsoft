@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -79,10 +80,10 @@ public class SysUserOnlineController extends BaseController
             {
                 return error("当前登陆用户无法强退");
             }
-            onlineSession.setStatus(OnlineStatus.off_line);
-            onlineSessionDAO.update(onlineSession);
+            onlineSessionDAO.delete(onlineSession);
             online.setStatus(OnlineStatus.off_line);
             userOnlineService.saveOnline(online);
+            userOnlineService.removeUserCache(online.getLoginName(), sessionId);
         }
         return success();
     }

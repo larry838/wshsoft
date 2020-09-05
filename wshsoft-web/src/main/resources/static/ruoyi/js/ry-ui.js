@@ -130,6 +130,7 @@ var table = {
                     onReorderRow: options.onReorderRow,                 // 当拖拽结束后处理函数
                     queryParams: options.queryParams,                   // 传递参数（*）
                     rowStyle: options.rowStyle,                         // 通过自定义函数设置行样式
+                    footerStyle: options.footerStyle,                   // 通过自定义函数设置页脚样式
                     columns: options.columns,                           // 显示列信息（*）
                     data: options.data,                                 // 被加载的数据
                     responseHandler: $.table.responseHandler,           // 在加载服务器发送来的数据之前处理函数
@@ -162,8 +163,8 @@ var table = {
             },
             // 请求获取数据后处理回调函数
             responseHandler: function(res) {
-            	if (typeof table.options.responseHandler == "function") {
-            		table.options.responseHandler(res);
+            	if (typeof table.get(this.id).responseHandler == "function") {
+            		table.get(this.id).responseHandler(res);
                 }
                 if (res.code == 0) {
                     if ($.common.isNotEmpty(table.options.sidePagination) && table.options.sidePagination == 'client') {
@@ -334,7 +335,7 @@ var table = {
             // 搜索-默认第一个form
             search: function(formId, tableId) {
             	table.set(tableId);
-            	var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
+            	table.options.formId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
             	var params = $.common.isEmpty(tableId) ? $("#" + table.options.id).bootstrapTable('getOptions') : $("#" + tableId).bootstrapTable('getOptions');
     		    if($.common.isNotEmpty(tableId)){
     				$("#" + tableId).bootstrapTable('refresh', params);

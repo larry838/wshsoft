@@ -1,12 +1,20 @@
 package com.wshsoft.web.controller.system;
 
 import java.util.List;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.wshsoft.common.utils.CookieUtils;
 import com.wshsoft.common.config.Global;
 import com.wshsoft.common.core.controller.BaseController;
+import com.wshsoft.common.utils.StringUtils;
+import com.wshsoft.common.utils.servlet.ServletUtils;
 import com.wshsoft.framework.shiro.utils.ShiroUtils;
 import com.wshsoft.system.domain.SysMenu;
 import com.wshsoft.system.domain.SysUser;
@@ -40,14 +48,36 @@ public class SysIndexController extends BaseController
         mmap.put("skinName", configService.selectConfigByKey("sys.index.skinName"));
         mmap.put("copyrightYear", Global.getCopyrightYear());
         mmap.put("demoEnabled", Global.isDemoEnabled());
-        return "index";
+
+        // 移动端，默认使左侧导航菜单，否则取默认配置
+        String indexStyle = ServletUtils.checkAgentIsMobile(ServletUtils.getRequest().getHeader("User-Agent")) ? "index" : Global.getMenuStyle();
+
+        // 优先Cookie配置导航菜单
+        Cookie[] cookies = ServletUtils.getRequest().getCookies();
+        for (Cookie cookie : cookies)
+        {
+            if (StringUtils.isNotEmpty(cookie.getName()) && "nav-style".equalsIgnoreCase(cookie.getName()))
+            {
+                indexStyle = cookie.getValue();
+                break;
+            }
+        }
+        String webIndex = "topnav".equalsIgnoreCase(indexStyle) ? "index-topnav" : "index";
+        return webIndex;
     }
 
     // 切换主题
     @GetMapping("/system/switchSkin")
-    public String switchSkin(ModelMap mmap)
+    public String switchSkin()
     {
         return "skin";
+    }
+
+    // 切换菜单
+    @GetMapping("/system/menuStyle/{style}")
+    public void menuStyle(@PathVariable String style, HttpServletResponse response)
+    {
+        CookieUtils.setCookie(response, "nav-style", style);
     }
 
     // 系统介绍

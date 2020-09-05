@@ -97,6 +97,7 @@
 								<li><a class="menuItem" th:href="@{/demo/form/duallistbox}">左右互选组件</a></li>
 								<li><a class="menuItem" th:href="@{/demo/form/autocomplete}">搜索自动补全</a></li>
 								<li><a class="menuItem" th:href="@{/demo/form/cxselect}">多级联动下拉</a></li>
+								<li><a class="menuItem" th:href="@{/demo/form/localrefresh}">Ajax局部刷新</a></li>
 							</ul>
                         </li>
                         <li> <a>表格<span class="fa arrow"></span></a>
@@ -206,6 +207,10 @@
 								<a onclick="switchSkin()">
 								<i class="fa fa-dashboard"></i> 切换主题</a>
 							</li>
+							<li>
+								<a onclick="toggleMenu()">
+								<i class="fa fa-toggle-off"></i> 横向菜单</a>
+							</li>
 							<li class="divider"></li>
 							<li>
 								<a th:href="@{logout}">
@@ -292,6 +297,15 @@ function switchSkin() {
 		title : "切换主题",
 		area : ["530px", "386px"],
 		content : [ctx + "system/switchSkin", 'no']
+	})
+}
+
+/* 切换菜单 */
+function toggleMenu() {
+	$.modal.confirm("确认要切换成横向菜单吗？", function() {
+		$.get(ctx + 'system/menuStyle/topnav', function(result) {
+            window.location.reload();
+	    });
 	})
 }
 

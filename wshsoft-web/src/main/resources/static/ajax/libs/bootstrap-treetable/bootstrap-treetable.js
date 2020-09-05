@@ -133,7 +133,7 @@
                 if((!target.isFixWidth)&& column.width){
                     target.isFixWidth = column.width.indexOf("px")>-1?true:false;
                 }
-                $th.text(column.title);
+                $th.html(column.title);
                 $thr.append($th);
             });
             var $thead = $('<thead class="treetable-thead"></thead>');
@@ -738,6 +738,9 @@
         expanderExpandedClass: 'glyphicon glyphicon-chevron-down', // 展开的按钮的图标
         expanderCollapsedClass: 'glyphicon glyphicon-chevron-right', // 缩起的按钮的图标
         responseHandler: function(res) {
+            return false;
+        },
+        onLoadSuccess: function(res) {
             return false;
         }
     };

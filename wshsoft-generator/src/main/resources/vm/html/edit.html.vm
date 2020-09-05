@@ -312,6 +312,7 @@
                 showRefresh: false,
                 showToggle: false,
                 showColumns: false,
+                sidePagination: "client",
                 columns: [{
                     checkbox: true
                 },
