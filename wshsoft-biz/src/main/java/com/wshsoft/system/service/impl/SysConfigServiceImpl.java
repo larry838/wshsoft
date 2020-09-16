@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.wshsoft.common.constant.Constants;
 import com.wshsoft.common.constant.UserConstants;
 import com.wshsoft.common.core.text.Convert;
+import com.wshsoft.common.exception.BusinessException;
 import com.wshsoft.common.utils.CacheUtils;
 import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.system.domain.SysConfig;
@@ -131,6 +132,15 @@ public class SysConfigServiceImpl implements SysConfigService
     @Override
     public int deleteConfigByIds(String ids)
     {
+        Long[] configIds = Convert.toLongArray(ids);
+        for (Long configId : configIds)
+        {
+            SysConfig config = selectConfigById(configId);
+            if (StringUtils.equals(UserConstants.YES, config.getConfigType()))
+            {
+                throw new BusinessException(String.format("内置参数【%1$s】不能删除 ", config.getConfigKey()));
+            }
+        }
         int count = configMapper.deleteConfigByIds(Convert.toStrArray(ids));
         if (count > 0)
         {

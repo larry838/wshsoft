@@ -501,6 +501,10 @@ body.body-small.fixed-sidebar.mini-navbar .navbar-static-side {
     border-radius: 2px;
 }
 
+.fixed-sidebar.mini-navbar .nav li.active:hover>.nav-second-level, .fixed-sidebar.mini-navbar .nav li.active:hover>a> span.nav-label {
+    left: 67px;
+}
+
 .fixed-sidebar.mini-navbar .nav .nav-second-level a> span, .fixed-sidebar.mini-navbar .nav .nav-third-level a> span {
     display: inline-block;
 }
@@ -1171,6 +1175,8 @@ button.dim:active:before {
 /* TOOLTIPS */
 .tooltip-inner {
     background-color: #2F4050;
+   	word-break: break-all;
+    overflow-wrap: break-word;
 }
 
 .tooltip.top .tooltip-arrow {
@@ -3264,7 +3270,7 @@ body.body-small .footer.fixed {
     position: relative;
     height: 39px;
     background: #fafafa;
-    line-height: 38px;
+    line-height: 39px;
 }
 
 .content-tabs .roll-nav, .page-tabs-list {
