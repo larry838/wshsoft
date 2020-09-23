@@ -73,22 +73,13 @@ public class SysPasswordService
         return user.getPassword().equals(encryptPassword(user.getLoginName(), newPassword, user.getSalt()));
     }
 
-    public void clearLoginRecordCache(String username)
+    public void clearLoginRecordCache(String loginName)
     {
-        loginRecordCache.remove(username);
-    }
-
-    public String encryptPassword(String username, String password, String salt)
-    {
-        return new Md5Hash(username + password + salt).toHex();
-    }
-
-    public void unlock(String loginName){
         loginRecordCache.remove(loginName);
     }
-    
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-      System.out.println(new Md5Hash("root" + "root123" + "123456").toHex());
-	}
+
+    public String encryptPassword(String loginName, String password, String salt)
+    {
+        return new Md5Hash(loginName + password + salt).toHex();
+    }
 }

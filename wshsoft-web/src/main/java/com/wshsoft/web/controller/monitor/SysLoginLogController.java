@@ -52,7 +52,7 @@ public class SysLoginLogController extends BaseController
         return getDataTable(list);
     }
 
-    @SysLog(title = "登陆日志", businessType = BusinessType.EXPORT)
+    @SysLog(title = "登录日志", businessType = BusinessType.EXPORT)
     @RequiresPermissions("monitor:loginLog:export")
     @PostMapping("/export")
     @ResponseBody
@@ -60,11 +60,11 @@ public class SysLoginLogController extends BaseController
     {
         List<SysLoginLog> list = loginLogService.selectLoginLogList(loginLog);
         ExcelUtil<SysLoginLog> util = new ExcelUtil<SysLoginLog>(SysLoginLog.class);
-        return util.exportExcel(list, "登陆日志");
+        return util.exportExcel(list, "登录日志");
     }
 
     @RequiresPermissions("monitor:loginLog:remove")
-    @SysLog(title = "登陆日志", businessType = BusinessType.DELETE)
+    @SysLog(title = "登录日志", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids)
@@ -73,7 +73,7 @@ public class SysLoginLogController extends BaseController
     }
     
     @RequiresPermissions("monitor:loginLog:remove")
-    @SysLog(title = "登陆日志", businessType = BusinessType.CLEAN)
+    @SysLog(title = "登录日志", businessType = BusinessType.CLEAN)
     @PostMapping("/clean")
     @ResponseBody
     public AjaxResult clean()
@@ -88,7 +88,7 @@ public class SysLoginLogController extends BaseController
     @ResponseBody
     public AjaxResult unlock(String loginName)
     {
-        passwordService.unlock(loginName);
+        passwordService.clearLoginRecordCache(loginName);
         return success();
     }
 }
