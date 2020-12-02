@@ -174,7 +174,7 @@ public class CacheUtils
      * @param cacheName
      * @return
      */
-    private static Cache<String, Object> getCache(String cacheName)
+    public static Cache<String, Object> getCache(String cacheName)
     {
         Cache<String, Object> cache = cacheManager.getCache(cacheName);
         if (cache == null)
@@ -184,4 +184,13 @@ public class CacheUtils
         return cache;
     }
 
+    /**
+     * 获取所有缓存
+     * 
+     * @return 缓存组
+     */
+    public static String[] getCacheNames()
+    {
+        return null;
+    }
 }

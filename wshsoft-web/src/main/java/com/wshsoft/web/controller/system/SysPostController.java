@@ -20,7 +20,7 @@ import com.wshsoft.common.core.domain.AjaxResult;
 import com.wshsoft.common.core.page.TableDataInfo;
 import com.wshsoft.common.enums.BusinessType;
 import com.wshsoft.common.utils.poi.ExcelUtil;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
+import com.wshsoft.common.utils.ShiroUtils;
 import com.wshsoft.system.domain.SysPost;
 import com.wshsoft.system.service.SysPostService;
 

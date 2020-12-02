@@ -16,11 +16,11 @@ import com.wshsoft.common.annotation.RepeatSubmit;
 import com.wshsoft.common.annotation.SysLog;
 import com.wshsoft.common.core.controller.BaseController;
 import com.wshsoft.common.core.domain.AjaxResult;
+import com.wshsoft.common.core.domain.entity.SysDictData;
 import com.wshsoft.common.core.page.TableDataInfo;
 import com.wshsoft.common.enums.BusinessType;
+import com.wshsoft.common.utils.ShiroUtils;
 import com.wshsoft.common.utils.poi.ExcelUtil;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
-import com.wshsoft.system.domain.SysDictData;
 import com.wshsoft.system.service.SysDictDataService;
 
 /**

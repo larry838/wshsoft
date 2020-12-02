@@ -1,7 +1,7 @@
 package com.wshsoft.system.mapper;
 
 import java.util.List;
-import com.wshsoft.system.domain.SysUser;
+import com.wshsoft.common.core.domain.entity.SysUser;
 
 /**
  * 用户表 数据层

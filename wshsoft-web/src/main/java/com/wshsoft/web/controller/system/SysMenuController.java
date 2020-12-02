@@ -16,10 +16,11 @@ import com.wshsoft.common.constant.UserConstants;
 import com.wshsoft.common.core.controller.BaseController;
 import com.wshsoft.common.core.domain.AjaxResult;
 import com.wshsoft.common.core.domain.Ztree;
+import com.wshsoft.common.core.domain.entity.SysMenu;
+import com.wshsoft.common.core.domain.entity.SysRole;
 import com.wshsoft.common.enums.BusinessType;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
-import com.wshsoft.system.domain.SysMenu;
-import com.wshsoft.system.domain.SysRole;
+import com.wshsoft.common.utils.ShiroUtils;
+import com.wshsoft.framework.shiro.utils.AuthorizationUtils;
 import com.wshsoft.system.service.SysMenuService;
 
 /**
@@ -70,7 +71,7 @@ public class SysMenuController extends BaseController
         {
             return AjaxResult.warn("菜单已分配,不允许删除");
         }
-        ShiroUtils.clearCachedAuthorizationInfo();
+        AuthorizationUtils.clearAllCachedAuthorizationInfo();
         return toAjax(menuService.deleteMenuById(menuId));
     }
 
@@ -109,7 +110,7 @@ public class SysMenuController extends BaseController
             return error("新增菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
         }
         menu.setCreateBy(ShiroUtils.getLoginName());
-        ShiroUtils.clearCachedAuthorizationInfo();
+        AuthorizationUtils.clearAllCachedAuthorizationInfo();
         return toAjax(menuService.insertMenu(menu));
     }
 
@@ -137,7 +138,7 @@ public class SysMenuController extends BaseController
             return error("修改菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
         }
         menu.setUpdateBy(ShiroUtils.getLoginName());
-        ShiroUtils.clearCachedAuthorizationInfo();
+        AuthorizationUtils.clearAllCachedAuthorizationInfo();
         return toAjax(menuService.updateMenu(menu));
     }
 

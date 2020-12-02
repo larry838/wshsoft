@@ -3,13 +3,12 @@ package com.wshsoft.framework.async.factory;
 import java.util.TimerTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
 import com.wshsoft.common.constant.Constants;
-import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.utils.ip.AddressUtils;
 import com.wshsoft.common.utils.log.LogUtils;
 import com.wshsoft.common.utils.servlet.ServletUtils;
+import com.wshsoft.common.utils.ShiroUtils;
+import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.utils.spring.SpringUtils;
 import com.wshsoft.framework.async.manager.log.LoginLogManager;
 import com.wshsoft.framework.shiro.session.OnlineSession;
@@ -18,13 +17,12 @@ import com.wshsoft.system.domain.SysOperLog;
 import com.wshsoft.system.domain.SysUserOnline;
 import com.wshsoft.system.service.SysOperLogService;
 import com.wshsoft.system.service.SysUserOnlineService;
-import com.wshsoft.system.service.impl.SysLoginLogServiceImpl;
 import eu.bitwalker.useragentutils.UserAgent;
 
 /**
  * 异步工厂（产生任务用）
  * 
- * @author liuhulu
+ * @author Larry xie
  *
  */
 public class AsyncFactory {

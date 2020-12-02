@@ -14,20 +14,22 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.cache.Cache;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.wshsoft.common.core.domain.entity.SysUser;
 import com.wshsoft.common.exception.user.CaptchaException;
 import com.wshsoft.common.exception.user.RoleBlockedException;
 import com.wshsoft.common.exception.user.UserBlockedException;
 import com.wshsoft.common.exception.user.UserNotExistsException;
 import com.wshsoft.common.exception.user.UserPasswordNotMatchException;
 import com.wshsoft.common.exception.user.UserPasswordRetryLimitExceedException;
+import com.wshsoft.common.utils.ShiroUtils;
 import com.wshsoft.framework.shiro.service.SysLoginService;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
-import com.wshsoft.system.domain.SysUser;
 import com.wshsoft.system.service.SysMenuService;
 import com.wshsoft.system.service.SysRoleService;
 
@@ -132,10 +134,26 @@ public class UserRealm extends AuthorizingRealm
     }
 
     /**
-     * 清理缓存权限
+     * 清理指定用户授权信息缓存
      */
-    public void clearCachedAuthorizationInfo()
+    public void clearCachedAuthorizationInfo(Object principal)
     {
-        this.clearCachedAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
+        SimplePrincipalCollection principals = new SimplePrincipalCollection(principal, getName());
+        this.clearCachedAuthorizationInfo(principals);
+    }
+
+    /**
+     * 清理所有用户授权信息缓存
+     */
+    public void clearAllCachedAuthorizationInfo()
+    {
+        Cache<Object, AuthorizationInfo> cache = getAuthorizationCache();
+        if (cache != null)
+        {
+            for (Object key : cache.keys())
+            {
+                cache.remove(key);
+            }
+        }
     }
 }

@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.wshsoft.common.annotation.DataScope;
 import com.wshsoft.common.constant.UserConstants;
 import com.wshsoft.common.core.domain.Ztree;
+import com.wshsoft.common.core.domain.entity.SysDept;
+import com.wshsoft.common.core.domain.entity.SysRole;
 import com.wshsoft.common.exception.BusinessException;
 import com.wshsoft.common.utils.StringUtils;
-import com.wshsoft.system.domain.SysDept;
-import com.wshsoft.system.domain.SysRole;
 import com.wshsoft.system.mapper.SysDeptMapper;
 import com.wshsoft.system.service.SysDeptService;
 

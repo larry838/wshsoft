@@ -1,5 +1,6 @@
 package com.wshsoft.web.controller.system;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -13,11 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.wshsoft.common.utils.CookieUtils;
 import com.wshsoft.common.config.Global;
 import com.wshsoft.common.core.controller.BaseController;
-import com.wshsoft.common.utils.StringUtils;
+import com.wshsoft.common.core.domain.entity.SysMenu;
+import com.wshsoft.common.core.domain.entity.SysUser;
+import com.wshsoft.common.core.text.Convert;
+import com.wshsoft.common.utils.date.DateUtils;
 import com.wshsoft.common.utils.servlet.ServletUtils;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
-import com.wshsoft.system.domain.SysMenu;
-import com.wshsoft.system.domain.SysUser;
+import com.wshsoft.common.utils.ShiroUtils;
+import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.system.service.SysConfigService;
 import com.wshsoft.system.service.SysMenuService;
 
@@ -49,6 +52,8 @@ public class SysIndexController extends BaseController
         mmap.put("ignoreFooter", configService.selectConfigByKey("sys.index.ignoreFooter"));
         mmap.put("copyrightYear", Global.getCopyrightYear());
         mmap.put("demoEnabled", Global.isDemoEnabled());
+	    mmap.put("isDefaultModifyPwd", initPasswordIsModify(user.getPwdUpdateDate()));
+        mmap.put("isPasswordExpired", passwordIsExpiration(user.getPwdUpdateDate()));
 
         // 菜单导航显示风格
         String menuStyle = configService.selectConfigByKey("sys.index.menuStyle");
@@ -89,5 +94,29 @@ public class SysIndexController extends BaseController
     {
         mmap.put("version", Global.getVersion());
         return "main";
+    }
+
+    // 检查初始密码是否提醒修改
+    public boolean initPasswordIsModify(Date pwdUpdateDate)
+    {
+        Integer initPasswordModify = Convert.toInt(configService.selectConfigByKey("sys.account.initPasswordModify"));
+        return initPasswordModify != null && initPasswordModify == 1 && pwdUpdateDate == null;
+    }
+
+    // 检查密码是否过期
+    public boolean passwordIsExpiration(Date pwdUpdateDate)
+    {
+        Integer passwordValidateDays = Convert.toInt(configService.selectConfigByKey("sys.account.passwordValidateDays"));
+        if (passwordValidateDays != null && passwordValidateDays > 0)
+        {
+            if (StringUtils.isNull(pwdUpdateDate))
+            {
+                // 如果从未修改过初始密码，直接提醒过期
+                return true;
+            }
+            Date nowDate = DateUtils.getNowDate();
+            return DateUtils.differentDaysByMillisecond(nowDate, pwdUpdateDate) > passwordValidateDays;
+        }
+        return false;
     }
 }

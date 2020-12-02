@@ -2,7 +2,7 @@ package com.wshsoft.system.service;
 
 import java.util.List;
 import java.util.Set;
-import com.wshsoft.system.domain.SysRole;
+import com.wshsoft.common.core.domain.entity.SysRole;
 import com.wshsoft.system.domain.SysUserRole;
 
 /**

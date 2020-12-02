@@ -21,14 +21,14 @@ import com.wshsoft.common.annotation.SysLog;
 import com.wshsoft.common.constant.UserConstants;
 import com.wshsoft.common.core.controller.BaseController;
 import com.wshsoft.common.core.domain.AjaxResult;
+import com.wshsoft.common.core.domain.entity.SysRole;
+import com.wshsoft.common.core.domain.entity.SysUser;
 import com.wshsoft.common.core.page.TableDataInfo;
 import com.wshsoft.common.enums.BusinessType;
+import com.wshsoft.common.utils.ShiroUtils;
+import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.utils.poi.ExcelUtil;
 import com.wshsoft.framework.shiro.service.SysPasswordService;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
-import com.wshsoft.system.domain.SysRole;
-import com.wshsoft.system.domain.SysUser;
-import com.wshsoft.system.domain.SysUserRole;
 import com.wshsoft.system.service.SysPostService;
 import com.wshsoft.system.service.SysRoleService;
 import com.wshsoft.system.service.SysUserService;
@@ -131,11 +131,13 @@ public class SysUserController extends BaseController
         {
             return error("新增用户'" + user.getLoginName() + "'失败，登录账号已存在");
         }
-        else if (UserConstants.USER_PHONE_NOT_UNIQUE.equals(userService.checkPhoneUnique(user)))
+        else if (StringUtils.isNotEmpty(user.getPhonenumber())
+                && UserConstants.USER_PHONE_NOT_UNIQUE.equals(userService.checkPhoneUnique(user)))
         {
             return error("新增用户'" + user.getLoginName() + "'失败，手机号码已存在");
         }
-        else if (UserConstants.USER_EMAIL_NOT_UNIQUE.equals(userService.checkEmailUnique(user)))
+        else if (StringUtils.isNotEmpty(user.getEmail())
+                && UserConstants.USER_EMAIL_NOT_UNIQUE.equals(userService.checkEmailUnique(user)))
         {
             return error("新增用户'" + user.getLoginName() + "'失败，邮箱账号已存在");
         }
@@ -168,11 +170,13 @@ public class SysUserController extends BaseController
     public AjaxResult editSave(@Validated SysUser user)
     {
         userService.checkUserAllowed(user);
-        if (UserConstants.USER_PHONE_NOT_UNIQUE.equals(userService.checkPhoneUnique(user)))
+        if (StringUtils.isNotEmpty(user.getPhonenumber())
+                && UserConstants.USER_PHONE_NOT_UNIQUE.equals(userService.checkPhoneUnique(user)))
         {
             return error("修改用户'" + user.getLoginName() + "'失败，手机号码已存在");
         }
-        else if (UserConstants.USER_EMAIL_NOT_UNIQUE.equals(userService.checkEmailUnique(user)))
+        else if (StringUtils.isNotEmpty(user.getEmail())
+                && UserConstants.USER_EMAIL_NOT_UNIQUE.equals(userService.checkEmailUnique(user)))
         {
             return error("修改用户'" + user.getLoginName() + "'失败，邮箱账号已存在");
         }

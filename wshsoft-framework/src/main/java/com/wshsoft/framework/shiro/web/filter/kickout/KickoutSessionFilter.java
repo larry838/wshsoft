@@ -19,9 +19,9 @@ import org.apache.shiro.web.util.WebUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wshsoft.common.constant.ShiroConstants;
 import com.wshsoft.common.core.domain.AjaxResult;
+import com.wshsoft.common.core.domain.entity.SysUser;
 import com.wshsoft.common.utils.servlet.ServletUtils;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
-import com.wshsoft.system.domain.SysUser;
+import com.wshsoft.common.utils.ShiroUtils;
 
 /**
  * 登录帐号控制过滤器

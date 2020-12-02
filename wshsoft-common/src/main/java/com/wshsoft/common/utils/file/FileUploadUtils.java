@@ -9,8 +9,8 @@ import com.wshsoft.common.constant.Constants;
 import com.wshsoft.common.exception.file.FileNameLengthLimitExceededException;
 import com.wshsoft.common.exception.file.FileSizeLimitExceededException;
 import com.wshsoft.common.exception.file.InvalidExtensionException;
-import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.utils.date.DateUtils;
+import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.utils.uuid.IdUtils;
 
 /**
@@ -131,13 +131,12 @@ public class FileUploadUtils
     {
         File desc = new File(uploadDir + File.separator + fileName);
 
-        if (!desc.getParentFile().exists())
-        {
-            desc.getParentFile().mkdirs();
-        }
         if (!desc.exists())
         {
-            desc.createNewFile();
+            if (!desc.getParentFile().exists())
+            {
+                desc.getParentFile().mkdirs();
+            }
         }
         return desc;
     }
@@ -196,7 +195,6 @@ public class FileUploadUtils
                 throw new InvalidExtensionException(allowedExtension, extension, fileName);
             }
         }
-
     }
 
     /**

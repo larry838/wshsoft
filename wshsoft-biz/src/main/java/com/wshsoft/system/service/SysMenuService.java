@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import com.wshsoft.common.core.domain.Ztree;
-import com.wshsoft.system.domain.SysMenu;
-import com.wshsoft.system.domain.SysRole;
-import com.wshsoft.system.domain.SysUser;
+import com.wshsoft.common.core.domain.entity.SysMenu;
+import com.wshsoft.common.core.domain.entity.SysRole;
+import com.wshsoft.common.core.domain.entity.SysUser;
 
 /**
  * 菜单 业务层

@@ -1,11 +1,9 @@
-package com.wshsoft.system.utils;
+package com.wshsoft.common.utils;
 
 import java.util.List;
 import org.springframework.stereotype.Component;
 import com.wshsoft.common.constant.Constants;
-import com.wshsoft.common.utils.CacheUtils;
-import com.wshsoft.common.utils.StringUtils;
-import com.wshsoft.system.domain.SysDictData;
+import com.wshsoft.common.core.domain.entity.SysDictData;
 
 /**
  * 字典工具类

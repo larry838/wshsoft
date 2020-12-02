@@ -2,7 +2,7 @@ package com.wshsoft.system.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import com.wshsoft.system.domain.SysDictData;
+import com.wshsoft.common.core.domain.entity.SysDictData;
 
 /**
  * 字典表 数据层

@@ -10,12 +10,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.wshsoft.common.constant.Constants;
 import com.wshsoft.common.constant.ShiroConstants;
+import com.wshsoft.common.core.domain.entity.SysUser;
 import com.wshsoft.common.exception.user.UserPasswordNotMatchException;
 import com.wshsoft.common.exception.user.UserPasswordRetryLimitExceedException;
 import com.wshsoft.common.utils.MessageUtils;
-import com.wshsoft.framework.async.factory.AsyncFactory;
 import com.wshsoft.framework.async.manager.AsyncManager;
-import com.wshsoft.system.domain.SysUser;
+import com.wshsoft.framework.async.factory.AsyncFactory;
 
 /**
  * 登录密码方法

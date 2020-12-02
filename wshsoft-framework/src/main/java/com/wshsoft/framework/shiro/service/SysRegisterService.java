@@ -6,12 +6,13 @@ import org.springframework.util.StringUtils;
 import com.wshsoft.common.constant.Constants;
 import com.wshsoft.common.constant.ShiroConstants;
 import com.wshsoft.common.constant.UserConstants;
+import com.wshsoft.common.core.domain.entity.SysUser;
+import com.wshsoft.common.utils.date.DateUtils;
 import com.wshsoft.common.utils.MessageUtils;
 import com.wshsoft.common.utils.servlet.ServletUtils;
-import com.wshsoft.framework.async.factory.AsyncFactory;
+import com.wshsoft.common.utils.ShiroUtils;
 import com.wshsoft.framework.async.manager.AsyncManager;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
-import com.wshsoft.system.domain.SysUser;
+import com.wshsoft.framework.async.factory.AsyncFactory;
 import com.wshsoft.system.service.SysUserService;
 
 /**
@@ -33,13 +34,13 @@ public class SysRegisterService
      */
     public String register(SysUser user)
     {
-        String msg = "", username = user.getLoginName(), password = user.getPassword();
+        String msg = "", loginName = user.getLoginName(), password = user.getPassword();
 
         if (!StringUtils.isEmpty(ServletUtils.getRequest().getAttribute(ShiroConstants.CURRENT_CAPTCHA)))
         {
             msg = "验证码错误";
         }
-        else if (StringUtils.isEmpty(username))
+        else if (StringUtils.isEmpty(loginName))
         {
             msg = "用户名不能为空";
         }
@@ -52,17 +53,19 @@ public class SysRegisterService
         {
             msg = "密码长度必须在5到20个字符之间";
         }
-        else if (username.length() < UserConstants.USERNAME_MIN_LENGTH
-                || username.length() > UserConstants.USERNAME_MAX_LENGTH)
+        else if (loginName.length() < UserConstants.USERNAME_MIN_LENGTH
+                || loginName.length() > UserConstants.USERNAME_MAX_LENGTH)
         {
             msg = "账户长度必须在2到20个字符之间";
         }
-        else if (UserConstants.USER_NAME_NOT_UNIQUE.equals(userService.checkLoginNameUnique(username)))
+        else if (UserConstants.USER_NAME_NOT_UNIQUE.equals(userService.checkLoginNameUnique(loginName)))
         {
-            msg = "保存用户'" + username + "'失败，注册账号已存在";
+            msg = "保存用户'" + loginName + "'失败，注册账号已存在";
         }
         else
         {
+            user.setPwdUpdateDate(DateUtils.getNowDate());
+            user.setUserName(loginName);
             user.setSalt(ShiroUtils.randomSalt());
             user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
             boolean regFlag = userService.registerUser(user);
@@ -72,7 +75,7 @@ public class SysRegisterService
             }
             else
             {
-                AsyncManager.me().execute(AsyncFactory.recordLoginLog(username, Constants.REGISTER, MessageUtils.message("user.register.success")));
+                AsyncManager.me().execute(AsyncFactory.recordLoginLog(loginName, Constants.REGISTER, MessageUtils.message("user.register.success")));
             }
         }
         return msg;

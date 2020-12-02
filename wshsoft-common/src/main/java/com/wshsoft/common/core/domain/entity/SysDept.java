@@ -1,4 +1,4 @@
-package com.wshsoft.system.domain;
+package com.wshsoft.common.core.domain.entity;
 
 import javax.validation.constraints.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;

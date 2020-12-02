@@ -6,19 +6,19 @@ import org.springframework.util.StringUtils;
 import com.wshsoft.common.constant.Constants;
 import com.wshsoft.common.constant.ShiroConstants;
 import com.wshsoft.common.constant.UserConstants;
+import com.wshsoft.common.core.domain.entity.SysUser;
 import com.wshsoft.common.enums.UserStatus;
 import com.wshsoft.common.exception.user.CaptchaException;
 import com.wshsoft.common.exception.user.UserBlockedException;
 import com.wshsoft.common.exception.user.UserDeleteException;
 import com.wshsoft.common.exception.user.UserNotExistsException;
 import com.wshsoft.common.exception.user.UserPasswordNotMatchException;
-import com.wshsoft.common.utils.MessageUtils;
 import com.wshsoft.common.utils.date.DateUtils;
+import com.wshsoft.common.utils.MessageUtils;
 import com.wshsoft.common.utils.servlet.ServletUtils;
-import com.wshsoft.framework.async.factory.AsyncFactory;
+import com.wshsoft.common.utils.ShiroUtils;
 import com.wshsoft.framework.async.manager.AsyncManager;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
-import com.wshsoft.system.domain.SysUser;
+import com.wshsoft.framework.async.factory.AsyncFactory;
 import com.wshsoft.system.service.SysUserService;
 
 /**
@@ -41,7 +41,7 @@ public class SysLoginService
     public SysUser login(String username, String password)
     {
         // 验证码校验
-        if (!StringUtils.isEmpty(ServletUtils.getRequest().getAttribute(ShiroConstants.CURRENT_CAPTCHA)))
+        if (ShiroConstants.CAPTCHA_ERROR.equals(ServletUtils.getRequest().getAttribute(ShiroConstants.CURRENT_CAPTCHA)))
         {
             AsyncManager.me().execute(AsyncFactory.recordLoginLog(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error")));
             throw new CaptchaException();

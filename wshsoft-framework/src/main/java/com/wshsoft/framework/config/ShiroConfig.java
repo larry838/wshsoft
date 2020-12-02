@@ -36,6 +36,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.http.HttpStatus;
 
+import com.wshsoft.common.constant.Constants;
 import com.wshsoft.framework.config.properties.RedisProperties;
 import com.wshsoft.framework.kaptcha.filter.KaptchaValidateFilter;
 import com.wshsoft.framework.shiro.credentials.RetryLimitCredentialsMatcher;
@@ -256,6 +257,7 @@ public class ShiroConfig {
     public UserRealm userRealm(RedisCacheManager cacheManager)
     {
         UserRealm userRealm = new UserRealm();
+		userRealm.setAuthorizationCacheName(Constants.SYS_AUTH_CACHE);
         userRealm.setCacheManager(cacheManager);
         return userRealm;
     }

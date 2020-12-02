@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.wshsoft.common.constant.UserConstants;
 import com.wshsoft.common.core.domain.Ztree;
+import com.wshsoft.common.core.domain.entity.SysDictData;
+import com.wshsoft.common.core.domain.entity.SysDictType;
 import com.wshsoft.common.core.text.Convert;
 import com.wshsoft.common.exception.BusinessException;
+import com.wshsoft.common.utils.DictUtils;
 import com.wshsoft.common.utils.StringUtils;
-import com.wshsoft.system.domain.SysDictData;
-import com.wshsoft.system.domain.SysDictType;
 import com.wshsoft.system.mapper.SysDictDataMapper;
 import com.wshsoft.system.mapper.SysDictTypeMapper;
 import com.wshsoft.system.service.SysDictTypeService;
-import com.wshsoft.system.utils.DictUtils;
 
 /**
  * 字典 业务层处理

@@ -4,7 +4,7 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
+import com.wshsoft.common.utils.ShiroUtils;
 
 import java.util.Date;
 import java.util.Objects;

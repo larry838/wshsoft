@@ -1,4 +1,4 @@
-package com.wshsoft.system.domain;
+package com.wshsoft.common.core.domain.entity;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -92,7 +92,7 @@ public class SysMenu extends BaseEntity
 		this.parentPath = parentPath;
 	}
 
-	public String getParentName()
+    public String getParentName()
     {
         return parentName;
     }

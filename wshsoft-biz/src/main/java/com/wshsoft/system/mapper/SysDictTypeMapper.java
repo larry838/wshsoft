@@ -1,7 +1,7 @@
 package com.wshsoft.system.mapper;
 
 import java.util.List;
-import com.wshsoft.system.domain.SysDictType;
+import com.wshsoft.common.core.domain.entity.SysDictType;
 
 /**
  * 字典表 数据层

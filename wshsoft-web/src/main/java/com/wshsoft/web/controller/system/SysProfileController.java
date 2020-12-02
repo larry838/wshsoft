@@ -15,12 +15,12 @@ import com.wshsoft.common.annotation.SysLog;
 import com.wshsoft.common.config.Global;
 import com.wshsoft.common.core.controller.BaseController;
 import com.wshsoft.common.core.domain.AjaxResult;
+import com.wshsoft.common.core.domain.entity.SysUser;
 import com.wshsoft.common.enums.BusinessType;
-import com.wshsoft.common.utils.StringUtils;
+import com.wshsoft.common.utils.date.DateUtils;
+import com.wshsoft.common.utils.ShiroUtils;
 import com.wshsoft.common.utils.file.FileUploadUtils;
 import com.wshsoft.framework.shiro.service.SysPasswordService;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
-import com.wshsoft.system.domain.SysUser;
 import com.wshsoft.system.service.SysUserService;
 
 /**
@@ -81,21 +81,23 @@ public class SysProfileController extends BaseController
     public AjaxResult resetPwd(String oldPassword, String newPassword)
     {
         SysUser user = ShiroUtils.getSysUser();
-        if (StringUtils.isNotEmpty(newPassword) && passwordService.matches(user, oldPassword))
-        {
-            user.setSalt(ShiroUtils.randomSalt());
-            user.setPassword(passwordService.encryptPassword(user.getLoginName(), newPassword, user.getSalt()));
-            if (userService.resetUserPwd(user) > 0)
-            {
-                ShiroUtils.setSysUser(userService.selectUserById(user.getUserId()));
-                return success();
-            }
-            return error();
-        }
-        else
+        if (!passwordService.matches(user, oldPassword))
         {
             return error("修改密码失败，旧密码错误");
         }
+        if (passwordService.matches(user, newPassword))
+        {
+            return error("新密码不能与旧密码相同");
+        }
+        user.setSalt(ShiroUtils.randomSalt());
+        user.setPassword(passwordService.encryptPassword(user.getLoginName(), newPassword, user.getSalt()));
+        user.setPwdUpdateDate(DateUtils.getNowDate());
+        if (userService.resetUserPwd(user) > 0)
+        {
+            ShiroUtils.setSysUser(userService.selectUserById(user.getUserId()));
+            return success();
+        }
+        return error("修改密码异常，请联系管理员");
     }
 
     /**

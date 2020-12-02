@@ -2,7 +2,7 @@ package com.wshsoft.framework.shiro.service;
 
 import java.util.Map;
 
-import com.wshsoft.system.domain.SysUser;
+import com.wshsoft.common.core.domain.entity.SysUser;
 
 
 /**

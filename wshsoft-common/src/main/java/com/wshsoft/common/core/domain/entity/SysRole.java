@@ -1,4 +1,4 @@
-package com.wshsoft.system.domain;
+package com.wshsoft.common.core.domain.entity;
 
 import javax.validation.constraints.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -176,16 +176,8 @@ public class SysRole extends BaseEntity
     {
         this.deptIds = deptIds;
     }
-    
-    private String remark;
-    
-    public String getRemark() {
-		return remark;
-	}
 
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
+    @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("roleId", getRoleId())

@@ -3,7 +3,7 @@ package com.wshsoft.framework.web.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.wshsoft.system.domain.SysDictData;
+import com.wshsoft.common.core.domain.entity.SysDictData;
 import com.wshsoft.system.service.SysDictDataService;
 import com.wshsoft.system.service.SysDictTypeService;
 

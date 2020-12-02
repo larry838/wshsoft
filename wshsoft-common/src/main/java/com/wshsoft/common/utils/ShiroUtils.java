@@ -1,26 +1,18 @@
-package com.wshsoft.framework.shiro.utils;
-
-import java.util.Objects;
+package com.wshsoft.common.utils;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
-import org.apache.shiro.subject.Subject;
-
-import com.wshsoft.common.utils.StringUtils;
+import com.wshsoft.common.core.domain.entity.SysUser;
 import com.wshsoft.common.utils.bean.BeanUtils;
-import com.wshsoft.framework.shiro.realm.UserRealm;
-import com.wshsoft.system.domain.SysUser;
-
-
 
 /**
  * shiro 工具类
  * 
- * @author Carry xie
+ * @author Larry xie
  */
 public class ShiroUtils
 {
@@ -34,7 +26,6 @@ public class ShiroUtils
         return SecurityUtils.getSubject().getSession();
     }
 
-    
     public static void logout()
     {
         getSubject().logout();
@@ -52,6 +43,16 @@ public class ShiroUtils
         return user;
     }
 
+    public static void setSysUser(SysUser user)
+    {
+        Subject subject = getSubject();
+        PrincipalCollection principalCollection = subject.getPrincipals();
+        String realmName = principalCollection.getRealmNames().iterator().next();
+        PrincipalCollection newPrincipalCollection = new SimplePrincipalCollection(user, realmName);
+        // 重新加载Principal
+        subject.runAs(newPrincipalCollection);
+    }
+
     public static Long getUserId()
     {
         return getSysUser().getUserId().longValue();
@@ -59,13 +60,12 @@ public class ShiroUtils
 
     public static String getLoginName()
     {
-    	return Objects.nonNull(getSysUser()) ? getSysUser().getLoginName():"";
+        return getSysUser().getLoginName();
     }
-   
+
     public static String getIp()
     {
-    	String ip=getSubject().getSession().getHost();
-        return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip ;
+        return getSubject().getSession().getHost();
     }
 
     public static String getSessionId()
@@ -83,24 +83,4 @@ public class ShiroUtils
         String hex = secureRandom.nextBytes(3).toHex();
         return hex;
     }
-    
-
-    public static void setSysUser(SysUser user)
-    {
-        Subject subject = getSubject();
-        PrincipalCollection principalCollection = subject.getPrincipals();
-        String realmName = principalCollection.getRealmNames().iterator().next();
-        PrincipalCollection newPrincipalCollection = new SimplePrincipalCollection(user, realmName);
-        // 重新加载Principal
-        subject.runAs(newPrincipalCollection);
-    }
-    
-
-    public static void clearCachedAuthorizationInfo()
-    {
-        RealmSecurityManager rsm = (RealmSecurityManager) SecurityUtils.getSecurityManager();
-        UserRealm realm = (UserRealm) rsm.getRealms().iterator().next();
-        realm.clearCachedAuthorizationInfo();
-    }
-
 }

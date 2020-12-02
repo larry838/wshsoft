@@ -20,7 +20,7 @@ import com.wshsoft.common.enums.BusinessType;
 import com.wshsoft.common.enums.OnlineStatus;
 import com.wshsoft.framework.shiro.session.OnlineSession;
 import com.wshsoft.framework.shiro.session.OnlineSessionDAO;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
+import com.wshsoft.common.utils.ShiroUtils;
 import com.wshsoft.system.domain.SysUserOnline;
 import com.wshsoft.system.service.SysUserOnlineService;
 

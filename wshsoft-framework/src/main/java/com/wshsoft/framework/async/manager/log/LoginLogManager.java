@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import com.wshsoft.system.domain.SysLoginLog;
 import com.wshsoft.system.service.SysLoginLogService;
 
+/**
+ *@author Larry xie
+ */
 
 @Service
 public class LoginLogManager {

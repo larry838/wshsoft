@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 import com.wshsoft.system.domain.SysOperLog;
 import com.wshsoft.system.service.SysOperLogService;
 
-
-
+/**
+ *@author Larry xie
+ */
 
 @Service
 public class SysOperLogManager {

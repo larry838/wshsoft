@@ -10,11 +10,11 @@ import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import com.wshsoft.common.constant.ShiroConstants;
+import com.wshsoft.common.core.domain.entity.SysUser;
 import com.wshsoft.common.enums.OnlineStatus;
+import com.wshsoft.common.utils.ShiroUtils;
 import com.wshsoft.framework.shiro.session.OnlineSession;
 import com.wshsoft.framework.shiro.session.OnlineSessionDAO;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
-import com.wshsoft.system.domain.SysUser;
 
 /**
  * 自定义访问控制

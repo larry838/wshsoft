@@ -18,11 +18,9 @@ import com.wshsoft.common.constant.UserConstants;
 import com.wshsoft.common.enums.BusinessType;
 import com.wshsoft.sys.domain.Dept;
 import com.wshsoft.sys.service.DeptService;
-import com.wshsoft.system.domain.SysDept;
 import com.wshsoft.common.core.controller.BaseController;
 import com.wshsoft.common.core.domain.AjaxResult;
 import com.wshsoft.common.utils.poi.ExcelUtil;
-import com.wshsoft.common.core.text.Convert;
 import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.core.domain.Ztree;
 

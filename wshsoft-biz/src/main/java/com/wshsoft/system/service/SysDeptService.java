@@ -2,8 +2,8 @@ package com.wshsoft.system.service;
 
 import java.util.List;
 import com.wshsoft.common.core.domain.Ztree;
-import com.wshsoft.system.domain.SysDept;
-import com.wshsoft.system.domain.SysRole;
+import com.wshsoft.common.core.domain.entity.SysDept;
+import com.wshsoft.common.core.domain.entity.SysRole;
 
 /**
  * 部门管理 服务层

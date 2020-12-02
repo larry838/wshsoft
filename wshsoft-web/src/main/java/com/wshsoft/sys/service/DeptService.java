@@ -1,7 +1,6 @@
 package com.wshsoft.sys.service;
 
 import com.wshsoft.sys.domain.Dept;
-import com.wshsoft.system.domain.SysDept;
 
 import java.util.List;
 import com.wshsoft.common.core.domain.Ztree;

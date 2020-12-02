@@ -7,15 +7,14 @@ import org.apache.shiro.session.SessionException;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.wshsoft.common.constant.Constants;
+import com.wshsoft.common.core.domain.entity.SysUser;
 import com.wshsoft.common.utils.MessageUtils;
+import com.wshsoft.common.utils.ShiroUtils;
 import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.utils.spring.SpringUtils;
-import com.wshsoft.framework.async.factory.AsyncFactory;
 import com.wshsoft.framework.async.manager.AsyncManager;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
-import com.wshsoft.system.domain.SysUser;
+import com.wshsoft.framework.async.factory.AsyncFactory;
 import com.wshsoft.system.service.SysUserOnlineService;
 
 /**

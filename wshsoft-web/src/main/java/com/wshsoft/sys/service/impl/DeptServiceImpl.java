@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.wshsoft.sys.mapper.DeptMapper;
 import com.wshsoft.sys.domain.Dept;
 import com.wshsoft.sys.service.DeptService;
-import com.wshsoft.system.domain.SysDept;
 
 /**
  * 部门 Service业务层实现

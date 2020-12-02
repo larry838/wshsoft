@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.wshsoft.sys.domain.Dept;
-import com.wshsoft.system.domain.SysDept;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -50,11 +49,10 @@ import com.wshsoft.common.config.Global;
 import com.wshsoft.common.core.domain.AjaxResult;
 import com.wshsoft.common.core.text.Convert;
 import com.wshsoft.common.exception.BusinessException;
+import com.wshsoft.common.utils.DictUtils;
 import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.utils.date.DateUtils;
 import com.wshsoft.common.utils.reflect.ReflectUtils;
-import com.wshsoft.common.utils.spring.SpringUtils;
-
 /**
  * Excel相关处理
  * 
@@ -279,6 +277,10 @@ public class ExcelUtil<T>
                         {
                             val = DateUtil.getJavaDate((Double) val);
                         }
+                    }
+                    else if (Boolean.TYPE == fieldType || Boolean.class == fieldType)
+                    {
+                        val = Convert.toBool(val, false);
                     }
                     if (StringUtils.isNotNull(fieldType))
                     {
@@ -746,10 +748,7 @@ public class ExcelUtil<T>
      */
     public static String convertDictByExp(String dictValue, String dictType, String separator) throws Exception
     {
-        Object bean = SpringUtils.getBean("dictUtils");
-        String methodName = "getDictLabel";
-        Method method = bean.getClass().getDeclaredMethod(methodName, String.class, String.class, String.class);
-        return Convert.toStr(method.invoke(bean, dictType, dictValue, separator));
+        return DictUtils.getDictLabel(dictType, dictValue, separator);
     }
 
     /**
@@ -762,10 +761,7 @@ public class ExcelUtil<T>
      */
     public static String reverseDictByExp(String dictLabel, String dictType, String separator) throws Exception
     {
-        Object bean = SpringUtils.getBean("dictUtils");
-        String methodName = "getDictValue";
-        Method method = bean.getClass().getDeclaredMethod(methodName, String.class, String.class, String.class);
-        return Convert.toStr(method.invoke(bean, dictType, dictLabel, separator));
+        return DictUtils.getDictValue(dictType, dictLabel, separator);
     }
 
     /**

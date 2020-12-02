@@ -2,7 +2,7 @@ package com.wshsoft.system.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import com.wshsoft.system.domain.SysDept;
+import com.wshsoft.common.core.domain.entity.SysDept;
 
 /**
  * 部门管理 数据层

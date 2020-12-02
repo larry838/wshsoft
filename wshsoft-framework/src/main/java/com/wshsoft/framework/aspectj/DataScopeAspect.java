@@ -10,10 +10,10 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import com.wshsoft.common.annotation.DataScope;
 import com.wshsoft.common.core.domain.BaseEntity;
+import com.wshsoft.common.core.domain.entity.SysRole;
+import com.wshsoft.common.core.domain.entity.SysUser;
+import com.wshsoft.common.utils.ShiroUtils;
 import com.wshsoft.common.utils.StringUtils;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
-import com.wshsoft.system.domain.SysRole;
-import com.wshsoft.system.domain.SysUser;
 
 /**
  * 数据过滤处理

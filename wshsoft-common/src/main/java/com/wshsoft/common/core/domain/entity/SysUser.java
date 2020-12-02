@@ -1,10 +1,11 @@
-package com.wshsoft.system.domain;
+package com.wshsoft.common.core.domain.entity;
 
 import java.util.Date;
 import java.util.List;
 import javax.validation.constraints.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wshsoft.common.annotation.Excel;
 import com.wshsoft.common.annotation.Excel.ColumnType;
 import com.wshsoft.common.annotation.Excel.Type;
@@ -81,6 +82,9 @@ public class SysUser extends BaseEntity
     @Excel(name = "最后登录时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Type.EXPORT)
     private Date loginDate;
 
+    /** 密码最后更新时间 */
+    private Date pwdUpdateDate;
+
     /** 部门对象 */
     @Excels({
         @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
@@ -121,7 +125,7 @@ public class SysUser extends BaseEntity
 		this.modifyed = modifyed;
 	}
 
-	public SysUser(Long userId)
+    public SysUser(Long userId)
     {
         this.userId = userId;
     }
@@ -199,6 +203,16 @@ public class SysUser extends BaseEntity
         this.userName = userName;
     }
 
+    public String getUserType()
+    {
+        return userType;
+    }
+
+    public void setUserType(String userType)
+    {
+        this.userType = userType;
+    }
+
     @Email(message = "邮箱格式不正确")
     @Size(min = 0, max = 50, message = "邮箱长度不能超过50个字符")
     public String getEmail()
@@ -242,6 +256,7 @@ public class SysUser extends BaseEntity
         this.avatar = avatar;
     }
 
+    @JsonIgnore
     public String getPassword()
     {
         return password;
@@ -302,6 +317,16 @@ public class SysUser extends BaseEntity
         this.loginDate = loginDate;
     }
 
+    public Date getPwdUpdateDate()
+    {
+        return pwdUpdateDate;
+    }
+
+    public void setPwdUpdateDate(Date pwdUpdateDate)
+    {
+        this.pwdUpdateDate = pwdUpdateDate;
+    }
+
     public SysDept getDept()
     {
         if (dept == null)
@@ -346,15 +371,7 @@ public class SysUser extends BaseEntity
         this.postIds = postIds;
     }
 
-    public String getUserType() {
-		return userType;
-	}
-
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
-
-	@Override
+    @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("userId", getUserId())

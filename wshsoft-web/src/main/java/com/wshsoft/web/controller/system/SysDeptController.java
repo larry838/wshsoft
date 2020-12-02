@@ -19,10 +19,10 @@ import com.wshsoft.common.core.controller.BaseController;
 import com.wshsoft.common.core.domain.AjaxResult;
 import com.wshsoft.common.core.domain.Ztree;
 import com.wshsoft.common.enums.BusinessType;
+import com.wshsoft.common.utils.ShiroUtils;
 import com.wshsoft.common.utils.StringUtils;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
-import com.wshsoft.system.domain.SysDept;
-import com.wshsoft.system.domain.SysRole;
+import com.wshsoft.common.core.domain.entity.SysDept;
+import com.wshsoft.common.core.domain.entity.SysRole;
 import com.wshsoft.system.service.SysDeptService;
 
 /**

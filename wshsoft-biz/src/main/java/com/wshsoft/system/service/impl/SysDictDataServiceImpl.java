@@ -3,11 +3,11 @@ package com.wshsoft.system.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.wshsoft.common.core.domain.entity.SysDictData;
 import com.wshsoft.common.core.text.Convert;
-import com.wshsoft.system.domain.SysDictData;
+import com.wshsoft.common.utils.DictUtils;
 import com.wshsoft.system.mapper.SysDictDataMapper;
 import com.wshsoft.system.service.SysDictDataService;
-import com.wshsoft.system.utils.DictUtils;
 
 /**
  * 字典 业务层处理

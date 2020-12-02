@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import com.google.code.kaptcha.Constants;
 import com.wshsoft.common.constant.ShiroConstants;
+import com.wshsoft.common.utils.ShiroUtils;
 import com.wshsoft.common.utils.StringUtils;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
 
 
 /**

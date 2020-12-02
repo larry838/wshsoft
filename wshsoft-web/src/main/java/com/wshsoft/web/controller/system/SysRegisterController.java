@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.wshsoft.common.core.controller.BaseController;
 import com.wshsoft.common.core.domain.AjaxResult;
+import com.wshsoft.common.core.domain.entity.SysUser;
 import com.wshsoft.framework.shiro.service.SysRegisterService;
-import com.wshsoft.system.domain.SysUser;
 import com.wshsoft.system.service.SysConfigService;
 
 /**

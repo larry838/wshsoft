@@ -19,7 +19,7 @@ import org.springframework.util.StringUtils;
 import com.wshsoft.framework.holder.SpringContextHolder;
 import com.wshsoft.framework.shiro.realm.UserRealm;
 import com.wshsoft.framework.shiro.service.ShiroService;
-import com.wshsoft.system.domain.SysUser;
+import com.wshsoft.common.core.domain.entity.SysUser;
 import com.wshsoft.system.service.SysMenuService;
 import com.wshsoft.system.service.SysUserService;
 

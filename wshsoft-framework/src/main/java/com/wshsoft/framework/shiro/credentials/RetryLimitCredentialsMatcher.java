@@ -15,7 +15,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import com.wshsoft.common.constant.Constants;
 import com.wshsoft.framework.async.factory.AsyncFactory;
 import com.wshsoft.framework.async.manager.AsyncManager;
-import com.wshsoft.system.domain.SysUser;
+import com.wshsoft.common.core.domain.entity.SysUser;
 import com.wshsoft.system.service.SysUserService;
 
 import lombok.extern.slf4j.Slf4j;

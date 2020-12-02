@@ -1,7 +1,7 @@
 package com.wshsoft.system.service;
 
 import java.util.List;
-import com.wshsoft.system.domain.SysDictData;
+import com.wshsoft.common.core.domain.entity.SysDictData;
 
 /**
  * 字典 业务层

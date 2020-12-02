@@ -15,12 +15,13 @@ import com.wshsoft.common.annotation.SysLog;
 import com.wshsoft.common.constant.UserConstants;
 import com.wshsoft.common.core.controller.BaseController;
 import com.wshsoft.common.core.domain.AjaxResult;
+import com.wshsoft.common.core.domain.entity.SysRole;
+import com.wshsoft.common.core.domain.entity.SysUser;
 import com.wshsoft.common.core.page.TableDataInfo;
 import com.wshsoft.common.enums.BusinessType;
+import com.wshsoft.common.utils.ShiroUtils;
 import com.wshsoft.common.utils.poi.ExcelUtil;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
-import com.wshsoft.system.domain.SysRole;
-import com.wshsoft.system.domain.SysUser;
+import com.wshsoft.framework.shiro.utils.AuthorizationUtils;
 import com.wshsoft.system.domain.SysUserRole;
 import com.wshsoft.system.service.SysRoleService;
 import com.wshsoft.system.service.SysUserService;
@@ -97,7 +98,7 @@ public class SysRoleController extends BaseController
             return error("新增角色'" + role.getRoleName() + "'失败，角色权限已存在");
         }
         role.setCreateBy(ShiroUtils.getLoginName());
-        ShiroUtils.clearCachedAuthorizationInfo();
+        AuthorizationUtils.clearAllCachedAuthorizationInfo();
         return toAjax(roleService.insertRole(role));
 
     }
@@ -131,7 +132,7 @@ public class SysRoleController extends BaseController
             return error("修改角色'" + role.getRoleName() + "'失败，角色权限已存在");
         }
         role.setUpdateBy(ShiroUtils.getLoginName());
-        ShiroUtils.clearCachedAuthorizationInfo();
+        AuthorizationUtils.clearAllCachedAuthorizationInfo();
         return toAjax(roleService.updateRole(role));
     }
 

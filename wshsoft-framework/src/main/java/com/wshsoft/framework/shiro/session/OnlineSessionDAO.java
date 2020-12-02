@@ -8,8 +8,8 @@ import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import com.wshsoft.common.enums.OnlineStatus;
-import com.wshsoft.framework.async.factory.AsyncFactory;
 import com.wshsoft.framework.async.manager.AsyncManager;
+import com.wshsoft.framework.async.factory.AsyncFactory;
 import com.wshsoft.framework.shiro.service.SysShiroService;
 
 /**
@@ -80,7 +80,7 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO
             boolean isGuest = onlineSession.getUserId() == null || onlineSession.getUserId() == 0L;
 
             // session 数据变更了 同步
-            if (!isGuest == false && onlineSession.isAttributeChanged())
+            if (!isGuest && onlineSession.isAttributeChanged())
             {
                 needSync = true;
             }

@@ -15,15 +15,15 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.support.spring.PropertyPreFilters;
 import com.wshsoft.common.annotation.SysLog;
+import com.wshsoft.common.core.domain.entity.SysUser;
 import com.wshsoft.common.enums.BusinessStatus;
 import com.wshsoft.common.json.JSON;
-import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.utils.servlet.ServletUtils;
-import com.wshsoft.framework.async.factory.AsyncFactory;
+import com.wshsoft.common.utils.ShiroUtils;
+import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.framework.async.manager.AsyncManager;
-import com.wshsoft.framework.shiro.utils.ShiroUtils;
+import com.wshsoft.framework.async.factory.AsyncFactory;
 import com.wshsoft.system.domain.SysOperLog;
-import com.wshsoft.system.domain.SysUser;
 
 /**
  * 操作日志记录处理
