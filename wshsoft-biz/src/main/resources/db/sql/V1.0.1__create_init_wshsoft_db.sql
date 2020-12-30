@@ -23,7 +23,7 @@ CREATE TABLE `gen_table` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`table_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='代码生成业务表';
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='代码生成业务表';
 
 -- ----------------------------
 -- Records of gen_table
@@ -58,7 +58,7 @@ CREATE TABLE `gen_table_column` (
   `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`column_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=297 DEFAULT CHARSET=utf8 COMMENT='代码生成业务表字段';
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='代码生成业务表字段';
 
 -- ----------------------------
 -- Records of gen_table_column
@@ -302,7 +302,7 @@ CREATE TABLE `sys_company` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`company_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8 COMMENT='公司表';
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8 COMMENT='公司表';
 
 -- ----------------------------
 -- Records of sys_company
@@ -364,7 +364,7 @@ CREATE TABLE `sys_dept` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`dept_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8 COMMENT='部门表';
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8 COMMENT='部门表';
 
 -- ----------------------------
 -- Records of sys_dept
@@ -548,7 +548,8 @@ CREATE TABLE `sys_menu` (
   `url` varchar(200) DEFAULT '#' COMMENT '请求地址',
   `target` varchar(20) DEFAULT '' COMMENT '打开方式（menuItem页签 menuBlank新窗口）',
   `menu_type` char(1) DEFAULT '' COMMENT '菜单类型（M目录 C菜单 F按钮）',
-  `visible` char(1) DEFAULT '0' COMMENT '菜单状态（0显示 1隐藏）',
+  `visible` char(1) NOT NULL DEFAULT '0' COMMENT '菜单状态（0显示 1隐藏）',
+  `is_refresh` char(1) NOT NULL DEFAULT '1' COMMENT '是否刷新（0刷新 1不刷新）',
   `permission_code` varchar(100) DEFAULT NULL COMMENT '权限标识',
   `icon` varchar(100) DEFAULT '#' COMMENT '菜单图标',
   `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
@@ -557,95 +558,94 @@ CREATE TABLE `sys_menu` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1098 DEFAULT CHARSET=utf8 COMMENT='菜单权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8 COMMENT='菜单权限表';
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES ('1', '系统管理', '0', null, '1', '#', '', 'M', '0', '', 'fa fa-gear', 'root', now(), '', null, '系统管理目录');
-INSERT INTO `sys_menu` VALUES ('2', '系统监控', '0', null, '2', '#', '', 'M', '0', '', 'fa fa-video-camera', 'root', now(), '', null, '系统监控目录');
-INSERT INTO `sys_menu` VALUES ('3', '系统工具', '0', null, '3', '#', '', 'M', '0', '', 'fa fa-bars', 'root', now(), '', null, '系统工具目录');
-INSERT INTO `sys_menu` VALUES ('4', '用户管理', '1', null, '1', '/system/user', '', 'C', '0', 'system:user:view', '#', 'root', now(), '', null, '用户管理菜单');
-INSERT INTO `sys_menu` VALUES ('5', '角色管理', '1', null, '2', '/system/role', '', 'C', '0', 'system:role:view', '#', 'root', now(), '', null, '角色管理菜单');
-INSERT INTO `sys_menu` VALUES ('6', '菜单管理', '1', null, '3', '/system/menu', '', 'C', '0', 'system:menu:view', '#', 'root', now(), '', null, '菜单管理菜单');
-INSERT INTO `sys_menu` VALUES ('7', '部门管理', '1', null, '4', '/system/dept', '', 'C', '0', 'system:dept:view', '#', 'root', now(), '', null, '部门管理菜单');
-INSERT INTO `sys_menu` VALUES ('8', '岗位管理', '1', null, '5', '/system/post', '', 'C', '0', 'system:post:view', '#', 'root', now(), '', null, '岗位管理菜单');
-INSERT INTO `sys_menu` VALUES ('9', '字典管理', '1', null, '6', '/system/dict', '', 'C', '0', 'system:dict:view', '#', 'root', now(), '', null, '字典管理菜单');
-INSERT INTO `sys_menu` VALUES ('10', '参数设置', '1', null, '7', '/system/config', '', 'C', '0', 'system:config:view', '#', 'root', now(), '', null, '参数设置菜单');
-INSERT INTO `sys_menu` VALUES ('11', '通知公告', '1', null, '8', '/system/notice', '', 'C', '0', 'system:notice:view', '#', 'root', now(), '', null, '通知公告菜单');
-INSERT INTO `sys_menu` VALUES ('12', '日志管理', '1', null, '9', '#', '', 'M', '0', '', '#', 'root', now(), '', null, '日志管理菜单');
-INSERT INTO `sys_menu` VALUES ('13', '在线用户', '2', null, '1', '/monitor/online', '', 'C', '0', 'monitor:online:view', '#', 'root', now(), '', null, '在线用户菜单');
-INSERT INTO `sys_menu` VALUES ('14', '定时任务', '2', null, '2', '/monitor/job', '', 'C', '0', 'monitor:job:view', '#', 'root', now(), '', null, '定时任务菜单');
-INSERT INTO `sys_menu` VALUES ('15', '数据监控', '2', null, '3', '/monitor/data', '', 'C', '0', 'monitor:data:view', '#', 'root', now(), '', null, '数据监控菜单');
-INSERT INTO `sys_menu` VALUES ('16', '服务监控', '2', null, '3', '/monitor/server', '', 'C', '0', 'monitor:server:view', '#', 'root', now(), '', null, '服务监控菜单');
-INSERT INTO `sys_menu` VALUES ('17', '表单构建', '3', null, '1', '/tool/build', '', 'C', '0', 'tool:build:view', '#', 'root', now(), '', null, '表单构建菜单');
-INSERT INTO `sys_menu` VALUES ('18', '代码生成', '3', null, '2', '/tool/gen', '', 'C', '0', 'tool:gen:view', '#', 'root', now(), '', null, '代码生成菜单');
-INSERT INTO `sys_menu` VALUES ('19', '系统接口', '3', null, '3', '/tool/swagger', '', 'C', '0', 'tool:swagger:view', '#', 'root', now(), '', null, '系统接口菜单');
-INSERT INTO `sys_menu` VALUES ('20', '操作日志', '12', null, '1', '/monitor/operlog', '', 'C', '0', 'monitor:operlog:view', '#', 'root', now(), '', null, '操作日志菜单');
-INSERT INTO `sys_menu` VALUES ('21', '登录日志', '12', null, '2', '/monitor/loginLog', '', 'C', '0', 'monitor:loginLog:view', '#', 'root', now(), '', null, '登录日志菜单');
-INSERT INTO `sys_menu` VALUES ('22', '用户查询', '4', null, '1', '#', '', 'F', '0', 'system:user:list', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('23', '用户新增', '4', null, '2', '#', '', 'F', '0', 'system:user:add', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('24', '用户修改', '4', null, '3', '#', '', 'F', '0', 'system:user:edit', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('25', '用户删除', '4', null, '4', '#', '', 'F', '0', 'system:user:remove', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('26', '用户导出', '4', null, '5', '#', '', 'F', '0', 'system:user:export', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('27', '用户导入', '4', null, '6', '#', '', 'F', '0', 'system:user:import', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('28', '重置密码', '4', null, '7', '#', '', 'F', '0', 'system:user:resetPwd', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('29', '角色查询', '5', null, '1', '#', '', 'F', '0', 'system:role:list', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('30', '角色新增', '5', null, '2', '#', '', 'F', '0', 'system:role:add', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('31', '角色修改', '5', null, '3', '#', '', 'F', '0', 'system:role:edit', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('32', '角色删除', '5', null, '4', '#', '', 'F', '0', 'system:role:remove', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('33', '角色导出', '5', null, '5', '#', '', 'F', '0', 'system:role:export', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('34', '菜单查询', '6', null, '1', '#', '', 'F', '0', 'system:menu:list', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('35', '菜单新增', '6', null, '2', '#', '', 'F', '0', 'system:menu:add', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('36', '菜单修改', '6', null, '3', '#', '', 'F', '0', 'system:menu:edit', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('37', '菜单删除', '6', null, '4', '#', '', 'F', '0', 'system:menu:remove', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('38', '部门查询', '7', null, '1', '#', '', 'F', '0', 'system:dept:list', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('39', '部门新增', '7', null, '2', '#', '', 'F', '0', 'system:dept:add', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('40', '部门修改', '7', null, '3', '#', '', 'F', '0', 'system:dept:edit', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('41', '部门删除', '7', null, '4', '#', '', 'F', '0', 'system:dept:remove', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('42', '岗位查询', '8', null, '1', '#', '', 'F', '0', 'system:post:list', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('43', '岗位新增', '8', null, '2', '#', '', 'F', '0', 'system:post:add', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('44', '岗位修改', '8', null, '3', '#', '', 'F', '0', 'system:post:edit', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('45', '岗位删除', '8', null, '4', '#', '', 'F', '0', 'system:post:remove', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('46', '岗位导出', '8', null, '5', '#', '', 'F', '0', 'system:post:export', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('47', '字典查询', '9', null, '1', '#', '', 'F', '0', 'system:dict:list', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('48', '字典新增', '9', null, '2', '#', '', 'F', '0', 'system:dict:add', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('49', '字典修改', '9', null, '3', '#', '', 'F', '0', 'system:dict:edit', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('50', '字典删除', '9', null, '4', '#', '', 'F', '0', 'system:dict:remove', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('51', '字典导出', '9', null, '5', '#', '', 'F', '0', 'system:dict:export', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('52', '参数查询', '10', null, '1', '#', '', 'F', '0', 'system:config:list', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('53', '参数新增', '10', null, '2', '#', '', 'F', '0', 'system:config:add', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('54', '参数修改', '10', null, '3', '#', '', 'F', '0', 'system:config:edit', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('55', '参数删除', '10', null, '4', '#', '', 'F', '0', 'system:config:remove', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('56', '参数导出', '10', null, '5', '#', '', 'F', '0', 'system:config:export', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('57', '公告查询', '11', null, '1', '#', '', 'F', '0', 'system:notice:list', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('58', '公告新增', '11', null, '2', '#', '', 'F', '0', 'system:notice:add', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('59', '公告修改', '11', null, '3', '#', '', 'F', '0', 'system:notice:edit', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('60', '公告删除', '11', null, '4', '#', '', 'F', '0', 'system:notice:remove', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('61', '操作查询', '20', null, '1', '#', '', 'F', '0', 'monitor:operlog:list', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('62', '操作删除', '20', null, '2', '#', '', 'F', '0', 'monitor:operlog:remove', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('63', '详细信息', '20', null, '3', '#', '', 'F', '0', 'monitor:operlog:detail', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('64', '日志导出', '20', null, '4', '#', '', 'F', '0', 'monitor:operlog:export', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('65', '登录查询', '21', null, '1', '#', '', 'F', '0', 'monitor:loginLog:list', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('66', '登录删除', '21', null, '2', '#', '', 'F', '0', 'monitor:loginLog:remove', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('67', '日志导出', '21', null, '3', '#', '', 'F', '0', 'monitor:loginLog:export', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('68', '账户解锁', '21', null, '4', '#', '', 'F', '0', 'monitor:loginLog:unlock', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('69', '在线查询', '13', null, '1', '#', '', 'F', '0', 'monitor:online:list', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('70', '批量强退', '13', null, '2', '#', '', 'F', '0', 'monitor:online:batchForceLogout', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('71', '单条强退', '13', null, '3', '#', '', 'F', '0', 'monitor:online:forceLogout', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('72', '任务查询', '14', null, '1', '#', '', 'F', '0', 'monitor:job:list', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('73', '任务新增', '14', null, '2', '#', '', 'F', '0', 'monitor:job:add', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('74', '任务修改', '14', null, '3', '#', '', 'F', '0', 'monitor:job:edit', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('75', '任务删除', '14', null, '4', '#', '', 'F', '0', 'monitor:job:remove', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('76', '状态修改', '14', null, '5', '#', '', 'F', '0', 'monitor:job:changeStatus', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('77', '任务详细', '14', null, '6', '#', '', 'F', '0', 'monitor:job:detail', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('78', '任务导出', '14', null, '7', '#', '', 'F', '0', 'monitor:job:export', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('79', '生成查询', '18', null, '1', '#', '', 'F', '0', 'tool:gen:list', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('80', '生成修改', '18', null, '2', '#', '', 'F', '0', 'tool:gen:edit', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('81', '生成删除', '18', null, '3', '#', '', 'F', '0', 'tool:gen:remove', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('82', '预览代码', '18', null, '4', '#', '', 'F', '0', 'tool:gen:preview', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('83', '生成代码', '18', null, '5', '#', '', 'F', '0', 'tool:gen:code', '#', 'root', now(), '', null, '');
-INSERT INTO `sys_menu` VALUES ('84','系统接口','3',null,3,'/tool/swagger','','C','0','tool:swagger:view','fa fa-gg','root',now(),'',null,'系统接口菜单');
+INSERT INTO `sys_menu` VALUES ('1', '系统管理', '0', null, '1', '#', '', 'M', '0', '1', '', 'fa fa-gear', 'root', now(), '', null, '系统管理目录');
+INSERT INTO `sys_menu` VALUES ('2', '系统监控', '0', null, '2', '#', '', 'M', '0', '1', '', 'fa fa-video-camera', 'root', now(), '', null, '系统监控目录');
+INSERT INTO `sys_menu` VALUES ('3', '系统工具', '0', null, '3', '#', '', 'M', '0', '1', '', 'fa fa-bars', 'root', now(), '', null, '系统工具目录');
+INSERT INTO `sys_menu` VALUES ('4', '用户管理', '1', null, '1', '/system/user', '', 'C', '0', '1', 'system:user:view', '#', 'root', now(), '', null, '用户管理菜单');
+INSERT INTO `sys_menu` VALUES ('5', '角色管理', '1', null, '2', '/system/role', '', 'C', '0', '1', 'system:role:view', '#', 'root', now(), '', null, '角色管理菜单');
+INSERT INTO `sys_menu` VALUES ('6', '菜单管理', '1', null, '3', '/system/menu', '', 'C', '0', '1', 'system:menu:view', '#', 'root', now(), '', null, '菜单管理菜单');
+INSERT INTO `sys_menu` VALUES ('7', '部门管理', '1', null, '4', '/system/dept', '', 'C', '0', '1', 'system:dept:view', '#', 'root', now(), '', null, '部门管理菜单');
+INSERT INTO `sys_menu` VALUES ('8', '岗位管理', '1', null, '5', '/system/post', '', 'C', '0', '1', 'system:post:view', '#', 'root', now(), '', null, '岗位管理菜单');
+INSERT INTO `sys_menu` VALUES ('9', '字典管理', '1', null, '6', '/system/dict', '', 'C', '0', '1', 'system:dict:view', '#', 'root', now(), '', null, '字典管理菜单');
+INSERT INTO `sys_menu` VALUES ('10', '参数设置', '1', null, '7', '/system/config', '', 'C', '0', '1', 'system:config:view', '#', 'root', now(), '', null, '参数设置菜单');
+INSERT INTO `sys_menu` VALUES ('11', '通知公告', '1', null, '8', '/system/notice', '', 'C', '0', '1', 'system:notice:view', '#', 'root', now(), '', null, '通知公告菜单');
+INSERT INTO `sys_menu` VALUES ('12', '日志管理', '1', null, '9', '#', '', 'M', '0', '1', '', '#', 'root', now(), '', null, '日志管理菜单');
+INSERT INTO `sys_menu` VALUES ('13', '在线用户', '2', null, '1', '/monitor/online', '', 'C', '0', '1', 'monitor:online:view', '#', 'root', now(), '', null, '在线用户菜单');
+INSERT INTO `sys_menu` VALUES ('14', '定时任务', '2', null, '2', '/monitor/job', '', 'C', '0', '1', 'monitor:job:view', '#', 'root', now(), '', null, '定时任务菜单');
+INSERT INTO `sys_menu` VALUES ('15', '数据监控', '2', null, '3', '/monitor/data', '', 'C', '0', '1', 'monitor:data:view', '#', 'root', now(), '', null, '数据监控菜单');
+INSERT INTO `sys_menu` VALUES ('16', '服务监控', '2', null, '3', '/monitor/server', '', 'C', '0', '1', 'monitor:server:view', '#', 'root', now(), '', null, '服务监控菜单');
+INSERT INTO `sys_menu` VALUES ('17', '表单构建', '3', null, '1', '/tool/build', '', 'C', '0', '1', 'tool:build:view', '#', 'root', now(), '', null, '表单构建菜单');
+INSERT INTO `sys_menu` VALUES ('18', '代码生成', '3', null, '2', '/tool/gen', '', 'C', '0', '1', 'tool:gen:view', '#', 'root', now(), '', null, '代码生成菜单');
+INSERT INTO `sys_menu` VALUES ('19', '系统接口', '3', null, '3', '/tool/swagger', '', 'C', '0', '1', 'tool:swagger:view', 'fa fa-gg', 'root', now(), '', null, '系统接口菜单');
+INSERT INTO `sys_menu` VALUES ('20', '操作日志', '12', null, '1', '/monitor/operlog', '', 'C', '0', '1', 'monitor:operlog:view', '#', 'root', now(), '', null, '操作日志菜单');
+INSERT INTO `sys_menu` VALUES ('21', '登录日志', '12', null, '2', '/monitor/loginLog', '', 'C', '0', '1', 'monitor:loginLog:view', '#', 'root', now(), '', null, '登录日志菜单');
+INSERT INTO `sys_menu` VALUES ('22', '用户查询', '4', null, '1', '#', '', 'F', '0', '1', 'system:user:list', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('23', '用户新增', '4', null, '2', '#', '', 'F', '0', '1', 'system:user:add', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('24', '用户修改', '4', null, '3', '#', '', 'F', '0', '1', 'system:user:edit', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('25', '用户删除', '4', null, '4', '#', '', 'F', '0', '1', 'system:user:remove', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('26', '用户导出', '4', null, '5', '#', '', 'F', '0', '1', 'system:user:export', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('27', '用户导入', '4', null, '6', '#', '', 'F', '0', '1', 'system:user:import', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('28', '重置密码', '4', null, '7', '#', '', 'F', '0', '1', 'system:user:resetPwd', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('29', '角色查询', '5', null, '1', '#', '', 'F', '0', '1', 'system:role:list', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('30', '角色新增', '5', null, '2', '#', '', 'F', '0', '1', 'system:role:add', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('31', '角色修改', '5', null, '3', '#', '', 'F', '0', '1', 'system:role:edit', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('32', '角色删除', '5', null, '4', '#', '', 'F', '0', '1', 'system:role:remove', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('33', '角色导出', '5', null, '5', '#', '', 'F', '0', '1', 'system:role:export', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('34', '菜单查询', '6', null, '1', '#', '', 'F', '0', '1', 'system:menu:list', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('35', '菜单新增', '6', null, '2', '#', '', 'F', '0', '1', 'system:menu:add', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('36', '菜单修改', '6', null, '3', '#', '', 'F', '0', '1', 'system:menu:edit', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('37', '菜单删除', '6', null, '4', '#', '', 'F', '0', '1', 'system:menu:remove', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('38', '部门查询', '7', null, '1', '#', '', 'F', '0', '1', 'system:dept:list', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('39', '部门新增', '7', null, '2', '#', '', 'F', '0', '1', 'system:dept:add', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('40', '部门修改', '7', null, '3', '#', '', 'F', '0', '1', 'system:dept:edit', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('41', '部门删除', '7', null, '4', '#', '', 'F', '0', '1', 'system:dept:remove', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('42', '岗位查询', '8', null, '1', '#', '', 'F', '0', '1', 'system:post:list', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('43', '岗位新增', '8', null, '2', '#', '', 'F', '0', '1', 'system:post:add', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('44', '岗位修改', '8', null, '3', '#', '', 'F', '0', '1', 'system:post:edit', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('45', '岗位删除', '8', null, '4', '#', '', 'F', '0', '1', 'system:post:remove', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('46', '岗位导出', '8', null, '5', '#', '', 'F', '0', '1', 'system:post:export', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('47', '字典查询', '9', null, '1', '#', '', 'F', '0', '1', 'system:dict:list', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('48', '字典新增', '9', null, '2', '#', '', 'F', '0', '1', 'system:dict:add', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('49', '字典修改', '9', null, '3', '#', '', 'F', '0', '1', 'system:dict:edit', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('50', '字典删除', '9', null, '4', '#', '', 'F', '0', '1', 'system:dict:remove', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('51', '字典导出', '9', null, '5', '#', '', 'F', '0', '1', 'system:dict:export', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('52', '参数查询', '10', null, '1', '#', '', 'F', '0', '1', 'system:config:list', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('53', '参数新增', '10', null, '2', '#', '', 'F', '0', '1', 'system:config:add', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('54', '参数修改', '10', null, '3', '#', '', 'F', '0', '1', 'system:config:edit', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('55', '参数删除', '10', null, '4', '#', '', 'F', '0', '1', 'system:config:remove', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('56', '参数导出', '10', null, '5', '#', '', 'F', '0', '1', 'system:config:export', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('57', '公告查询', '11', null, '1', '#', '', 'F', '0', '1', 'system:notice:list', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('58', '公告新增', '11', null, '2', '#', '', 'F', '0', '1', 'system:notice:add', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('59', '公告修改', '11', null, '3', '#', '', 'F', '0', '1', 'system:notice:edit', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('60', '公告删除', '11', null, '4', '#', '', 'F', '0', '1', 'system:notice:remove', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('61', '操作查询', '20', null, '1', '#', '', 'F', '0', '1', 'monitor:operlog:list', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('62', '操作删除', '20', null, '2', '#', '', 'F', '0', '1', 'monitor:operlog:remove', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('63', '详细信息', '20', null, '3', '#', '', 'F', '0', '1', 'monitor:operlog:detail', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('64', '日志导出', '20', null, '4', '#', '', 'F', '0', '1', 'monitor:operlog:export', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('65', '登录查询', '21', null, '1', '#', '', 'F', '0', '1', 'monitor:loginLog:list', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('66', '登录删除', '21', null, '2', '#', '', 'F', '0', '1', 'monitor:loginLog:remove', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('67', '日志导出', '21', null, '3', '#', '', 'F', '0', '1', 'monitor:loginLog:export', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('68', '账户解锁', '21', null, '4', '#', '', 'F', '0', '1', 'monitor:loginLog:unlock', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('69', '在线查询', '13', null, '1', '#', '', 'F', '0', '1', 'monitor:online:list', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('70', '批量强退', '13', null, '2', '#', '', 'F', '0', '1', 'monitor:online:batchForceLogout', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('71', '单条强退', '13', null, '3', '#', '', 'F', '0', '1', 'monitor:online:forceLogout', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('72', '任务查询', '14', null, '1', '#', '', 'F', '0', '1', 'monitor:job:list', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('73', '任务新增', '14', null, '2', '#', '', 'F', '0', '1', 'monitor:job:add', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('74', '任务修改', '14', null, '3', '#', '', 'F', '0', '1', 'monitor:job:edit', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('75', '任务删除', '14', null, '4', '#', '', 'F', '0', '1', 'monitor:job:remove', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('76', '状态修改', '14', null, '5', '#', '', 'F', '0', '1', 'monitor:job:changeStatus', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('77', '任务详细', '14', null, '6', '#', '', 'F', '0', '1', 'monitor:job:detail', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('78', '任务导出', '14', null, '7', '#', '', 'F', '0', '1', 'monitor:job:export', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('79', '生成查询', '18', null, '1', '#', '', 'F', '0', '1', 'tool:gen:list', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('80', '生成修改', '18', null, '2', '#', '', 'F', '0', '1', 'tool:gen:edit', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('81', '生成删除', '18', null, '3', '#', '', 'F', '0', '1', 'tool:gen:remove', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('82', '预览代码', '18', null, '4', '#', '', 'F', '0', '1', 'tool:gen:preview', '#', 'root', now(), '', null, '');
+INSERT INTO `sys_menu` VALUES ('83', '生成代码', '18', null, '5', '#', '', 'F', '0', '1', 'tool:gen:code', '#', 'root', now(), '', null, '');
 -- ----------------------------
 -- Table structure for `sys_notice`
 -- ----------------------------
@@ -692,7 +692,7 @@ CREATE TABLE `sys_oper_log` (
   `error_msg` varchar(2000) DEFAULT '' COMMENT '错误消息',
   `oper_time` datetime DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`oper_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='操作日志记录';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作日志记录';
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -743,7 +743,7 @@ CREATE TABLE `sys_role` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='角色信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='角色信息表';
 
 -- ----------------------------
 -- Records of sys_role
@@ -808,12 +808,12 @@ CREATE TABLE `sys_user` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='用户信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户信息表';
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', '103', 'root', '0', '超级管理员', '00', 'root@wshsoft.com', '13735561307', '0', '/profile/avatar/2020/01/06/2dce2fb53e7a4b63428cf1ec6b5c9beb.png', 'b1d33eaa6dcf8acc8114b62cb10b02b8', '123456', '0', '0', '127.0.0.1', now(), now(), 'root', now(), '', now(), '超级管理员');
+INSERT INTO `sys_user` VALUES ('1', '103', 'root', '0', '超级管理员', '00', 'root@wshsoft.com', '13735561307', '0', '', '2cd9d64309fda936de1dffe0eb918e91', '2bb804', '0', '0', '127.0.0.1', now(), now(), 'root', now(), '', now(), '超级管理员');
 INSERT INTO `sys_user` VALUES ('2', '105', 'test', '0', '测试帐号', '00', 'test@wshsoft.com', '13777858464', '0', '', 'bdbbd48177df6fb86b829ef7be29ee56', '1e4d6b', '0', '0', '127.0.0.1', now(), now(), 'root', now(), 'root', now(), '');
 INSERT INTO `sys_user` VALUES ('3', '104', 'user', '0', '普通员工', '00', 'user@wshsoft.com', '13735561308', '0', '', 'eb40b979368ec731eefaede4a62c54b6', '8e1761', '0', '0', '127.0.0.1', now(), now(), 'root', now(), 'root', now(), '');
 

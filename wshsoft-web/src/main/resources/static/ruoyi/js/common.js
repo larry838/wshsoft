@@ -182,9 +182,7 @@ $(function() {
     // 按下ESC按钮关闭弹层
     $('body', document).on('keyup', function(e) {
         if (e.which === 27) {
-           if(window.sessionStorage.getItem("lockcms")!= "true"){//增加锁屏情况失效
-	          $.modal.closeAll();
-	    	}
+            $.modal.closeAll();
         }
     });
 });
@@ -266,7 +264,7 @@ var closeItem = function(dataId){
 }
 
 /** 创建选项卡 */
-function createMenuItem(dataUrl, menuName) {
+function createMenuItem(dataUrl, menuName, isRefresh) {
     var panelUrl = window.frameElement.getAttribute('data-id');
     dataIndex = $.common.random(1, 100),
     flag = true;
@@ -286,6 +284,9 @@ function createMenuItem(dataUrl, menuName) {
                         return false;
                     }
                 });
+            }
+            if (isRefresh) {
+            	refreshTab();
             }
             flag = false;
             return false;
@@ -310,6 +311,15 @@ function createMenuItem(dataUrl, menuName) {
         scrollToTab($('.menuTab.active', topWindow));
     }
     return false;
+}
+
+// 刷新iframe
+function refreshTab() {
+	var topWindow = $(window.parent.document);
+	var currentId = $('.page-tabs-content', topWindow).find('.active').attr('data-id');
+	var target = $('.RuoYi_iframe[data-id="' + currentId + '"]', topWindow);
+    var url = target.attr('src');
+	target.attr('src', url).ready();
 }
 
 // 滚动到指定选项卡
@@ -412,7 +422,7 @@ var sub = {
     editColumn: function() {
     	var count = $("#" + table.options.id).bootstrapTable('getData').length;
     	var params = new Array();
-    	for (var dataIndex = 0; dataIndex <= count; dataIndex++) {
+    	for (var dataIndex = 0; dataIndex < count; dataIndex++) {
     	    var columns = $('#' + table.options.id + ' tr[data-index="' + dataIndex + '"] td');
     	    var obj = new Object();
     	    for (var i = 0; i < columns.length; i++) {
@@ -440,6 +450,16 @@ var sub = {
             return;
         }
         $("#" + table.options.id).bootstrapTable('remove', { field: subColumn, values: ids });
+    },
+    addColumn: function(row, tableId) {
+    	var currentId = $.common.isEmpty(tableId) ? table.options.id : tableId;
+    	table.set(currentId);
+    	var count = $("#" + currentId).bootstrapTable('getData').length;
+    	sub.editColumn();
+    	$("#" + currentId).bootstrapTable('insertRow', {
+            index: count + 1,
+            row: row
+        });
     }
 };
 

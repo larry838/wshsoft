@@ -3,7 +3,6 @@ package com.wshsoft.framework.shiro.web.filter.sync;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import org.apache.shiro.web.filter.PathMatchingFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.wshsoft.common.constant.ShiroConstants;
 import com.wshsoft.framework.shiro.session.OnlineSession;
 import com.wshsoft.framework.shiro.session.OnlineSessionDAO;
@@ -15,7 +14,6 @@ import com.wshsoft.framework.shiro.session.OnlineSessionDAO;
  */
 public class SyncOnlineSessionFilter extends PathMatchingFilter
 {
-    @Autowired
     private OnlineSessionDAO onlineSessionDAO;
 
     /**
@@ -32,5 +30,10 @@ public class SyncOnlineSessionFilter extends PathMatchingFilter
             onlineSessionDAO.syncToDb(session);
         }
         return true;
+    }
+
+    public void setOnlineSessionDAO(OnlineSessionDAO onlineSessionDAO)
+    {
+        this.onlineSessionDAO = onlineSessionDAO;
     }
 }

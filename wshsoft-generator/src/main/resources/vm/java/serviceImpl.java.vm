@@ -18,6 +18,8 @@ import com.wshsoft.common.utils.date.DateUtils;
 #break
 #end
 #end
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 #if($table.sub)
 import java.util.ArrayList;
 import com.wshsoft.common.utils.StringUtils;
@@ -295,7 +297,7 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
             List<${subClassName}> list = new ArrayList<${subClassName}>();
             for (${subClassName} ${subclassName} : ${subclassName}List)
             {
-                ${subclassName}.set${pkColumn.capJavaField}(${pkColumn.javaField});
+                ${subclassName}.set${subTableFkClassName}(${pkColumn.javaField});
                 list.add(${subclassName});
             }
             if (list.size() > 0)

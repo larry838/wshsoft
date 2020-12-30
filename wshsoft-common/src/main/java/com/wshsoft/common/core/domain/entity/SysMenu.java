@@ -34,14 +34,17 @@ public class SysMenu extends BaseEntity
     /** 菜单URL */
     private String url;
 
-    /** 打开方式：menuItem页签 menuBlank新窗口 */
+    /** 打开方式（menuItem页签 menuBlank新窗口） */
     private String target;
 
-    /** 类型:0目录,1菜单,2按钮 */
+    /** 类型（M目录 C菜单 F按钮） */
     private String menuType;
 
     /** 菜单状态:0显示,1隐藏 */
     private String visible;
+
+    /** 是否刷新（0刷新 1不刷新） */
+    private String isRefresh;
 
     /** 权限字符串 */
     private String permissionCode;
@@ -165,6 +168,15 @@ public class SysMenu extends BaseEntity
         this.visible = visible;
     }
 
+    public String getIsRefresh()
+    {
+        return isRefresh;
+    }
+
+    public void setIsRefresh(String isRefresh)
+    {
+        this.isRefresh = isRefresh;
+    }
     public String getIcon()
     {
         return icon;

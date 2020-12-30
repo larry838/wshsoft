@@ -10,17 +10,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import com.wshsoft.common.utils.CookieUtils;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.wshsoft.common.config.Global;
+import com.wshsoft.common.constant.ShiroConstants;
 import com.wshsoft.common.core.controller.BaseController;
+import com.wshsoft.common.core.domain.AjaxResult;
 import com.wshsoft.common.core.domain.entity.SysMenu;
 import com.wshsoft.common.core.domain.entity.SysUser;
 import com.wshsoft.common.core.text.Convert;
+import com.wshsoft.common.utils.CookieUtils;
 import com.wshsoft.common.utils.date.DateUtils;
 import com.wshsoft.common.utils.servlet.ServletUtils;
 import com.wshsoft.common.utils.ShiroUtils;
 import com.wshsoft.common.utils.StringUtils;
+import com.wshsoft.framework.shiro.service.SysPasswordService;
 import com.wshsoft.system.service.SysConfigService;
 import com.wshsoft.system.service.SysMenuService;
 
@@ -36,6 +40,8 @@ public class SysIndexController extends BaseController
     private SysMenuService menuService;
     @Autowired
     private SysConfigService configService;
+    @Autowired
+    private SysPasswordService passwordService;
 
     // 系统首页
     @GetMapping("/index")
@@ -74,6 +80,32 @@ public class SysIndexController extends BaseController
         return webIndex;
     }
 
+    // 锁定屏幕
+    @GetMapping("/lockscreen")
+    public String lockscreen(ModelMap mmap)
+    {
+        mmap.put("user", ShiroUtils.getSysUser());
+        ServletUtils.getSession().setAttribute(ShiroConstants.LOCK_SCREEN, true);
+        return "lock";
+    }
+
+    // 解锁屏幕
+    @PostMapping("/unlockscreen")
+    @ResponseBody
+    public AjaxResult unlockscreen(String password)
+    {
+        SysUser user = ShiroUtils.getSysUser();
+        if (StringUtils.isNull(user))
+        {
+            return AjaxResult.error("服务器超时，请重新登陆");
+        }
+        if (passwordService.matches(user, password))
+        {
+            ServletUtils.getSession().removeAttribute(ShiroConstants.LOCK_SCREEN);
+            return AjaxResult.success();
+        }
+        return AjaxResult.error("密码不正确，请重新输入。");
+    }
     // 切换主题
     @GetMapping("/system/switchSkin")
     public String switchSkin()

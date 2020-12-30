@@ -91,6 +91,24 @@ public class DemoFormController
     }
 
     /**
+     * 单据打印
+     */
+    @GetMapping("/invoice")
+    public String invoice()
+    {
+        return prefix + "/invoice";
+    }
+
+    /**
+     * 标签 & 提示
+     */
+    @GetMapping("/labels_tips")
+    public String labels_tips()
+    {
+        return prefix + "/labels_tips";
+    }
+
+    /**
      * 选项卡 & 面板
      */
     @GetMapping("/tabs_panels")
