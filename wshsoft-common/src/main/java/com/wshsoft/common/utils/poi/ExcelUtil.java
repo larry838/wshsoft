@@ -44,7 +44,6 @@ import org.apache.poi.xssf.usermodel.XSSFDataValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wshsoft.common.utils.file.ImageUtils;
 import com.wshsoft.common.annotation.Excel;
 import com.wshsoft.common.annotation.Excel.ColumnType;
 import com.wshsoft.common.annotation.Excel.Type;
@@ -57,6 +56,7 @@ import com.wshsoft.common.utils.date.DateUtils;
 import com.wshsoft.common.utils.DictUtils;
 import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.utils.file.FileTypeUtils;
+import com.wshsoft.common.utils.file.ImageUtils;
 import com.wshsoft.common.utils.reflect.ReflectUtils;
 /**
  * Excel相关处理
@@ -1059,7 +1059,7 @@ public class ExcelUtil<T>
                     }
                     else
                     {
-                        if ((Double) val % 1 > 0)
+                        if ((Double) val % 1 != 0)
                         {
                             val = new BigDecimal(val.toString());
                         }
