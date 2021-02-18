@@ -35,10 +35,10 @@ public class SysUserOnlineController extends BaseController
 {
     private String prefix = "monitor/online";
 
-   // @Autowired
+    @Autowired
     private SysUserOnlineService userOnlineService;
 
-    //@Autowired
+    @Autowired
     private OnlineSessionDAO onlineSessionDAO;
 
     @RequiresPermissions("monitor:online:view")

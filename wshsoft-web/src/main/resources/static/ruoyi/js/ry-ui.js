@@ -202,6 +202,8 @@ var table = {
             	$(optionsIds).on("post-body.bs.table", function (e, args) {
                     // 浮动提示框特效
                     $(".table [data-toggle='tooltip']").tooltip();
+                    // 气泡弹出框特效
+                    $('.table [data-toggle="popover"]').popover();
             	});
             	// 选中、取消、全部选中、全部取消（事件）
             	$(optionsIds).on("check.bs.table check-all.bs.table uncheck.bs.table uncheck-all.bs.table", function (e, rowsAfter, rowsBefore) {
@@ -286,6 +288,8 @@ var table = {
             destroy: function (tableId) {
             	var currentId = $.common.isEmpty(tableId) ? table.options.id : tableId;
             	$("#" + currentId).bootstrapTable('destroy');
+            	delete table.rememberSelectedIds[currentId];
+            	delete table.rememberSelecteds[currentId];
             },
             // 序列号生成
             serialNumber: function (index, tableId) {

@@ -6,6 +6,7 @@ import java.util.Deque;
 import java.util.List;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.ehcache.EhCacheManager;//ehcache
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wshsoft.common.constant.ShiroConstants;
@@ -26,9 +27,11 @@ public class SysUserOnlineServiceImpl implements SysUserOnlineService
     @Autowired
     private SysUserOnlineMapper userOnlineDao;
     
+  //  @Autowired
+  //  private CacheManager redisCacheManager;
+    
     @Autowired
-    private CacheManager redisCacheManager;
-
+    private EhCacheManager ehCacheManager;//ehcache
     /**
      * 通过会话序号查询信息
      * 
@@ -118,7 +121,7 @@ public class SysUserOnlineServiceImpl implements SysUserOnlineService
     @Override
     public void removeUserCache(String loginName, String sessionId)
     {
-        Cache<String, Deque<Serializable>> cache = redisCacheManager.getCache(ShiroConstants.SYS_USERCACHE);
+        Cache<String, Deque<Serializable>> cache = ehCacheManager.getCache(ShiroConstants.SYS_USERCACHE);
         Deque<Serializable> deque = cache.get(loginName);
         if (StringUtils.isEmpty(deque) || deque.size() == 0)
         {
