@@ -49,7 +49,7 @@
         <jna.version>5.7.0</jna.version>
 		<commons.io.version>2.5</commons.io.version>
 		<commons.fileupload.version>1.3.3</commons.fileupload.version>
-		<commons.beanutils.version>1.9.3</commons.beanutils.version>
+		<commons.beanutils.version>1.9.4</commons.beanutils.version>
         <hibernate-validator.version>6.0.17.Final</hibernate-validator.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
 		<persistence.version>2.2</persistence.version>
