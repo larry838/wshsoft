@@ -123,6 +123,7 @@
 					<li><a class="menuItem" th:href="@{/demo/table/footer}">数据汇总</a></li>
 					<li><a class="menuItem" th:href="@{/demo/table/groupHeader}">组合表头</a></li>
 					<li><a class="menuItem" th:href="@{/demo/table/export}">表格导出</a></li>
+					<li><a class="menuItem" th:href="@{/demo/table/exportSelected}">导出选择列</a></li>
 					<li><a class="menuItem" th:href="@{/demo/table/remember}">翻页记住选择</a></li>
 					<li><a class="menuItem" th:href="@{/demo/table/pageGo}">跳转至指定页</a></li>
 					<li><a class="menuItem" th:href="@{/demo/table/params}">自定义查询参数</a></li>
@@ -247,7 +248,7 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li class="mt5">
-								<a th:href="@{/system/user/profile}" class="menuItem">
+								<a th:href="@{/system/user/profile}" class="menuItem noactive">
 								<i class="fa fa-user"></i> 个人中心</a>
 							</li>
 							<li>
@@ -377,6 +378,7 @@ function applyPath(url) {
 }
 
 $(function() {
+	var lockPath = storage.get('lockPath');
 	if($.common.equals("history", mode) && window.performance.navigation.type == 1) {
 		var url = storage.get('publicPath');
 	    if ($.common.isNotEmpty(url)) {
@@ -384,6 +386,9 @@ $(function() {
 	    } else {
 	    	$(".navbar-toolbar li a").eq(0).click();
 	    }
+	} else if($.common.isNotEmpty(lockPath)) {
+	    applyPath(lockPath);
+	    storage.remove('lockPath');
 	} else {
 		var hash = location.hash;
 	    if ($.common.isNotEmpty(hash)) {

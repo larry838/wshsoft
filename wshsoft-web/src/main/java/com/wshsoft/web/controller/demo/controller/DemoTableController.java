@@ -17,8 +17,11 @@ import com.wshsoft.common.core.domain.AjaxResult;
 import com.wshsoft.common.core.page.PageDomain;
 import com.wshsoft.common.core.page.TableDataInfo;
 import com.wshsoft.common.core.page.TableSupport;
-import com.wshsoft.common.utils.StringUtils;
+import com.wshsoft.common.core.text.Convert;
 import com.wshsoft.common.utils.date.DateUtils;
+import com.wshsoft.common.utils.poi.ExcelUtil;
+import com.wshsoft.common.utils.StringUtils;
+
 
 /**
  * 表格相关
@@ -105,6 +108,44 @@ public class DemoTableController extends BaseController
     public String export()
     {
         return prefix + "/export";
+    }
+
+    /**
+     * 表格导出选择列
+     */
+    @GetMapping("/exportSelected")
+    public String exportSelected()
+    {
+        return prefix + "/exportSelected";
+    }
+
+    /**
+     * 导出数据
+     */
+    @PostMapping("/exportData")
+    @ResponseBody
+    public AjaxResult exportSelected(UserTableModel userModel, String userIds)
+    {
+        List<UserTableModel> userList = new ArrayList<UserTableModel>(Arrays.asList(new UserTableModel[users.size()]));
+        Collections.copy(userList, users);
+
+        // 条件过滤
+        if (StringUtils.isNotEmpty(userIds))
+        {
+            userList.clear();
+            for (Long userId : Convert.toLongArray(userIds))
+            {
+                for (UserTableModel user : users)
+                {
+                    if (user.getUserId() == userId)
+                    {
+                        userList.add(user);
+                    }
+                }
+            }
+        }
+        ExcelUtil<UserTableModel> util = new ExcelUtil<UserTableModel>(UserTableModel.class);
+        return util.exportExcel(userList, "用户数据");
     }
 
     /**

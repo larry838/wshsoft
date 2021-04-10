@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.wshsoft.common.annotation.SysLog;
 import com.wshsoft.common.config.Global;
+import com.wshsoft.common.constant.UserConstants;
 import com.wshsoft.common.core.controller.BaseController;
 import com.wshsoft.common.core.domain.AjaxResult;
 import com.wshsoft.common.core.domain.entity.SysUser;
 import com.wshsoft.common.enums.BusinessType;
 import com.wshsoft.common.utils.date.DateUtils;
 import com.wshsoft.common.utils.ShiroUtils;
+import com.wshsoft.common.utils.StringUtils;
 import com.wshsoft.common.utils.file.FileUploadUtils;
 import com.wshsoft.framework.shiro.service.SysPasswordService;
 import com.wshsoft.system.service.SysUserService;
@@ -135,6 +137,16 @@ public class SysProfileController extends BaseController
         currentUser.setEmail(user.getEmail());
         currentUser.setPhonenumber(user.getPhonenumber());
         currentUser.setGender(user.getGender());
+        if (StringUtils.isNotEmpty(user.getPhonenumber())
+                && UserConstants.USER_PHONE_NOT_UNIQUE.equals(userService.checkPhoneUnique(currentUser)))
+        {
+            return error("修改用户'" + currentUser.getLoginName() + "'失败，手机号码已存在");
+        }
+        else if (StringUtils.isNotEmpty(user.getEmail())
+                && UserConstants.USER_EMAIL_NOT_UNIQUE.equals(userService.checkEmailUnique(currentUser)))
+        {
+            return error("修改用户'" + currentUser.getLoginName() + "'失败，邮箱账号已存在");
+        }
         if (userService.updateUserInfo(currentUser) > 0)
         {
             ShiroUtils.setSysUser(userService.selectUserById(currentUser.getUserId()));
