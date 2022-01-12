@@ -62,7 +62,7 @@
 		<jsoup.version>1.11.3</jsoup.version>
         <poi.version>4.1.2</poi.version>
 		<velocity.version>1.7</velocity.version>			
-		<dubbo.version>2.7.1</dubbo.version>
+		<dubbo.version>2.7.15</dubbo.version>
 		<zkclient.version>0.11</zkclient.version>
 		<maven-compiler.version>3.5</maven-compiler.version>
 		<ip2region.version>1.7.2</ip2region.version>
