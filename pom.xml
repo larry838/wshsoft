@@ -59,7 +59,7 @@
 		<disruptor.version>3.4.2</disruptor.version>
 		<lombok.version>1.18.8</lombok.version>
 		<p6spy.version>3.8.0</p6spy.version>
-		<jsoup.version>1.11.3</jsoup.version>
+		<jsoup.version>1.15.3</jsoup.version>
         <poi.version>4.1.2</poi.version>
 		<velocity.version>1.7</velocity.version>			
 		<dubbo.version>2.7.1</dubbo.version>
